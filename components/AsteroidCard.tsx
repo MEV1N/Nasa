@@ -77,18 +77,36 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-slate-800/20 to-slate-900/40" />
           
           {/* Asteroid Image */}
-          <div className="relative h-32 bg-slate-800/50 overflow-hidden">
-            {asteroid.image_url && (
+          <div className="relative h-32 bg-slate-800/50 overflow-hidden rounded-t-lg">
+            {asteroid.image_url ? (
               <LazyImage
                 src={asteroid.image_url}
                 alt={`Asteroid ${asteroid.name}`}
                 fill
                 className="object-cover"
+                priority={index < 4} // Load first 4 images with priority
+                placeholderClassName="rounded-t-lg"
               />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800">
+                <div className="text-slate-500 text-center">
+                  <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-slate-600 flex items-center justify-center">
+                    ?
+                  </div>
+                  <span className="text-xs">No Image</span>
+                </div>
+              </div>
             )}
             
             {/* Overlay gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent z-10" />
+            
+            {/* Image info overlay */}
+            <div className="absolute bottom-2 left-2 z-20">
+              <div className="text-xs text-white/80 bg-black/50 px-2 py-1 rounded">
+                ID: {asteroid.id}
+              </div>
+            </div>
           </div>
 
           {/* Hazardous asteroid indicator */}

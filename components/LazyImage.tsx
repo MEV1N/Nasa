@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { ImageIcon } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ImageIcon, AlertCircle } from 'lucide-react';
 
 interface LazyImageProps {
   src: string;
@@ -13,6 +13,9 @@ interface LazyImageProps {
   fill?: boolean;
   width?: number;
   height?: number;
+  priority?: boolean;
+  onLoad?: () => void;
+  onError?: () => void;
 }
 
 export function LazyImage({ 
@@ -22,14 +25,21 @@ export function LazyImage({
   placeholderClassName = '',
   fill = false,
   width,
-  height 
+  height,
+  priority = false,
+  onLoad,
+  onError
 }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(priority); // If priority, start loading immediately
+  const [loadProgress, setLoadProgress] = useState(0);
   const imgRef = useRef<HTMLDivElement>(null);
 
+  // Intersection Observer for lazy loading
   useEffect(() => {
+    if (priority) return; // Skip intersection observer if priority loading
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -37,7 +47,10 @@ export function LazyImage({
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { 
+        threshold: 0.1,
+        rootMargin: '50px' // Start loading 50px before the image is visible
+      }
     );
 
     if (imgRef.current) {
@@ -45,28 +58,83 @@ export function LazyImage({
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [priority]);
+
+  // Handle image load with progress simulation
+  const handleImageLoad = useCallback(() => {
+    setIsLoaded(true);
+    setLoadProgress(100);
+    onLoad?.();
+  }, [onLoad]);
+
+  const handleImageError = useCallback(() => {
+    setHasError(true);
+    onError?.();
+  }, [onError]);
+
+  // Simulate loading progress (for better UX)
+  useEffect(() => {
+    if (isInView && !isLoaded && !hasError) {
+      const interval = setInterval(() => {
+        setLoadProgress(prev => {
+          if (prev >= 90) return prev; // Stop at 90%, complete on actual load
+          return prev + Math.random() * 10;
+        });
+      }, 200);
+
+      return () => clearInterval(interval);
+    }
+  }, [isInView, isLoaded, hasError]);
 
   return (
-    <div ref={imgRef} className={`relative ${className}`}>
-      {/* Loading placeholder */}
-      {!isLoaded && !hasError && (
-        <div className={`absolute inset-0 flex items-center justify-center bg-slate-800 ${placeholderClassName}`}>
+    <div ref={imgRef} className={`relative overflow-hidden ${className}`}>
+      <AnimatePresence mode="wait">
+        {/* Loading placeholder with progress */}
+        {!isLoaded && !hasError && (
           <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            key="loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={`absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 ${placeholderClassName}`}
           >
-            <ImageIcon className="w-8 h-8 text-slate-500" />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              className="mb-2"
+            >
+              <ImageIcon className="w-6 h-6 text-slate-400" />
+            </motion.div>
+            
+            {/* Progress bar */}
+            <div className="w-16 h-1 bg-slate-700 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-blue-500 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${loadProgress}%` }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+            
+            <span className="text-xs text-slate-500 mt-1">
+              {Math.round(loadProgress)}%
+            </span>
           </motion.div>
-        </div>
-      )}
+        )}
 
-      {/* Error fallback */}
-      {hasError && (
-        <div className={`absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800 ${placeholderClassName}`}>
-          <ImageIcon className="w-8 h-8 text-slate-500" />
-        </div>
-      )}
+        {/* Error fallback */}
+        {hasError && (
+          <motion.div
+            key="error"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className={`absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-red-900/20 to-slate-800 ${placeholderClassName}`}
+          >
+            <AlertCircle className="w-6 h-6 text-red-400 mb-1" />
+            <span className="text-xs text-red-400">Failed to load</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Actual image - only load when in view */}
       {isInView && !hasError && (
@@ -76,13 +144,23 @@ export function LazyImage({
           fill={fill}
           width={width}
           height={height}
-          className={`transition-opacity duration-500 ${
-            isLoaded ? 'opacity-100' : 'opacity-0'
+          priority={priority}
+          className={`transition-all duration-700 ease-out ${
+            isLoaded 
+              ? 'opacity-100 scale-100 blur-0' 
+              : 'opacity-0 scale-105 blur-sm'
           }`}
-          onLoad={() => setIsLoaded(true)}
-          onError={() => setHasError(true)}
-          loading="lazy"
+          onLoad={handleImageLoad}
+          onError={handleImageError}
+          loading={priority ? "eager" : "lazy"}
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
         />
+      )}
+
+      {/* Shimmer effect for loading */}
+      {!isLoaded && !hasError && (
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer" />
       )}
     </div>
   );

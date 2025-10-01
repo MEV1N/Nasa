@@ -49,3 +49,17 @@
 .leaflet-tile {
   filter: brightness(0.6) contrast(1.2);
 }
+
+/* Shimmer animation for loading images */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
