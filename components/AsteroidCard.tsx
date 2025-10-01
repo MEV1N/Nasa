@@ -64,20 +64,18 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
       transition={transition}
       whileHover={{
         ...hoverState,
-        boxShadow: asteroid.is_potentially_hazardous_asteroid
-          ? "0 0 30px rgba(239, 68, 68, 0.4)"
-          : "0 0 30px rgba(59, 130, 246, 0.4)"
+        boxShadow: "0 0 30px rgba(255, 255, 255, 0.1)"
       }}
       className="cursor-pointer"
       onClick={() => onSelect?.(asteroid)}
     >
       <motion.div>
-        <Card className="h-full bg-gradient-to-br from-slate-900 to-slate-800 border-slate-700 overflow-hidden relative min-h-[400px]">
+        <Card className="h-full card-hover bg-card border-border overflow-hidden relative min-h-[400px]">
           {/* Background pattern */}
-          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-slate-800/20 to-slate-900/40" />
+          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/20 to-black/40" />
           
           {/* Asteroid Image */}
-          <div className="relative h-32 bg-slate-800/50 overflow-hidden rounded-t-lg">
+          <div className="relative h-32 bg-black/50 overflow-hidden rounded-t-lg">
             {asteroid.image_url ? (
               <LazyImage
                 src={asteroid.image_url}
@@ -88,9 +86,9 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
                 placeholderClassName="rounded-t-lg"
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800">
-                <div className="text-slate-500 text-center">
-                  <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-slate-600 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-800 to-black">
+                <div className="text-neutral-400 text-center">
+                  <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-neutral-600 flex items-center justify-center">
                     ?
                   </div>
                   <span className="text-xs">No Image</span>
@@ -99,7 +97,7 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
             )}
             
             {/* Overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10" />
             
             {/* Image info overlay */}
             <div className="absolute bottom-2 left-2 z-20">
@@ -134,15 +132,15 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
             <CardTitle className="text-white text-lg font-bold truncate">
               {asteroid.name.replace(/[()]/g, '')}
             </CardTitle>
-            <div className="text-sm text-slate-400">
+            <div className="text-sm text-neutral-400">
               ID: {asteroid.id}
             </div>
           </CardHeader>
 
           <CardContent className="relative z-10 space-y-4">
             {/* Diameter */}
-            <div className="flex items-center gap-2 text-slate-300">
-              <Ruler className="w-4 h-4 text-blue-400" />
+            <div className="flex items-center gap-2 text-neutral-300">
+              <Ruler className="w-4 h-4 text-white" />
               <span className="text-sm">
                 Diameter: <span className="font-semibold text-white">
                   {avgDiameter > 0 ? `${avgDiameter.toFixed(2)} km` : 'Unknown'}
@@ -152,8 +150,8 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
 
             {/* Velocity */}
             {velocity > 0 && (
-              <div className="flex items-center gap-2 text-slate-300">
-                <Gauge className="w-4 h-4 text-green-400" />
+              <div className="flex items-center gap-2 text-neutral-300">
+                <Gauge className="w-4 h-4 text-white" />
                 <span className="text-sm">
                   Velocity: <span className="font-semibold text-white">
                     {velocity.toLocaleString()} km/h
@@ -163,8 +161,8 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
             )}
 
             {/* Closest approach date */}
-            <div className="flex items-center gap-2 text-slate-300">
-              <Calendar className="w-4 h-4 text-purple-400" />
+            <div className="flex items-center gap-2 text-neutral-300">
+              <Calendar className="w-4 h-4 text-white" />
               <span className="text-sm">
                 Next approach: <span className="font-semibold text-white">
                   {approachDate}
@@ -173,13 +171,13 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
             </div>
 
             {/* Magnitude */}
-            <div className="text-xs text-slate-400 mt-3">
+            <div className="text-xs text-neutral-400 mt-3">
               Absolute Magnitude: {asteroid.absolute_magnitude_h.toFixed(2)}
             </div>
 
             {/* Hover overlay */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 opacity-0"
+              className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 opacity-0"
               whileHover={{ opacity: 1 }}
               transition={{ duration: 0.2 }}
             />

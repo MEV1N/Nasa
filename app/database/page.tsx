@@ -28,7 +28,7 @@ export default function DatabasePage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black py-8">
+    <div className="min-h-screen bg-black py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -36,21 +36,21 @@ export default function DatabasePage() {
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <h1 className="text-5xl font-bold mb-4 font-orbitron text-center bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-4 font-orbitron text-center text-gradient">
             ASTEROID DATABASE
           </h1>
-          <p className="text-center text-gray-400 mb-8">
+          <p className="text-center text-neutral-400 mb-8">
             Explore near-Earth asteroids tracked by NASA
           </p>
 
           <div className="max-w-2xl mx-auto relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-neutral-400" />
             <Input
               type="text"
               placeholder="Search asteroids by name..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-12 bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 h-14 text-lg"
+              className="pl-12 bg-card border-border text-white placeholder:text-neutral-500 h-14 text-lg"
             />
           </div>
         </motion.div>
@@ -61,33 +61,33 @@ export default function DatabasePage() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-4"
         >
-          <Card className="bg-gray-900/50 border-gray-800">
+          <Card className="bg-card border-border">
             <CardContent className="pt-6">
               <div className="text-center">
-                <p className="text-4xl font-bold text-blue-400">{asteroids.length}</p>
-                <p className="text-sm text-gray-400 mt-2">Total Asteroids</p>
+                <p className="text-4xl font-bold text-white">{asteroids.length}</p>
+                <p className="text-sm text-neutral-400 mt-2">Total Asteroids</p>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gray-900/50 border-gray-800">
+          <Card className="bg-card border-border">
             <CardContent className="pt-6">
               <div className="text-center">
-                <p className="text-4xl font-bold text-red-400">
+                <p className="text-4xl font-bold text-white">
                   {asteroids.filter((a) => a.is_potentially_hazardous_asteroid).length}
                 </p>
-                <p className="text-sm text-gray-400 mt-2">Potentially Hazardous</p>
+                <p className="text-sm text-neutral-400 mt-2">Potentially Hazardous</p>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gray-900/50 border-gray-800">
+          <Card className="bg-card border-border">
             <CardContent className="pt-6">
               <div className="text-center">
-                <p className="text-4xl font-bold text-green-400">
+                <p className="text-4xl font-bold text-white">
                   {asteroids.filter((a) => !a.is_potentially_hazardous_asteroid).length}
                 </p>
-                <p className="text-sm text-gray-400 mt-2">Non-Hazardous</p>
+                <p className="text-sm text-neutral-400 mt-2">Non-Hazardous</p>
               </div>
             </CardContent>
           </Card>
@@ -96,7 +96,7 @@ export default function DatabasePage() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Card key={i} className="bg-gray-900/50 border-gray-800">
+              <Card key={i} className="bg-card border-border">
                 <CardHeader>
                   <Skeleton className="h-6 w-3/4 bg-gray-700" />
                   <Skeleton className="h-4 w-1/2 bg-gray-700 mt-2" />

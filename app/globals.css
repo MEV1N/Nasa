@@ -5,24 +5,24 @@
 @layer base {
   :root {
     --background: 0 0% 0%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 217 91% 60%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 9%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 9%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 9%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 15%;
+    --input: 0 0% 9%;
+    --ring: 0 0% 80%;
     --radius: 0.5rem;
     --font-orbitron: 'Orbitron', sans-serif;
   }
@@ -34,6 +34,7 @@
   }
   body {
     @apply bg-black text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
@@ -41,13 +42,41 @@
   font-family: var(--font-orbitron);
 }
 
+/* Vercel-style gradients */
+.gradient-primary {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+}
+
+.gradient-border {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+/* Text gradients */
+.text-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-reverse {
+  background: linear-gradient(135deg, #000000 0%, #404040 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .leaflet-container {
-  background: #0a0a0a;
+  background: #000000;
   z-index: 1;
 }
 
 .leaflet-tile {
-  filter: brightness(0.6) contrast(1.2);
+  filter: brightness(0.3) contrast(1.5) grayscale(1);
 }
 
 /* Shimmer animation for loading images */
@@ -62,4 +91,14 @@
 
 .animate-shimmer {
   animation: shimmer 2s infinite;
+}
+
+/* Vercel-style hover effects */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.05), 0 10px 10px -5px rgba(255, 255, 255, 0.02);
 }

@@ -40,7 +40,7 @@ export default function SimulationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-slate-900 to-black">
+    <div className="min-h-screen bg-black">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <motion.div
@@ -51,7 +51,7 @@ export default function SimulationPage() {
         >
           <div className="flex items-center justify-between mb-6">
             <Link href="/">
-              <Button variant="outline" className="bg-slate-800 border-slate-600 text-white hover:bg-slate-700">
+              <Button variant="outline" className="bg-card border-border text-white hover:bg-white/5">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Home
               </Button>
@@ -61,7 +61,7 @@ export default function SimulationPage() {
               <Button 
                 onClick={resetSimulation}
                 variant="outline" 
-                className="bg-slate-800 border-slate-600 text-white hover:bg-slate-700"
+                className="bg-card border-border text-white hover:bg-white/5"
               >
                 New Simulation
               </Button>
@@ -69,10 +69,10 @@ export default function SimulationPage() {
           </div>
 
           <div className="text-center space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl font-bold text-gradient">
               Asteroid Impact Simulator
             </h1>
-            <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
               Select an asteroid from NASA&apos;s database, configure impact parameters, and visualize the devastating consequences
             </p>
           </div>
@@ -81,23 +81,23 @@ export default function SimulationPage() {
           <div className="flex justify-center mt-8">
             <div className="flex items-center space-x-4">
               <div className={`flex items-center space-x-2 px-4 py-2 rounded-full ${
-                simulationStep === 'select' ? 'bg-blue-600' : 
-                (simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-green-600' : 'bg-slate-700'
+                simulationStep === 'select' ? 'bg-white text-black' : 
+                (simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-white/80 text-black' : 'bg-neutral-700 text-white'
               }`}>
                 <Target className="w-4 h-4" />
                 <span className="text-sm font-medium">Select Asteroid</span>
               </div>
               
               <div className={`flex items-center space-x-2 px-4 py-2 rounded-full ${
-                simulationStep === 'simulate' ? 'bg-blue-600' : 
-                simulationStep === 'results' ? 'bg-green-600' : 'bg-slate-700'
+                simulationStep === 'simulate' ? 'bg-white text-black' : 
+                simulationStep === 'results' ? 'bg-white/80 text-black' : 'bg-neutral-700 text-white'
               }`}>
                 <Rocket className="w-4 h-4" />
                 <span className="text-sm font-medium">Configure Impact</span>
               </div>
               
               <div className={`flex items-center space-x-2 px-4 py-2 rounded-full ${
-                simulationStep === 'results' ? 'bg-blue-600' : 'bg-slate-700'
+                simulationStep === 'results' ? 'bg-white text-black' : 'bg-neutral-700 text-white'
               }`}>
                 <Mountain className="w-4 h-4" />
                 <span className="text-sm font-medium">View Results</span>
@@ -130,10 +130,10 @@ export default function SimulationPage() {
               className="space-y-8"
             >
               {/* Selected Asteroid Info */}
-              <Card className="bg-gradient-to-r from-slate-900 to-slate-800 border-slate-700">
+              <Card className="bg-card border-border">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-white">
-                    <Target className="w-6 h-6 text-blue-400" />
+                    <Target className="w-6 h-6 text-white" />
                     Selected Asteroid
                     {selectedAsteroid.is_potentially_hazardous_asteroid && (
                       <Badge variant="destructive" className="bg-red-600/90">
@@ -146,13 +146,13 @@ export default function SimulationPage() {
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                     <div>
-                      <span className="text-slate-400">Name:</span>
+                      <span className="text-neutral-400">Name:</span>
                       <div className="text-white font-semibold text-lg">
                         {selectedAsteroid.name.replace(/[()]/g, '')}
                       </div>
                     </div>
                     <div>
-                      <span className="text-slate-400">Diameter:</span>
+                      <span className="text-neutral-400">Diameter:</span>
                       <div className="text-white font-semibold">
                         {selectedAsteroid.estimated_diameter?.kilometers
                           ? `${((selectedAsteroid.estimated_diameter.kilometers.estimated_diameter_min + 
@@ -161,7 +161,7 @@ export default function SimulationPage() {
                       </div>
                     </div>
                     <div>
-                      <span className="text-slate-400">Velocity:</span>
+                      <span className="text-neutral-400">Velocity:</span>
                       <div className="text-white font-semibold">
                         {selectedAsteroid.close_approach_data?.[0]?.relative_velocity?.kilometers_per_hour
                           ? `${Math.round(parseFloat(selectedAsteroid.close_approach_data[0].relative_velocity.kilometers_per_hour)).toLocaleString()} km/h`
@@ -187,10 +187,10 @@ export default function SimulationPage() {
               className="space-y-8"
             >
               {/* Results Header */}
-              <Card className="bg-gradient-to-r from-red-900/30 to-orange-900/30 border-red-800/50">
+              <Card className="bg-card border-border">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-white">
-                    <AlertTriangle className="w-6 h-6 text-red-400" />
+                    <AlertTriangle className="w-6 h-6 text-white" />
                     Impact Analysis Results
                     <Badge variant="destructive">
                       {simulationResults.magnitude}
@@ -203,19 +203,19 @@ export default function SimulationPage() {
                       <div className="text-3xl font-bold text-white">
                         {simulationResults.energy.toLocaleString()}
                       </div>
-                      <div className="text-sm text-slate-400">Megatons TNT</div>
+                      <div className="text-sm text-neutral-400">Megatons TNT</div>
                     </div>
                     <div className="text-center">
                       <div className="text-3xl font-bold text-white">
                         {simulationResults.craterDiameter.toFixed(1)}
                       </div>
-                      <div className="text-sm text-slate-400">km Crater Diameter</div>
+                      <div className="text-sm text-neutral-400">km Crater Diameter</div>
                     </div>
                     <div className="text-center">
                       <div className="text-3xl font-bold text-white">
                         {selectedAsteroid.name.replace(/[()]/g, '').substring(0, 15)}...
                       </div>
-                      <div className="text-sm text-slate-400">Impacting Asteroid</div>
+                      <div className="text-sm text-neutral-400">Impacting Asteroid</div>
                     </div>
                   </div>
                 </CardContent>
