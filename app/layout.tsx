@@ -30,7 +30,7 @@ export default function RootLayout({
         <nav className="border-b border-gray-800 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
-              <Link href="/" className="font-bold text-xl font-orbitron text-blue-400 hover:text-blue-300 transition-colors">
+              <Link href="/" className="font-bold text-xl font-orbitron text-white hover:text-blue400 hover:text-blue-300 transition-colors">
                 NASA ASTEROID SIMULATOR
               </Link>
               <div className="flex space-x-8">

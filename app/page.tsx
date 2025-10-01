@@ -51,60 +51,11 @@ export default function Home() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20"
         >
-          <Card className="card-hover bg-card border-border hover:border-white/20 transition-all duration-300">
-            <CardHeader>
-              <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4">
-                <Target className="h-6 w-6 text-white" />
-              </div>
-              <CardTitle className="text-2xl font-orbitron">Impact Simulation</CardTitle>
-              <CardDescription className="text-neutral-400">
-                Choose any location on Earth and select from real NASA-tracked asteroids
-                to simulate impact scenarios with accurate physics calculations.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card className="card-hover bg-card border-border hover:border-white/20 transition-all duration-300">
-            <CardHeader>
-              <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4">
-                <Globe className="h-6 w-6 text-white" />
-              </div>
-              <CardTitle className="text-2xl font-orbitron">Asteroid Database</CardTitle>
-              <CardDescription className="text-neutral-400">
-                Browse thousands of near-Earth asteroids with real-time data including
-                size, velocity, close approach dates, and hazard classifications.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card className="card-hover bg-card border-border hover:border-white/20 transition-all duration-300">
-            <CardHeader>
-              <div className="w-12 h-12 bg-white/10 rounded-lg flex items-center justify-center mb-4">
-                <Info className="h-6 w-6 text-white" />
-              </div>
-              <CardTitle className="text-2xl font-orbitron">Learn & Understand</CardTitle>
-              <CardDescription className="text-neutral-400">
-                Understand asteroid risks, impact physics, and what makes these space rocks
-                potentially hazardous to life on Earth.
-              </CardDescription>
-            </CardHeader>
-          </Card>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-20 text-center"
-        >
-          <div className="inline-block bg-card border border-border rounded-lg p-8">
-            <h3 className="text-2xl font-bold mb-4 font-orbitron text-white">Did You Know?</h3>
-            <p className="text-neutral-300 max-w-2xl">
-              An asteroid just 1 kilometer in diameter hitting Earth would release energy equivalent
-              to millions of nuclear bombs, causing global climate disruption and potential mass extinction.
-            </p>
-          </div>
-        </motion.div>
+        
+          
+      
       </div>
     </div>
   );

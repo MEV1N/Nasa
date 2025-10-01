@@ -68,9 +68,10 @@ export function LazyImage({
   }, [onLoad]);
 
   const handleImageError = useCallback(() => {
+    console.error(`Failed to load image: ${src}`);
     setHasError(true);
     onError?.();
-  }, [onError]);
+  }, [onError, src]);
 
   // Simulate loading progress (for better UX)
   useEffect(() => {
@@ -96,7 +97,7 @@ export function LazyImage({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className={`absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-neutral-800 to-black ${placeholderClassName}`}
+            className={`absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-neutral-700 to-neutral-800 ${placeholderClassName}`}
           >
             <motion.div
               animate={{ rotate: 360 }}
@@ -128,10 +129,10 @@ export function LazyImage({
             key="error"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className={`absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-red-900/20 to-black ${placeholderClassName}`}
+            className={`absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-900 ${placeholderClassName}`}
           >
-            <AlertCircle className="w-6 h-6 text-red-400 mb-1" />
-            <span className="text-xs text-red-400">Failed to load</span>
+            <AlertCircle className="w-6 h-6 text-neutral-500 mb-1" />
+            <span className="text-xs text-neutral-500">Failed to load</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -153,14 +154,13 @@ export function LazyImage({
           onLoad={handleImageLoad}
           onError={handleImageError}
           loading={priority ? "eager" : "lazy"}
-          placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+          unoptimized={true} // Allow external images
         />
       )}
 
       {/* Shimmer effect for loading */}
       {!isLoaded && !hasError && (
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-shimmer" />
       )}
     </div>
   );

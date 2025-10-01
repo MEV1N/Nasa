@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { Asteroid } from '@/lib/nasa-api';
 import { Calendar, Gauge, Ruler, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
-import { LazyImage } from './LazyImage';
 
 interface AsteroidCardProps {
   asteroid: Asteroid;
@@ -70,42 +69,9 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
       onClick={() => onSelect?.(asteroid)}
     >
       <motion.div>
-        <Card className="h-full card-hover bg-card border-border overflow-hidden relative min-h-[400px]">
+        <Card className="h-full card-hover bg-card border-border overflow-hidden relative min-h-[280px]">
           {/* Background pattern */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/20 to-black/40" />
-          
-          {/* Asteroid Image */}
-          <div className="relative h-32 bg-black/50 overflow-hidden rounded-t-lg">
-            {asteroid.image_url ? (
-              <LazyImage
-                src={asteroid.image_url}
-                alt={`Asteroid ${asteroid.name}`}
-                fill
-                className="object-cover"
-                priority={index < 4} // Load first 4 images with priority
-                placeholderClassName="rounded-t-lg"
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-neutral-800 to-black">
-                <div className="text-neutral-400 text-center">
-                  <div className="w-8 h-8 mx-auto mb-2 rounded-full bg-neutral-600 flex items-center justify-center">
-                    ?
-                  </div>
-                  <span className="text-xs">No Image</span>
-                </div>
-              </div>
-            )}
-            
-            {/* Overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10" />
-            
-            {/* Image info overlay */}
-            <div className="absolute bottom-2 left-2 z-20">
-              <div className="text-xs text-white/80 bg-black/50 px-2 py-1 rounded">
-                ID: {asteroid.id}
-              </div>
-            </div>
-          </div>
 
           {/* Hazardous asteroid indicator */}
           {asteroid.is_potentially_hazardous_asteroid && (

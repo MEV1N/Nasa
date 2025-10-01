@@ -129,7 +129,7 @@ export function AsteroidList({ onAsteroidSelect }: AsteroidListProps) {
         >
           <Rocket className="w-12 h-12 text-blue-500" />
         </motion.div>
-        <p className="text-lg text-slate-400">Loading asteroids from NASA...</p>
+        <p className="text-lg text-neutral-400">Loading asteroids from NASA...</p>
       </div>
     );
   }
@@ -147,7 +147,7 @@ export function AsteroidList({ onAsteroidSelect }: AsteroidListProps) {
           Near-Earth Asteroids
         </motion.h2>
         <motion.p 
-          className="text-slate-400 max-w-2xl mx-auto"
+          className="text-neutral-400 max-w-2xl mx-auto"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -164,18 +164,18 @@ export function AsteroidList({ onAsteroidSelect }: AsteroidListProps) {
         transition={{ duration: 0.6, delay: 0.4 }}
       >
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4" />
           <Input
             placeholder="Search asteroids by name or ID..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-slate-800 border-slate-600 text-white placeholder-slate-400"
+            className="pl-10 bg-card border-border text-white placeholder-neutral-400"
           />
         </div>
         <Button 
           onClick={handleRefresh}
           variant="outline"
-          className="bg-slate-800 border-slate-600 text-white hover:bg-slate-700"
+          className="bg-card border-border text-white hover:bg-white/5"
         >
           Refresh Data
         </Button>

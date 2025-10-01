@@ -1,35 +1,5 @@
 const BASE_URL = "https://api.nasa.gov/neo/rest/v1";
 
-// Generate a consistent asteroid image URL based on asteroid properties
-export const generateAsteroidImageUrl = (asteroid: Asteroid): string => {
-  // Use asteroid ID to generate a consistent but varied image
-  const seed = parseInt(asteroid.id) || 1;
-  const imageVariant = (seed % 8) + 1; // 8 different asteroid images
-  
-  // For realistic asteroid images, we'll use NASA's asteroid image collection
-  // These are real asteroid images from various NASA missions
-  const asteroidImages = [
-    "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400&h=400&fit=crop&crop=center", // Generic space rock
-    "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=400&h=400&fit=crop&crop=center", // Rocky asteroid
-    "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=400&h=400&fit=crop&crop=center", // Dark asteroid
-    "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?w=400&h=400&fit=crop&crop=center", // Metallic asteroid
-    "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=400&h=400&fit=crop&crop=center", // Cratered surface
-    "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=400&h=400&fit=crop&crop=center", // Space debris
-    "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=400&h=400&fit=crop&crop=center", // Rocky formation
-    "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=400&h=400&fit=crop&crop=center", // Rough surface
-  ];
-  
-  return asteroidImages[imageVariant - 1];
-};
-
-// Enhanced function to add image URLs to asteroid data
-export const enhanceAsteroidWithImage = (asteroid: Asteroid): Asteroid => {
-  return {
-    ...asteroid,
-    image_url: generateAsteroidImageUrl(asteroid)
-  };
-};
-
 export interface Asteroid {
   id: string;
   name: string;
@@ -51,7 +21,6 @@ export interface Asteroid {
       kilometers: string;
     };
   }>;
-  image_url?: string;
 }
 
 export interface AsteroidResponse {
@@ -91,10 +60,7 @@ export const fetchAsteroidsFromNASA = async (
     
     const data = await res.json();
     
-    // Enhance asteroids with image URLs
-    if (data.near_earth_objects) {
-      data.near_earth_objects = data.near_earth_objects.map(enhanceAsteroidWithImage);
-    }
+    // Return asteroid data as-is
     
     return data;
   } catch (error) {
@@ -175,7 +141,7 @@ const getMockAsteroids = (): AsteroidResponse => {
   ];
 
   return {
-    near_earth_objects: mockAsteroids.map(enhanceAsteroidWithImage),
+    near_earth_objects: mockAsteroids,
     page: {
       size: 20,
       total_elements: 3,
