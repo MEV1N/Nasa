@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Asteroid } from '@/lib/nasa-api';
 import { Calendar, Gauge, Ruler, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
+import { LazyImage } from './LazyImage';
 
 interface AsteroidCardProps {
   asteroid: Asteroid;
@@ -14,6 +15,7 @@ interface AsteroidCardProps {
 }
 
 export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
+
   // Get the most recent close approach data
   const latestApproach = asteroid.close_approach_data?.[0];
   
@@ -70,10 +72,25 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
       onClick={() => onSelect?.(asteroid)}
     >
       <motion.div>
-        <Card className="h-full bg-gradient-to-br from-slate-900 to-slate-800 border-slate-700 overflow-hidden relative">
+        <Card className="h-full bg-gradient-to-br from-slate-900 to-slate-800 border-slate-700 overflow-hidden relative min-h-[400px]">
           {/* Background pattern */}
           <div className="absolute inset-0 bg-gradient-to-br from-transparent via-slate-800/20 to-slate-900/40" />
           
+          {/* Asteroid Image */}
+          <div className="relative h-32 bg-slate-800/50 overflow-hidden">
+            {asteroid.image_url && (
+              <LazyImage
+                src={asteroid.image_url}
+                alt={`Asteroid ${asteroid.name}`}
+                fill
+                className="object-cover"
+              />
+            )}
+            
+            {/* Overlay gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent z-10" />
+          </div>
+
           {/* Hazardous asteroid indicator */}
           {asteroid.is_potentially_hazardous_asteroid && (
             <motion.div
@@ -95,7 +112,7 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
             </motion.div>
           )}
 
-          <CardHeader className="relative z-10">
+          <CardHeader className="relative z-10 pb-2">
             <CardTitle className="text-white text-lg font-bold truncate">
               {asteroid.name.replace(/[()]/g, '')}
             </CardTitle>
