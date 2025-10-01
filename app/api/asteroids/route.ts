@@ -8,10 +8,19 @@ export async function GET(request: NextRequest) {
     
     if (!apiKey) {
       console.error('NASA_API_KEY environment variable is not set');
+      console.error('Available environment variables:', Object.keys(process.env).filter(key => key.includes('NASA')));
+      console.error('Node environment:', process.env.NODE_ENV);
+      console.error('Vercel environment:', process.env.VERCEL_ENV);
+      
       return NextResponse.json(
         { 
           error: 'NASA API key not configured',
-          message: 'Please set the NASA_API_KEY environment variable in your Vercel project settings'
+          message: 'Please set the NASA_API_KEY environment variable in your Vercel project settings',
+          debug: {
+            nodeEnv: process.env.NODE_ENV,
+            vercelEnv: process.env.VERCEL_ENV,
+            availableNasaKeys: Object.keys(process.env).filter(key => key.includes('NASA'))
+          }
         },
         { status: 500 }
       );
