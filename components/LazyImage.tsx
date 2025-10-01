@@ -96,27 +96,27 @@ export function LazyImage({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className={`absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 ${placeholderClassName}`}
+            className={`absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-neutral-800 to-black ${placeholderClassName}`}
           >
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               className="mb-2"
             >
-              <ImageIcon className="w-6 h-6 text-slate-400" />
+              <ImageIcon className="w-6 h-6 text-neutral-400" />
             </motion.div>
             
             {/* Progress bar */}
-            <div className="w-16 h-1 bg-slate-700 rounded-full overflow-hidden">
+            <div className="w-16 h-1 bg-neutral-700 rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-blue-500 rounded-full"
+                className="h-full bg-white rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${loadProgress}%` }}
                 transition={{ duration: 0.3 }}
               />
             </div>
             
-            <span className="text-xs text-slate-500 mt-1">
+            <span className="text-xs text-neutral-400 mt-1">
               {Math.round(loadProgress)}%
             </span>
           </motion.div>
@@ -128,7 +128,7 @@ export function LazyImage({
             key="error"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className={`absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-red-900/20 to-slate-800 ${placeholderClassName}`}
+            className={`absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-red-900/20 to-black ${placeholderClassName}`}
           >
             <AlertCircle className="w-6 h-6 text-red-400 mb-1" />
             <span className="text-xs text-red-400">Failed to load</span>
