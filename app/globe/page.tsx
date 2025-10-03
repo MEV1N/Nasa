@@ -1,4 +1,19 @@
-import InteractiveGlobe from '@/components/InteractiveGlobe';
+'use client';
+
+import dynamic from 'next/dynamic';
+
+// Dynamically import InteractiveGlobe with SSR disabled
+const InteractiveGlobe = dynamic(() => import('@/components/InteractiveGlobe'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center bg-neutral-900 rounded-lg">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white mx-auto mb-4"></div>
+        <p className="text-white">Loading Interactive Globe...</p>
+      </div>
+    </div>
+  ),
+});
 
 export default function GlobePage() {
   return (

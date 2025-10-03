@@ -2,11 +2,24 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import { AsteroidList } from "@/components/AsteroidList";
 import { ImpactSimulator } from "@/components/ImpactSimulator";
 import { CraterVisualization } from "@/components/CraterVisualization";
-import InteractiveGlobe from "@/components/InteractiveGlobe";
 import { Asteroid } from "@/lib/nasa-api";
+
+// Dynamically import InteractiveGlobe with SSR disabled
+const InteractiveGlobe = dynamic(() => import("@/components/InteractiveGlobe"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center bg-neutral-900 rounded-lg">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white mx-auto mb-4"></div>
+        <p className="text-white">Loading Interactive Globe...</p>
+      </div>
+    </div>
+  ),
+});
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
