@@ -5,17 +5,23 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AsteroidList } from "@/components/AsteroidList";
 import { ImpactSimulator } from "@/components/ImpactSimulator";
 import { CraterVisualization } from "@/components/CraterVisualization";
+import InteractiveGlobe from "@/components/InteractiveGlobe";
 import { Asteroid } from "@/lib/nasa-api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Rocket, Target, Mountain, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Rocket, Target, Mountain, AlertTriangle, Globe } from "lucide-react";
 import Link from "next/link";
 
-type SimulationStep = 'select' | 'simulate' | 'results';
+type SimulationStep = 'select' | 'location' | 'simulate' | 'results';
 
 export default function SimulationPage() {
   const [selectedAsteroid, setSelectedAsteroid] = useState<Asteroid | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<{
+    lat: number;
+    lng: number;
+    name: string;
+  } | null>(null);
   const [simulationStep, setSimulationStep] = useState<SimulationStep>('select');
   const [simulationResults, setSimulationResults] = useState<{
     energy: number;
@@ -25,6 +31,11 @@ export default function SimulationPage() {
 
   const handleAsteroidSelect = (asteroid: Asteroid) => {
     setSelectedAsteroid(asteroid);
+    setSimulationStep('location');
+  };
+
+  const handleLocationSelect = (lat: number, lng: number, locationName: string) => {
+    setSelectedLocation({ lat, lng, name: locationName });
     setSimulationStep('simulate');
   };
 
@@ -35,6 +46,7 @@ export default function SimulationPage() {
 
   const resetSimulation = () => {
     setSelectedAsteroid(null);
+    setSelectedLocation(null);
     setSimulationResults(null);
     setSimulationStep('select');
   };
@@ -79,16 +91,24 @@ export default function SimulationPage() {
 
           {/* Progress Steps */}
           <div className="flex justify-center mt-8">
-            <div className="flex items-center space-x-4">
-              <div className={`flex items-center space-x-2 px-4 py-2 rounded-full ${
+            <div className="flex items-center space-x-2">
+              <div className={`flex items-center space-x-2 px-3 py-2 rounded-full ${
                 simulationStep === 'select' ? 'bg-white text-black' : 
-                (simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-white/80 text-black' : 'bg-neutral-700 text-white'
+                (simulationStep === 'location' || simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-white/80 text-black' : 'bg-neutral-700 text-white'
               }`}>
                 <Target className="w-4 h-4" />
                 <span className="text-sm font-medium">Select Asteroid</span>
               </div>
               
-              <div className={`flex items-center space-x-2 px-4 py-2 rounded-full ${
+              <div className={`flex items-center space-x-2 px-3 py-2 rounded-full ${
+                simulationStep === 'location' ? 'bg-white text-black' : 
+                (simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-white/80 text-black' : 'bg-neutral-700 text-white'
+              }`}>
+                <Globe className="w-4 h-4" />
+                <span className="text-sm font-medium">Choose Location</span>
+              </div>
+              
+              <div className={`flex items-center space-x-2 px-3 py-2 rounded-full ${
                 simulationStep === 'simulate' ? 'bg-white text-black' : 
                 simulationStep === 'results' ? 'bg-white/80 text-black' : 'bg-neutral-700 text-white'
               }`}>
@@ -96,7 +116,7 @@ export default function SimulationPage() {
                 <span className="text-sm font-medium">Configure Impact</span>
               </div>
               
-              <div className={`flex items-center space-x-2 px-4 py-2 rounded-full ${
+              <div className={`flex items-center space-x-2 px-3 py-2 rounded-full ${
                 simulationStep === 'results' ? 'bg-white text-black' : 'bg-neutral-700 text-white'
               }`}>
                 <Mountain className="w-4 h-4" />
@@ -120,7 +140,82 @@ export default function SimulationPage() {
             </motion.div>
           )}
 
-          {simulationStep === 'simulate' && selectedAsteroid && (
+          {simulationStep === 'location' && selectedAsteroid && (
+            <motion.div
+              key="location"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.5 }}
+              className="space-y-8"
+            >
+              {/* Selected Asteroid Info */}
+              <Card className="bg-card border-border">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3 text-white">
+                    <Target className="w-6 h-6 text-white" />
+                    Selected Asteroid
+                    {selectedAsteroid.is_potentially_hazardous_asteroid && (
+                      <Badge variant="destructive" className="bg-red-600/90">
+                        <AlertTriangle className="w-3 h-3 mr-1" />
+                        Hazardous
+                      </Badge>
+                    )}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                      <span className="text-neutral-400">Name:</span>
+                      <div className="text-white font-semibold text-lg">
+                        {selectedAsteroid.name.replace(/[()]/g, '')}
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-neutral-400">Diameter:</span>
+                      <div className="text-white font-semibold">
+                        {selectedAsteroid.estimated_diameter?.kilometers
+                          ? `${((selectedAsteroid.estimated_diameter.kilometers.estimated_diameter_min + 
+                               selectedAsteroid.estimated_diameter.kilometers.estimated_diameter_max) / 2).toFixed(2)} km`
+                          : 'Unknown'}
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-neutral-400">Velocity:</span>
+                      <div className="text-white font-semibold">
+                        {selectedAsteroid.close_approach_data?.[0]?.relative_velocity?.kilometers_per_hour
+                          ? `${Math.round(parseFloat(selectedAsteroid.close_approach_data[0].relative_velocity.kilometers_per_hour)).toLocaleString()} km/h`
+                          : 'Unknown'}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Back Button */}
+              <div className="flex justify-start mb-4">
+                <Button 
+                  onClick={() => setSimulationStep('select')}
+                  variant="outline"
+                  className="bg-card border-border text-white hover:bg-white/5"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Choose Different Asteroid
+                </Button>
+              </div>
+
+              {/* Interactive Globe for Location Selection */}
+              <div className="w-full h-[600px]">
+                <InteractiveGlobe 
+                  className="w-full h-full"
+                  onLocationSelect={handleLocationSelect}
+                  selectedAsteroid={selectedAsteroid}
+                />
+              </div>
+            </motion.div>
+          )}
+
+          {simulationStep === 'simulate' && selectedAsteroid && selectedLocation && (
             <motion.div
               key="simulate"
               initial={{ opacity: 0, x: -20 }}
@@ -172,8 +267,20 @@ export default function SimulationPage() {
                 </CardContent>
               </Card>
 
+              {/* Back Button */}
+              <div className="flex justify-start mb-4">
+                <Button 
+                  onClick={() => setSimulationStep('location')}
+                  variant="outline"
+                  className="bg-card border-border text-white hover:bg-white/5"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Choose Different Location
+                </Button>
+              </div>
+
               {/* Impact Simulator */}
-              <ImpactSimulator asteroid={selectedAsteroid} />
+              <ImpactSimulator asteroid={selectedAsteroid} selectedLocation={selectedLocation} />
             </motion.div>
           )}
 

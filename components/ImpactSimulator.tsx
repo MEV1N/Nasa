@@ -13,9 +13,14 @@ import { Badge } from '@/components/ui/badge';
 
 interface ImpactSimulatorProps {
   asteroid?: Asteroid;
+  selectedLocation?: {
+    lat: number;
+    lng: number;
+    name: string;
+  };
 }
 
-export function ImpactSimulator({ asteroid }: ImpactSimulatorProps) {
+export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorProps) {
   const [impactAngle, setImpactAngle] = useState(45);
   const [impactVelocity, setImpactVelocity] = useState(
     asteroid?.close_approach_data?.[0]?.relative_velocity?.kilometers_per_hour 
@@ -107,6 +112,27 @@ export function ImpactSimulator({ asteroid }: ImpactSimulatorProps) {
                   <div>
                     <span className="text-slate-400">Default Velocity:</span>
                     <span className="text-white ml-2">{impactVelocity} km/s</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Impact Location Info */}
+            {selectedLocation && (
+              <div className="bg-red-900/20 p-4 rounded-lg border border-red-800/50 space-y-2">
+                <h4 className="text-sm font-semibold text-red-300">Impact Target</h4>
+                <div className="grid grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <span className="text-slate-400">Location:</span>
+                    <span className="text-white ml-2">{selectedLocation.name}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400">Latitude:</span>
+                    <span className="text-white ml-2">{selectedLocation.lat.toFixed(2)}°</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400">Longitude:</span>
+                    <span className="text-white ml-2">{selectedLocation.lng.toFixed(2)}°</span>
                   </div>
                 </div>
               </div>
