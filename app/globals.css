@@ -42,32 +42,26 @@
   font-family: var(--font-orbitron);
 }
 
-/* Vercel-style gradients */
+/* Simple backgrounds */
 .gradient-primary {
-  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  background: #000000;
 }
 
 .gradient-secondary {
-  background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+  background: #000000;
 }
 
 .gradient-border {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: #000000;
 }
 
-/* Text gradients */
+/* Text colors */
 .text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
 }
 
 .text-gradient-reverse {
-  background: linear-gradient(135deg, #000000 0%, #404040 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
 }
 
 .leaflet-container {
@@ -76,38 +70,37 @@
 }
 
 .leaflet-tile {
-  filter: brightness(0.3) contrast(1.5) grayscale(1);
+  background: #000000;
 }
 
-/* Vercel-style hover effects */
+/* Simple hover effects */
 .hover-lift {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: none;
 }
 
 .hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.05), 0 10px 10px -5px rgba(255, 255, 255, 0.02);
+  background: #000000;
 }
 
 .card-hover:hover {
-  transform: scale(1.02);
-  box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.1);
+  background: #000000;
 }
 
-/* Glow effects */
+/* No glow effects */
 .glow-on-hover {
-  transition: all 0.3s ease;
+  background: #000000;
+  color: #ffffff;
 }
 
 .glow-on-hover:hover {
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
+  background: #000000;
   color: #ffffff;
 }
 
 .glow-icon-hover {
-  transition: all 0.3s ease;
+  background: #000000;
 }
 
 .glow-icon-hover:hover {
-  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
+  background: #000000;
 }
