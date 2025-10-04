@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,8 +9,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Asteroid, calculateImpactEnergy } from '@/lib/nasa-api';
-import { Calculator, Target, Zap, Mountain } from 'lucide-react';
+import { Calculator, Target, Mountain, AlertTriangle, MapPin } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+
 
 interface ImpactSimulatorProps {
   asteroid?: Asteroid;
@@ -21,6 +23,7 @@ interface ImpactSimulatorProps {
 }
 
 export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorProps) {
+  const router = useRouter();
   const [impactAngle, setImpactAngle] = useState(45);
   const [impactVelocity, setImpactVelocity] = useState(
     asteroid?.close_approach_data?.[0]?.relative_velocity?.kilometers_per_hour 
@@ -28,12 +31,7 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
       : 20
   );
   const [targetType, setTargetType] = useState('land');
-  const [results, setResults] = useState<{
-    energy: number;
-    craterDiameter: number;
-    magnitude: string;
-    description: string;
-  } | null>(null);
+  const [isSimulating, setIsSimulating] = useState(false);
 
   const getDiameter = () => {
     if (!asteroid?.estimated_diameter?.kilometers) return 1;
@@ -42,42 +40,30 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
   };
 
   const runSimulation = () => {
-    const diameter = getDiameter();
-    const velocity = impactVelocity;
-    
-    // Calculate impact energy (in megatons of TNT)
-    const energy = calculateImpactEnergy(diameter, velocity);
-    
-    // Estimate crater diameter (simplified formula)
-    const craterDiameter = Math.pow(energy, 0.25) * diameter * 20;
-    
-    // Determine magnitude and description
-    let magnitude = '';
-    let description = '';
-    
-    if (energy < 1) {
-      magnitude = 'Minor';
-      description = 'Local damage, similar to a small building collapse';
-    } else if (energy < 100) {
-      magnitude = 'Moderate';
-      description = 'City-wide destruction, similar to the Hiroshima bomb';
-    } else if (energy < 10000) {
-      magnitude = 'Major';
-      description = 'Regional devastation, affects entire metropolitan areas';
-    } else if (energy < 1000000) {
-      magnitude = 'Catastrophic';
-      description = 'Continental damage, climate effects for years';
-    } else {
-      magnitude = 'Extinction Level';
-      description = 'Global catastrophe, mass extinction event';
+    if (!asteroid || !selectedLocation) {
+      alert('Please select both an asteroid and impact location before running simulation.');
+      return;
     }
-    
-    setResults({
-      energy,
-      craterDiameter,
-      magnitude,
-      description
+
+    setIsSimulating(true);
+
+    // Build URL parameters for results page
+    const params = new URLSearchParams({
+      asteroid: asteroid.name.replace(/[()]/g, ''),
+      diameter: getDiameter().toString(),
+      asteroidVelocity: asteroid.close_approach_data?.[0]?.relative_velocity?.kilometers_per_hour 
+        ? Math.round(parseFloat(asteroid.close_approach_data[0].relative_velocity.kilometers_per_hour) / 3600).toString()
+        : '20',
+      hazardous: asteroid.is_potentially_hazardous_asteroid.toString(),
+      lat: selectedLocation.lat.toString(),
+      lng: selectedLocation.lng.toString(),
+      location: selectedLocation.name,
+      angle: impactAngle.toString(),
+      velocity: impactVelocity.toString(),
     });
+
+    // Navigate to results page
+    router.push(`/results?${params.toString()}`);
   };
 
   return (
@@ -95,6 +81,12 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
               {asteroid && (
                 <Badge variant="outline" className="ml-2 text-xs">
                   {asteroid.name.replace(/[()]/g, '')}
+                </Badge>
+              )}
+              {selectedLocation && (
+                <Badge variant="secondary" className="ml-2 text-xs">
+                  <MapPin className="w-3 h-3 mr-1" />
+                  {selectedLocation.name}
                 </Badge>
               )}
             </CardTitle>
@@ -189,51 +181,22 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
               Run Impact Simulation
             </Button>
 
-            {/* Results */}
-            {results && (
+            {/* Simulation Loading State */}
+            {isSimulating && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="bg-gradient-to-r from-red-900/30 to-orange-900/30 p-6 rounded-lg border border-red-800/50"
+                className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-lg border border-blue-800/50"
               >
-                <h4 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-yellow-400" />
-                  Impact Results
-                </h4>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div className="space-y-2">
-                    <div className="text-sm text-slate-300">
-                      <span className="font-medium">Energy Released:</span>
-                      <span className="text-white ml-2">
-                        {results.energy.toLocaleString()} megatons TNT
-                      </span>
-                    </div>
-                    <div className="text-sm text-slate-300">
-                      <span className="font-medium">Crater Diameter:</span>
-                      <span className="text-white ml-2">
-                        {results.craterDiameter.toFixed(1)} km
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <div className="text-sm text-slate-300">
-                      <span className="font-medium">Impact Magnitude:</span>
-                      <Badge 
-                        variant={results.magnitude === 'Extinction Level' ? 'destructive' : 'secondary'}
-                        className="ml-2"
-                      >
-                        {results.magnitude}
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="text-sm text-slate-300 bg-slate-800/50 p-3 rounded">
-                  <span className="font-medium">Impact Description:</span>
-                  <p className="text-white mt-1">{results.description}</p>
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+                  <h4 className="text-lg font-bold text-white mb-2">
+                    Calculating Impact Effects...
+                  </h4>
+                  <p className="text-slate-300">
+                    Analyzing asteroid trajectory, impact dynamics, and secondary effects
+                  </p>
                 </div>
               </motion.div>
             )}

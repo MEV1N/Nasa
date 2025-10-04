@@ -18,5 +18,6 @@
   },
   "editor.quickSuggestions": {
     "strings": true
-  }
+  },
+  "json.schemaDownload.enable": false
 }

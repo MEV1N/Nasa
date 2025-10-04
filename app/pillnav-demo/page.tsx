@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import PillNav from '../../components/PillNav';
+// import PillNav from '../../components/PillNav'; // Component not found, commenting out
 
 export default function PillNavDemo() {
   const [currentPage, setCurrentPage] = useState('/');
@@ -15,19 +15,10 @@ export default function PillNavDemo() {
 
   return (
     <div className="min-h-screen bg-black text-white relative">
-      {/* PillNav Demo */}
-      <PillNav
-        logo="/nasa-logo.svg"
-        logoAlt="NASA Logo"
-        items={navItems}
-        activeHref={currentPage}
-        className="custom-nav"
-        ease="power2.easeOut"
-        baseColor="#000000"
-        pillColor="#ffffff"
-        hoveredPillTextColor="#ffffff"
-        pillTextColor="#000000"
-      />
+      {/* PillNav Demo - Component not available */}
+      <div className="p-4 bg-gray-800 text-center">
+        <p>PillNav Component Demo - Component Not Found</p>
+      </div>
 
       <div className="pt-24 px-4">
         <div className="max-w-4xl mx-auto">
