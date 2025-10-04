@@ -66,14 +66,64 @@ export function EarthquakeEffectsDisplay({ effects, className }: EarthquakeEffec
             <div className="text-slate-300">Critical Zones</div>
           </div>
           <div className="bg-orange-900/30 p-2 rounded text-center">
-            <div className="text-orange-400 font-bold">{(summary.totalAffected / 1000000).toFixed(1)}M</div>
+            <div className="text-orange-400 font-bold">
+              {summary.totalAffected >= 1000000 
+                ? `${(summary.totalAffected / 1000000).toFixed(1)}M`
+                : summary.totalAffected >= 1000
+                ? `${(summary.totalAffected / 1000).toFixed(0)}K`
+                : summary.totalAffected.toLocaleString()
+              }
+            </div>
             <div className="text-slate-300">People Affected</div>
           </div>
           <div className="bg-slate-900/50 p-2 rounded text-center">
-            <div className="text-yellow-400 font-bold">{(summary.estimatedCasualties / 1000).toFixed(0)}K</div>
+            <div className="text-yellow-400 font-bold">
+              {summary.estimatedCasualties === 0 
+                ? '0'
+                : summary.estimatedCasualties >= 1000000
+                ? `${(summary.estimatedCasualties / 1000000).toFixed(1)}M`
+                : summary.estimatedCasualties >= 1000
+                ? `${(summary.estimatedCasualties / 1000).toFixed(0)}K`
+                : summary.estimatedCasualties.toLocaleString()
+              }
+            </div>
             <div className="text-slate-300">Est. Casualties</div>
           </div>
         </div>
+
+        {/* Detailed Casualty Breakdown */}
+        {summary.estimatedCasualties > 0 && (
+          <div className="bg-slate-800/30 p-3 rounded-lg">
+            <h4 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
+              <Skull className="w-4 h-4 text-red-400" />
+              Casualty Analysis
+            </h4>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-red-900/20 p-2 rounded text-center">
+                <div className="text-red-300 font-bold">
+                  {summary.totalFatalities >= 1000000 
+                    ? `${(summary.totalFatalities / 1000000).toFixed(1)}M`
+                    : summary.totalFatalities >= 1000
+                    ? `${(summary.totalFatalities / 1000).toFixed(0)}K`
+                    : summary.totalFatalities.toLocaleString()
+                  }
+                </div>
+                <div className="text-slate-400 text-xs">Fatalities</div>
+              </div>
+              <div className="bg-yellow-900/20 p-2 rounded text-center">
+                <div className="text-yellow-300 font-bold">
+                  {summary.totalInjuries >= 1000000 
+                    ? `${(summary.totalInjuries / 1000000).toFixed(1)}M`
+                    : summary.totalInjuries >= 1000
+                    ? `${(summary.totalInjuries / 1000).toFixed(0)}K`
+                    : summary.totalInjuries.toLocaleString()
+                  }
+                </div>
+                <div className="text-slate-400 text-xs">Injuries</div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Affected Cities List */}
         <div className="max-h-48 overflow-y-auto space-y-2">

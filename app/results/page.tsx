@@ -21,6 +21,9 @@ import {
 import { calculateImpact, type ImpactResults } from '@/utils/impactPhysics';
 import { calculateEarthquakeEffects, type EarthquakeEffect } from '@/utils/earthquakeEffects';
 import { EarthquakeEffectsDisplay } from '@/components/EarthquakeEffectsDisplay';
+import { findAffectedCities, type AffectedCity } from '@/utils/citiesDatabase';
+import { AffectedCitiesDisplay } from '@/components/AffectedCitiesDisplay';
+import ImpactEffects from '@/components/ImpactEffects';
 import dynamic from 'next/dynamic';
 
 // Dynamic import for map component (client-side only)
@@ -63,6 +66,12 @@ function ResultsContent() {
     description: string;
     earthquakeEffects: EarthquakeEffect[];
   }) | null>(null);
+  const [affectedCities, setAffectedCities] = useState<AffectedCity[]>([]);
+  const [additionalEffects, setAdditionalEffects] = useState<{
+    airblastRadius: number;
+    tsunamiRadius: number;
+    seismicRadius: number;
+  } | null>(null);
 
   useEffect(() => {
     // Parse URL parameters
@@ -109,6 +118,26 @@ function ResultsContent() {
       impactData.energyMt,
       2000
     );
+
+    // Calculate affected cities
+    const citiesInDamageZone = findAffectedCities(
+      lat,
+      lng,
+      impactData.radii
+    );
+    setAffectedCities(citiesInDamageZone);
+
+    // Calculate additional effects for map display
+    const energyScale = impactData.energyMt / 24; // Normalized to reference impact
+    const airblastRadius = 50 * Math.pow(energyScale, 1/3);
+    const tsunamiRadius = velocity > 15 ? 100 * Math.pow(energyScale, 1/4) : 0; // Only if high velocity
+    const seismicRadius = 200 * Math.pow(energyScale, 1/5);
+    
+    setAdditionalEffects({
+      airblastRadius: Math.round(airblastRadius * 10) / 10,
+      tsunamiRadius: Math.round(tsunamiRadius * 10) / 10,
+      seismicRadius: Math.round(seismicRadius * 10) / 10
+    });
 
     // Determine magnitude and description
     let magnitude = '';
@@ -326,6 +355,7 @@ function ResultsContent() {
                 <DamageZoneMap 
                   location={simulationData.location}
                   damageRadii={results.radii}
+                  additionalEffects={additionalEffects || undefined}
                   className="h-96"
                 />
                 <div className="mt-3 text-xs text-slate-400 text-center">
@@ -344,6 +374,32 @@ function ResultsContent() {
             <EarthquakeEffectsDisplay effects={results.earthquakeEffects} />
           </motion.div>
         </div>
+
+        {/* Global Impact Effects */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.0 }}
+          className="mt-8"
+        >
+          <ImpactEffects 
+            impactLat={simulationData.location.lat}
+            impactLng={simulationData.location.lng}
+            asteroidDiameter={simulationData.asteroid.diameter}
+            impactVelocity={simulationData.parameters.velocity}
+            impactAngle={simulationData.parameters.angle}
+          />
+        </motion.div>
+
+        {/* Affected Cities Analysis */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.2 }}
+          className="mt-8"
+        >
+          <AffectedCitiesDisplay affectedCities={affectedCities} />
+        </motion.div>
 
         {/* Additional Details */}
         <motion.div

@@ -59,11 +59,40 @@ function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: numbe
  * Calculate earthquake magnitude based on impact energy and distance
  */
 function calculateEarthquakeMagnitude(energyMt: number, distance: number): number {
-  // Simplified formula: impact energy converts to seismic energy
-  // Higher energy impacts create stronger initial quakes that attenuate with distance
-  const basemagnitude = Math.log10(energyMt) + 4; // Base magnitude from energy
-  const attenuationFactor = Math.max(0, 1 - (distance / 1000)); // Attenuates over 1000km
-  return Math.max(0, basemagnitude * attenuationFactor);
+  // More realistic formula based on impact energy
+  // Base magnitude from impact energy (logarithmic relationship)
+  let baseMagnitude = 0;
+  
+  if (energyMt >= 100000) {
+    baseMagnitude = 9.0; // Extinction-level impacts
+  } else if (energyMt >= 10000) {
+    baseMagnitude = 8.5; // Global catastrophe
+  } else if (energyMt >= 1000) {
+    baseMagnitude = 8.0; // Regional devastation
+  } else if (energyMt >= 100) {
+    baseMagnitude = 7.5; // Major regional impact
+  } else if (energyMt >= 10) {
+    baseMagnitude = 7.0; // Significant regional impact
+  } else if (energyMt >= 1) {
+    baseMagnitude = 6.5; // Local major impact
+  } else if (energyMt >= 0.1) {
+    baseMagnitude = 6.0; // Local significant impact
+  } else if (energyMt >= 0.01) {
+    baseMagnitude = 5.5; // Local moderate impact
+  } else {
+    baseMagnitude = 5.0; // Small local impact
+  }
+  
+  // Distance attenuation - earthquakes can be felt at great distances
+  // More gradual attenuation than before
+  let attenuationFactor = 1.0;
+  if (distance > 100) {
+    // Gradual attenuation starting at 100km
+    attenuationFactor = Math.max(0.1, 1.0 - Math.pow(distance / 2000, 0.8));
+  }
+  
+  const magnitude = baseMagnitude * attenuationFactor;
+  return Math.max(0, magnitude);
 }
 
 /**
@@ -73,13 +102,19 @@ function getDamageLevel(magnitude: number): { damage: EarthquakeEffect['damage']
   if (magnitude >= 8.0) {
     return { damage: 'catastrophic', intensity: 'Great earthquake - massive destruction' };
   } else if (magnitude >= 7.0) {
-    return { damage: 'severe', intensity: 'Major earthquake - serious damage' };
+    return { damage: 'severe', intensity: 'Major earthquake - serious structural damage' };
   } else if (magnitude >= 6.0) {
     return { damage: 'moderate', intensity: 'Strong earthquake - considerable damage' };
+  } else if (magnitude >= 5.0) {
+    return { damage: 'moderate', intensity: 'Moderate earthquake - widespread minor damage' };
   } else if (magnitude >= 4.0) {
-    return { damage: 'light', intensity: 'Light earthquake - minor damage' };
+    return { damage: 'light', intensity: 'Light earthquake - some damage to weak structures' };
+  } else if (magnitude >= 3.0) {
+    return { damage: 'light', intensity: 'Weak earthquake - felt by many, minor vibrations' };
   } else if (magnitude >= 2.0) {
-    return { damage: 'light', intensity: 'Weak earthquake - felt by people' };
+    return { damage: 'light', intensity: 'Micro earthquake - felt by some people' };
+  } else if (magnitude >= 1.5) {
+    return { damage: 'none', intensity: 'Very weak - detected by instruments, barely felt' };
   } else {
     return { damage: 'none', intensity: 'No significant effects' };
   }
@@ -108,8 +143,8 @@ export function calculateEarthquakeEffects(
       const magnitude = calculateEarthquakeMagnitude(energyMt, distance);
       const { damage, intensity } = getDamageLevel(magnitude);
 
-      // Only include cities with noticeable effects
-      if (magnitude >= 2.0) {
+      // Include cities with any noticeable effects (magnitude 1.5+)
+      if (magnitude >= 1.5) {
         effects.push({
           city,
           distance,
@@ -126,7 +161,83 @@ export function calculateEarthquakeEffects(
 }
 
 /**
- * Get regional earthquake summary
+ * Calculate realistic affected population based on earthquake magnitude and distance
+ */
+function calculateAffectedPopulation(effect: EarthquakeEffect): number {
+  const { magnitude, city, distance } = effect;
+  
+  // Base affected percentage based on magnitude
+  let affectedPercentage = 0;
+  
+  if (magnitude >= 8.0) {
+    affectedPercentage = 0.95; // 95% of population affected
+  } else if (magnitude >= 7.0) {
+    affectedPercentage = 0.80; // 80% affected
+  } else if (magnitude >= 6.0) {
+    affectedPercentage = 0.60; // 60% affected
+  } else if (magnitude >= 5.0) {
+    affectedPercentage = 0.35; // 35% affected
+  } else if (magnitude >= 4.0) {
+    affectedPercentage = 0.15; // 15% affected
+  } else if (magnitude >= 3.0) {
+    affectedPercentage = 0.05; // 5% affected
+  } else {
+    affectedPercentage = 0.01; // 1% affected (barely noticeable)
+  }
+  
+  // Distance modifier - closer impacts affect more people
+  let distanceModifier = 1.0;
+  if (distance > 500) {
+    distanceModifier = Math.max(0.1, 1.0 - (distance - 500) / 1500);
+  }
+  
+  return Math.round(city.population * affectedPercentage * distanceModifier);
+}
+
+/**
+ * Enhanced casualty breakdown with fatalities and injuries
+ */
+export interface CasualtyBreakdown {
+  totalCasualties: number;
+  fatalities: number;
+  injuries: number;
+  affectedPopulation: number;
+}
+
+/**
+ * Vulnerability rates for different damage levels (matching impact zones)
+ */
+const VULNERABILITY_RATES = {
+  catastrophic: { fatality_rate: 0.12, injury_rate: 0.25 }, // Very high rates for catastrophic
+  severe: { fatality_rate: 0.08, injury_rate: 0.20 },       // High rates for severe damage
+  moderate: { fatality_rate: 0.02, injury_rate: 0.08 },     // Moderate rates
+  light: { fatality_rate: 0.005, injury_rate: 0.02 },       // Low rates for light damage
+  none: { fatality_rate: 0.0001, injury_rate: 0.001 }       // Minimal rates
+};
+
+/**
+ * Calculate detailed casualty estimates with fatalities and injuries breakdown
+ */
+function calculateDetailedCasualties(effect: EarthquakeEffect, affectedPopulation: number): CasualtyBreakdown {
+  const { damage } = effect;
+  
+  // Get vulnerability rates for this damage level
+  const rates = VULNERABILITY_RATES[damage] || VULNERABILITY_RATES.none;
+  
+  const fatalities = Math.round(affectedPopulation * rates.fatality_rate);
+  const injuries = Math.round(affectedPopulation * rates.injury_rate);
+  const totalCasualties = fatalities + injuries;
+  
+  return {
+    totalCasualties,
+    fatalities,
+    injuries,
+    affectedPopulation
+  };
+}
+
+/**
+ * Get regional earthquake summary with detailed casualty breakdown
  */
 export function getEarthquakeSummary(effects: EarthquakeEffect[]): {
   totalAffected: number;
@@ -134,25 +245,39 @@ export function getEarthquakeSummary(effects: EarthquakeEffect[]): {
   moderate: number;
   light: number;
   estimatedCasualties: number;
+  totalFatalities: number;
+  totalInjuries: number;
+  casualtyBreakdown: CasualtyBreakdown[];
 } {
   let totalAffected = 0;
   let severelyCritical = 0;
   let moderate = 0;
   let light = 0;
   let estimatedCasualties = 0;
+  let totalFatalities = 0;
+  let totalInjuries = 0;
+  const casualtyBreakdown: CasualtyBreakdown[] = [];
 
   for (const effect of effects) {
-    totalAffected += effect.city.population;
+    // Calculate realistic affected population
+    const affectedInThisCity = calculateAffectedPopulation(effect);
+    totalAffected += affectedInThisCity;
+    
+    // Calculate detailed casualties with breakdown
+    const casualtiesInThisCity = calculateDetailedCasualties(effect, affectedInThisCity);
+    estimatedCasualties += casualtiesInThisCity.totalCasualties;
+    totalFatalities += casualtiesInThisCity.fatalities;
+    totalInjuries += casualtiesInThisCity.injuries;
+    casualtyBreakdown.push(casualtiesInThisCity);
 
+    // Count damage categories
     switch (effect.damage) {
       case 'catastrophic':
       case 'severe':
         severelyCritical++;
-        estimatedCasualties += effect.city.population * 0.01; // 1% casualty rate estimate
         break;
       case 'moderate':
         moderate++;
-        estimatedCasualties += effect.city.population * 0.001; // 0.1% casualty rate
         break;
       case 'light':
         light++;
@@ -165,6 +290,9 @@ export function getEarthquakeSummary(effects: EarthquakeEffect[]): {
     severelyCritical,
     moderate,
     light,
-    estimatedCasualties: Math.round(estimatedCasualties),
+    estimatedCasualties,
+    totalFatalities,
+    totalInjuries,
+    casualtyBreakdown,
   };
 }

@@ -15,10 +15,15 @@ interface DamageZoneMapProps {
     moderate: number; // km
     light: number; // km
   };
+  additionalEffects?: {
+    airblastRadius?: number; // km
+    tsunamiRadius?: number; // km for coastal areas affected
+    seismicRadius?: number; // km for earthquake effects
+  };
   className?: string;
 }
 
-export function DamageZoneMap({ location, damageRadii, className }: DamageZoneMapProps) {
+export function DamageZoneMap({ location, damageRadii, additionalEffects, className }: DamageZoneMapProps) {
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
@@ -96,8 +101,49 @@ export function DamageZoneMap({ location, damageRadii, className }: DamageZoneMa
       }).addTo(map).bindPopup('Severe Destruction Zone<br/>Complete devastation expected');
     }
 
+    // Add additional effects if provided
+    if (additionalEffects?.airblastRadius && additionalEffects.airblastRadius > 0) {
+      L.circle([location.lat, location.lng], {
+        radius: additionalEffects.airblastRadius * 1000,
+        fillColor: '#8b5cf6', // Purple
+        color: '#7c3aed',
+        weight: 2,
+        opacity: 0.7,
+        fillOpacity: 0.1,
+        dashArray: '10, 5'
+      }).addTo(map).bindPopup('Airblast/Shockwave Zone<br/>Destructive overpressure effects');
+    }
+
+    if (additionalEffects?.tsunamiRadius && additionalEffects.tsunamiRadius > 0) {
+      L.circle([location.lat, location.lng], {
+        radius: additionalEffects.tsunamiRadius * 1000,
+        fillColor: '#0ea5e9', // Blue
+        color: '#0284c7',
+        weight: 2,
+        opacity: 0.6,
+        fillOpacity: 0.05,
+        dashArray: '15, 10'
+      }).addTo(map).bindPopup('Tsunami Affected Zone<br/>Coastal areas at risk of flooding');
+    }
+
+    if (additionalEffects?.seismicRadius && additionalEffects.seismicRadius > 0) {
+      L.circle([location.lat, location.lng], {
+        radius: additionalEffects.seismicRadius * 1000,
+        fillColor: '#eab308', // Yellow
+        color: '#ca8a04',
+        weight: 1,
+        opacity: 0.5,
+        fillOpacity: 0.03,
+        dashArray: '5, 15'
+      }).addTo(map).bindPopup('Seismic Effects Zone<br/>Earthquake damage from impact');
+    }
+
     // Fit map to show all damage zones
-    const maxRadius = Math.max(damageRadii.light, damageRadii.moderate, damageRadii.severe);
+    const allRadii = [damageRadii.light, damageRadii.moderate, damageRadii.severe];
+    if (additionalEffects?.airblastRadius) allRadii.push(additionalEffects.airblastRadius);
+    if (additionalEffects?.tsunamiRadius) allRadii.push(additionalEffects.tsunamiRadius);
+    if (additionalEffects?.seismicRadius) allRadii.push(additionalEffects.seismicRadius);
+    const maxRadius = Math.max(...allRadii);
     if (maxRadius > 0) {
       const bounds = L.latLngBounds(
         [location.lat - maxRadius/111, location.lng - maxRadius/111], // Rough conversion

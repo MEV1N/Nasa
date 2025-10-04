@@ -74,13 +74,13 @@ const getMockAsteroids = (): AsteroidResponse => {
   const mockAsteroids = [
     {
       id: "2465633",
-      name: "(2009 JF1)",
+      name: "(2009 JF1) - Small",
       nasa_jpl_url: "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=2465633",
       absolute_magnitude_h: 23.2,
       estimated_diameter: {
         kilometers: {
-          estimated_diameter_min: 0.0109,
-          estimated_diameter_max: 0.0244
+          estimated_diameter_min: 0.010,
+          estimated_diameter_max: 0.020
         }
       },
       is_potentially_hazardous_asteroid: false,
@@ -96,13 +96,13 @@ const getMockAsteroids = (): AsteroidResponse => {
     },
     {
       id: "3542519",
-      name: "(2010 PK9)",
+      name: "(2010 PK9) - Medium",
       nasa_jpl_url: "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=3542519",
       absolute_magnitude_h: 21.0,
       estimated_diameter: {
         kilometers: {
-          estimated_diameter_min: 0.11,
-          estimated_diameter_max: 0.25
+          estimated_diameter_min: 0.15,
+          estimated_diameter_max: 0.30
         }
       },
       is_potentially_hazardous_asteroid: true,
@@ -118,13 +118,13 @@ const getMockAsteroids = (): AsteroidResponse => {
     },
     {
       id: "54016154",
-      name: "(2020 SO)",
+      name: "(2020 SO) - Tiny",
       nasa_jpl_url: "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=54016154",
       absolute_magnitude_h: 28.6,
       estimated_diameter: {
         kilometers: {
           estimated_diameter_min: 0.005,
-          estimated_diameter_max: 0.012
+          estimated_diameter_max: 0.008
         }
       },
       is_potentially_hazardous_asteroid: false,
@@ -137,6 +137,50 @@ const getMockAsteroids = (): AsteroidResponse => {
           kilometers: "50394.4"
         }
       }]
+    },
+    {
+      id: "fictional_large",
+      name: "Apophis (2029) - Large",
+      nasa_jpl_url: "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=fictional",
+      absolute_magnitude_h: 19.7,
+      estimated_diameter: {
+        kilometers: {
+          estimated_diameter_min: 0.8,
+          estimated_diameter_max: 1.2
+        }
+      },
+      is_potentially_hazardous_asteroid: true,
+      close_approach_data: [{
+        close_approach_date: "2029-04-13",
+        relative_velocity: {
+          kilometers_per_hour: "28000.0"
+        },
+        miss_distance: {
+          kilometers: "31000.0"
+        }
+      }]
+    },
+    {
+      id: "fictional_massive",
+      name: "Chicxulub-type - Massive",
+      nasa_jpl_url: "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=fictional2", 
+      absolute_magnitude_h: 15.0,
+      estimated_diameter: {
+        kilometers: {
+          estimated_diameter_min: 8.0,
+          estimated_diameter_max: 12.0
+        }
+      },
+      is_potentially_hazardous_asteroid: true,
+      close_approach_data: [{
+        close_approach_date: "2035-01-01",
+        relative_velocity: {
+          kilometers_per_hour: "72000.0"
+        },
+        miss_distance: {
+          kilometers: "0.0"
+        }
+      }]
     }
   ];
 
@@ -144,7 +188,7 @@ const getMockAsteroids = (): AsteroidResponse => {
     near_earth_objects: mockAsteroids,
     page: {
       size: 20,
-      total_elements: 3,
+      total_elements: 5,
       total_pages: 1,
       number: 0
     },

@@ -43,6 +43,9 @@ export default function RootLayout({
                 <Link href="/database" className="text-white hover:text-gray-300 transition-colors">
                   Database
                 </Link>
+                <Link href="/threats" className="text-white hover:text-gray-300 transition-colors">
+                  Threats
+                </Link>
                 <Link href="/globe" className="text-white hover:text-gray-300 transition-colors">
                   Globe
                 </Link>
