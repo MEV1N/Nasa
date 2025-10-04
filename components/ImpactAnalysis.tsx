@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -51,8 +51,13 @@ export default function ImpactAnalysis({
   impactData 
 }: ImpactAnalysisProps) {
   const [analysis, setAnalysis] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // Auto-load analysis when component mounts
+  useEffect(() => {
+    handleAnalyze();
+  }, []);
 
   const handleAnalyze = async () => {
     setLoading(true);
@@ -104,9 +109,6 @@ export default function ImpactAnalysis({
           <CardTitle className="flex items-center gap-3 text-white">
             <Brain className="w-6 h-6 text-purple-400" />
             AI Impact Analysis
-            <Badge variant="outline" className="text-purple-300 border-purple-400">
-              GPT-4 Powered
-            </Badge>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -204,24 +206,35 @@ export default function ImpactAnalysis({
             </div>
           )}
 
-          {/* Analysis Button */}
-          <Button
-            onClick={handleAnalyze}
-            className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Analyzing Impact with AI...
-              </>
-            ) : (
-              <>
-                <Brain className="w-4 h-4 mr-2" />
-                Generate Comprehensive AI Analysis
-              </>
-            )}
-          </Button>
+          {/* Analysis Status */}
+          {loading && !analysis && (
+            <div className="flex items-center justify-center py-8">
+              <Loader2 className="w-6 h-6 mr-3 animate-spin text-purple-400" />
+              <span className="text-slate-300">Generating AI analysis...</span>
+            </div>
+          )}
+
+          {/* Regenerate Button (only show after initial load) */}
+          {(analysis || error) && (
+            <Button
+              onClick={handleAnalyze}
+              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+              disabled={loading}
+              variant="outline"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Regenerating Analysis...
+                </>
+              ) : (
+                <>
+                  <Brain className="w-4 h-4 mr-2" />
+                  Regenerate Analysis
+                </>
+              )}
+            </Button>
+          )}
 
           {/* Error Display */}
           {error && (

@@ -70,8 +70,8 @@ Provide ONLY the JSON object, no other text.`;
 
     // Generate response using Gemini
     console.log('Initializing Gemini model...');
-    // Using Gemini 1.5 Flash model
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    // Using Gemini Pro model
+    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
     
     let impactData;
     try {

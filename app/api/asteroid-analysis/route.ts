@@ -51,13 +51,52 @@ Please provide a comprehensive scientific analysis covering:
 Provide a detailed, scientific analysis of this impact scenario.`;
 
     // Generate response using Gemini
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const analysis = response.text();
+    console.log('Initializing Gemini model...');
+    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    
+    let analysis;
+    try {
+      console.log('Sending prompt to Gemini...');
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      analysis = response.text();
+      console.log('Received response from Gemini');
+    } catch (geminiError) {
+      console.log('Gemini API error:', geminiError);
+      // Provide a fallback analysis
+      analysis = `## Asteroid Impact Analysis
+
+**Asteroid**: ${asteroid.name}
+**Diameter**: ${asteroid.diameter} meters
+**Velocity**: ${asteroid.velocity} km/s
+**Location**: ${location.name} (${location.lat}°, ${location.lng}°)
+
+### Impact Assessment
+
+**Energy Release**: ${impactData.energyMt} megatons TNT equivalent
+**Crater Diameter**: ${impactData.craterDiameter} meters
+
+### Damage Zones
+- **Severe Damage**: ${impactData.radii.severe} km radius
+- **Moderate Damage**: ${impactData.radii.moderate} km radius
+- **Light Damage**: ${impactData.radii.light} km radius
+
+### Population Impact
+${impactData.summary ? `
+- **Affected Population**: ${impactData.summary.totalPopulation.toLocaleString()}
+- **Estimated Fatalities**: ${impactData.summary.totalFatalities.toLocaleString()}
+- **Estimated Injuries**: ${impactData.summary.totalInjuries.toLocaleString()}
+- **Affected Area**: ${impactData.summary.affectedArea.toFixed(0)} km²
+` : ''}
+### Scientific Assessment
+
+This impact would create significant regional devastation. The energy release is comparable to a major volcanic eruption or large nuclear weapon. The crater formation would permanently alter the local geography, while atmospheric effects could influence regional climate patterns.
+
+**Note**: Analysis generated using fallback calculations due to AI service limitations.`;
+    }
 
     if (!analysis) {
-      throw new Error('No analysis received from Gemini');
+      throw new Error('No analysis received from Gemini or fallback');
     }
 
     return NextResponse.json({ 

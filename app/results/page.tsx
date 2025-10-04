@@ -308,9 +308,7 @@ function ResultsContent() {
               <CardTitle className="flex items-center gap-3 text-white text-xl">
                 <Brain className="w-6 h-6 text-purple-400" />
                 AI-Enhanced Impact Analysis
-                <Badge variant="outline" className="text-purple-300 border-purple-400 text-xs">
-                  Powered by Gemini
-                </Badge>
+
               </CardTitle>
             </CardHeader>
             <CardContent>
