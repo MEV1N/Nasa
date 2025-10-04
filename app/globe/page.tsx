@@ -20,11 +20,11 @@ export default function GlobePage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="border-b border-border bg-card/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-6">
-          <h1 className="text-4xl font-bold text-white mb-2">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-8">
+          <h1 className="text-4xl font-bold text-white mb-4">
             Interactive Earth Globe
           </h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-lg leading-relaxed">
             Click anywhere on Earth to explore locations and get coordinates
           </p>
         </div>

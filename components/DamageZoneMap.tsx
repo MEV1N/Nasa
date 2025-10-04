@@ -124,6 +124,49 @@ export function DamageZoneMap({ location, damageRadii, additionalEffects, classN
         fillOpacity: 0.05,
         dashArray: '15, 10'
       }).addTo(map).bindPopup('Tsunami Affected Zone<br/>Coastal areas at risk of flooding');
+
+      // Add tsunami warning markers at key coastal points
+      const tsunamiWarningPoints = [
+        { name: 'Coastal Warning North', offset: [0.5, 0] },
+        { name: 'Coastal Warning South', offset: [-0.5, 0] },
+        { name: 'Coastal Warning East', offset: [0, 0.5] },
+        { name: 'Coastal Warning West', offset: [0, -0.5] }
+      ];
+
+      tsunamiWarningPoints.forEach(point => {
+        const warningLat = location.lat + point.offset[0];
+        const warningLng = location.lng + point.offset[1];
+        
+        const tsunamiIcon = L.divIcon({
+          className: 'tsunami-warning-marker',
+          html: `<div style="
+            width: 18px; 
+            height: 18px; 
+            background: #0ea5e9; 
+            border: 2px solid white; 
+            border-radius: 50%; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+          ">🌊</div>`,
+          iconSize: [18, 18],
+          iconAnchor: [9, 9],
+        });
+        
+        L.marker([warningLat, warningLng], { icon: tsunamiIcon })
+          .addTo(map)
+          .bindPopup(`
+            <div>
+              <h4 style="margin: 0 0 6px 0; color: #333;">🚨 Tsunami Warning</h4>
+              <p style="margin: 0; font-size: 12px; color: #666;">
+                Coastal areas in this direction at high risk of tsunami flooding
+              </p>
+            </div>
+          `);
+      });
     }
 
     if (additionalEffects?.seismicRadius && additionalEffects.seismicRadius > 0) {

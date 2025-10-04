@@ -27,29 +27,26 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} ${orbitron.variable} bg-black text-white min-h-screen`}>
-        <nav className="border-b border-gray-800 bg-black sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
+        <nav className="border-b border-gray-800/50 bg-black/95 backdrop-blur-sm sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div className="flex justify-between items-center h-20">
               <Link href="/" className="font-bold text-xl font-orbitron text-white hover:text-gray-300 transition-colors">
                 NASA ASTEROID SIMULATOR
               </Link>
-              <div className="flex space-x-8">
-                <Link href="/" className="text-white hover:text-gray-300 transition-colors">
+              <div className="flex space-x-12">
+                <Link href="/" className="text-white/90 hover:text-white transition-colors text-sm font-medium">
                   Home
                 </Link>
-                <Link href="/simulation" className="text-white hover:text-gray-300 transition-colors">
+                <Link href="/simulation" className="text-white/90 hover:text-white transition-colors text-sm font-medium">
                   Simulation
                 </Link>
-                <Link href="/database" className="text-white hover:text-gray-300 transition-colors">
+                <Link href="/database" className="text-white/90 hover:text-white transition-colors text-sm font-medium">
                   Database
                 </Link>
-                <Link href="/threats" className="text-white hover:text-gray-300 transition-colors">
-                  Threats
-                </Link>
-                <Link href="/globe" className="text-white hover:text-gray-300 transition-colors">
+                <Link href="/globe" className="text-white/90 hover:text-white transition-colors text-sm font-medium">
                   Globe
                 </Link>
-                <Link href="/info" className="text-white hover:text-gray-300 transition-colors">
+                <Link href="/info" className="text-white/90 hover:text-white transition-colors text-sm font-medium">
                   Info
                 </Link>
               </div>

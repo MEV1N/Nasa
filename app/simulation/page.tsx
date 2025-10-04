@@ -66,17 +66,17 @@ export default function SimulationPage() {
 
   return (
     <div className="min-h-screen bg-black">
-      <div className="container mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-8"
+          className="mb-16"
         >
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-12">
             <Link href="/">
-              <Button variant="outline" className="bg-card border-border text-white hover:bg-white/5">
+              <Button variant="outline" className="bg-card border-border text-white hover:bg-white/5 px-6 py-3">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Home
               </Button>
@@ -86,54 +86,60 @@ export default function SimulationPage() {
               <Button 
                 onClick={resetSimulation}
                 variant="outline" 
-                className="bg-card border-border text-white hover:bg-white/5"
+                className="bg-card border-border text-white hover:bg-white/5 px-6 py-3"
               >
                 New Simulation
               </Button>
             )}
           </div>
 
-          <div className="text-center space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold text-gradient">
+          <div className="text-center space-y-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-gradient">
               Asteroid Impact Simulator
             </h1>
-            <p className="text-lg text-neutral-400 max-w-3xl mx-auto">
+            <p className="text-lg text-neutral-400 max-w-4xl mx-auto leading-relaxed">
               Select an asteroid from NASA&apos;s database, configure impact parameters, and visualize the devastating consequences
             </p>
           </div>
 
           {/* Progress Steps */}
-          <div className="flex justify-center mt-8">
-            <div className="flex items-center space-x-2">
-              <div className={`flex items-center space-x-2 px-3 py-2 rounded-full ${
-                simulationStep === 'select' ? 'bg-white text-black' : 
-                (simulationStep === 'location' || simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-white/80 text-black' : 'bg-neutral-700 text-white'
+          <div className="flex justify-center mt-12">
+            <div className="flex items-center space-x-6">
+              <div className={`flex items-center space-x-3 px-6 py-3 rounded-full transition-all ${
+                simulationStep === 'select' ? 'bg-white text-black shadow-lg' : 
+                (simulationStep === 'location' || simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-white/80 text-black' : 'bg-neutral-700/50 text-white/70'
               }`}>
                 <Target className="w-4 h-4" />
-                <span className="text-sm font-medium">Select Asteroid</span>
+                <span className="font-medium">Select Asteroid</span>
               </div>
               
-              <div className={`flex items-center space-x-2 px-3 py-2 rounded-full ${
-                simulationStep === 'location' ? 'bg-white text-black' : 
-                (simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-white/80 text-black' : 'bg-neutral-700 text-white'
+              <div className="w-8 h-0.5 bg-neutral-600"></div>
+              
+              <div className={`flex items-center space-x-3 px-6 py-3 rounded-full transition-all ${
+                simulationStep === 'location' ? 'bg-white text-black shadow-lg' : 
+                (simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-white/80 text-black' : 'bg-neutral-700/50 text-white/70'
               }`}>
                 <Globe className="w-4 h-4" />
-                <span className="text-sm font-medium">Choose Location</span>
+                <span className="font-medium">Choose Location</span>
               </div>
               
-              <div className={`flex items-center space-x-2 px-3 py-2 rounded-full ${
-                simulationStep === 'simulate' ? 'bg-white text-black' : 
-                simulationStep === 'results' ? 'bg-white/80 text-black' : 'bg-neutral-700 text-white'
+              <div className="w-8 h-0.5 bg-neutral-600"></div>
+              
+              <div className={`flex items-center space-x-3 px-6 py-3 rounded-full transition-all ${
+                simulationStep === 'simulate' ? 'bg-white text-black shadow-lg' : 
+                simulationStep === 'results' ? 'bg-white/80 text-black' : 'bg-neutral-700/50 text-white/70'
               }`}>
                 <Rocket className="w-4 h-4" />
-                <span className="text-sm font-medium">Configure Impact</span>
+                <span className="font-medium">Configure Impact</span>
               </div>
               
-              <div className={`flex items-center space-x-2 px-3 py-2 rounded-full ${
-                simulationStep === 'results' ? 'bg-white text-black' : 'bg-neutral-700 text-white'
+              <div className="w-8 h-0.5 bg-neutral-600"></div>
+              
+              <div className={`flex items-center space-x-3 px-6 py-3 rounded-full transition-all ${
+                simulationStep === 'results' ? 'bg-white text-black shadow-lg' : 'bg-neutral-700/50 text-white/70'
               }`}>
                 <Mountain className="w-4 h-4" />
-                <span className="text-sm font-medium">View Results</span>
+                <span className="font-medium">View Results</span>
               </div>
             </div>
           </div>

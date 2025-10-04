@@ -24,6 +24,7 @@ import { EarthquakeEffectsDisplay } from '@/components/EarthquakeEffectsDisplay'
 import { findAffectedCities, type AffectedCity } from '@/utils/citiesDatabase';
 import { AffectedCitiesDisplay } from '@/components/AffectedCitiesDisplay';
 import ImpactEffects from '@/components/ImpactEffects';
+import { SecondaryEffectsDisplay } from '@/components/SecondaryEffectsDisplay';
 import dynamic from 'next/dynamic';
 
 // Dynamic import for map component (client-side only)
@@ -192,7 +193,7 @@ function ResultsContent() {
 
   return (
     <div className="min-h-screen bg-black">
-      <div className="container mx-auto px-4 py-8">
+                <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -306,7 +307,7 @@ function ResultsContent() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="flex items-start gap-3 p-3 bg-red-900/20 rounded-lg border border-red-800/50">
                   <div className="w-4 h-4 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
                   <div>
@@ -337,7 +338,7 @@ function ResultsContent() {
         </motion.div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-12">
           {/* Damage Zone Map */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -391,11 +392,28 @@ function ResultsContent() {
           />
         </motion.div>
 
-        {/* Affected Cities Analysis */}
+        {/* Secondary Effects Analysis */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.2 }}
+          className="mt-8"
+        >
+          <SecondaryEffectsDisplay 
+            impactLocation={simulationData.location}
+            asteroidData={{
+              diameter: simulationData.asteroid.diameter,
+              velocity: simulationData.parameters.velocity,
+              energyMt: results.energyMt
+            }}
+          />
+        </motion.div>
+
+        {/* Affected Cities Analysis */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.4 }}
           className="mt-8"
         >
           <AffectedCitiesDisplay affectedCities={affectedCities} />

@@ -103,7 +103,7 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
             </div>
           </CardHeader>
 
-          <CardContent className="relative z-10 space-y-4">
+          <CardContent className="relative z-10 space-y-6">
             {/* Diameter */}
             <div className="flex items-center gap-2 text-neutral-300">
               <Ruler className="w-4 h-4 text-white" />

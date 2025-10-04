@@ -77,7 +77,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
             </div>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">
                   {formatNumber(results.physicsResults.energyMt)} MT
@@ -278,7 +278,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
               <div>
                 <div className="text-slate-400">Asteroid Diameter</div>
                 <div className="text-white font-bold">{results.asteroidData.diameter} m</div>

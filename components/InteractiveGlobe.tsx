@@ -101,21 +101,46 @@ const InteractiveGlobe: React.FC<InteractiveGlobeProps> = ({ className, onLocati
   };
 
   const getLocationName = (lat: number, lng: number): string => {
-    // Simplified location naming - in a real app you'd use reverse geocoding API
-    const regions = [
-      { name: 'Pacific Ocean', bounds: { latMin: -60, latMax: 60, lngMin: -180, lngMax: -80 } },
-      { name: 'Atlantic Ocean', bounds: { latMin: -60, latMax: 60, lngMin: -80, lngMax: 20 } },
-      { name: 'Indian Ocean', bounds: { latMin: -60, latMax: 30, lngMin: 20, lngMax: 120 } },
+    // Check land regions first (prioritize land over ocean)
+    const landRegions = [
       { name: 'North America', bounds: { latMin: 15, latMax: 75, lngMin: -170, lngMax: -50 } },
       { name: 'South America', bounds: { latMin: -60, latMax: 15, lngMin: -90, lngMax: -30 } },
       { name: 'Europe', bounds: { latMin: 35, latMax: 75, lngMin: -10, lngMax: 40 } },
       { name: 'Africa', bounds: { latMin: -35, latMax: 40, lngMin: -20, lngMax: 55 } },
       { name: 'Asia', bounds: { latMin: 5, latMax: 75, lngMin: 40, lngMax: 180 } },
       { name: 'Australia', bounds: { latMin: -45, latMax: -10, lngMin: 110, lngMax: 160 } },
-      { name: 'Antarctica', bounds: { latMin: -90, latMax: -60, lngMin: -180, lngMax: 180 } }
+      { name: 'Antarctica', bounds: { latMin: -90, latMax: -60, lngMin: -180, lngMax: 180 } },
+      // Add more specific land regions
+      { name: 'Greenland', bounds: { latMin: 59, latMax: 84, lngMin: -73, lngMax: -12 } },
+      { name: 'Madagascar', bounds: { latMin: -26, latMax: -12, lngMin: 43, lngMax: 51 } },
+      { name: 'Japan', bounds: { latMin: 24, latMax: 46, lngMin: 123, lngMax: 146 } },
+      { name: 'Philippines', bounds: { latMin: 4, latMax: 21, lngMin: 116, lngMax: 127 } },
+      { name: 'Indonesia', bounds: { latMin: -11, latMax: 6, lngMin: 95, lngMax: 141 } },
+      { name: 'United Kingdom', bounds: { latMin: 49, latMax: 61, lngMin: -8, lngMax: 2 } },
+      { name: 'New Zealand', bounds: { latMin: -47, latMax: -34, lngMin: 166, lngMax: 179 } },
     ];
 
-    for (const region of regions) {
+    // Check land regions first
+    for (const region of landRegions) {
+      const { bounds } = region;
+      if (lat >= bounds.latMin && lat <= bounds.latMax && 
+          lng >= bounds.lngMin && lng <= bounds.lngMax) {
+        return region.name;
+      }
+    }
+
+    // Then check ocean regions (only if not on land)
+    const oceanRegions = [
+      // More precise ocean bounds that don't overlap major land masses
+      { name: 'Pacific Ocean', bounds: { latMin: -60, latMax: 60, lngMin: -180, lngMax: -70 } }, // Western Pacific
+      { name: 'Pacific Ocean', bounds: { latMin: -60, latMax: 60, lngMin: 120, lngMax: 180 } }, // Eastern Pacific
+      { name: 'Atlantic Ocean', bounds: { latMin: -60, latMax: 60, lngMin: -70, lngMax: -10 } }, // Atlantic
+      { name: 'Indian Ocean', bounds: { latMin: -60, latMax: 30, lngMin: 20, lngMax: 120 } }, // Indian Ocean
+      { name: 'Arctic Ocean', bounds: { latMin: 60, latMax: 90, lngMin: -180, lngMax: 180 } },
+      { name: 'Southern Ocean', bounds: { latMin: -90, latMax: -60, lngMin: -180, lngMax: 180 } }
+    ];
+
+    for (const region of oceanRegions) {
       const { bounds } = region;
       if (lat >= bounds.latMin && lat <= bounds.latMax && 
           lng >= bounds.lngMin && lng <= bounds.lngMax) {
