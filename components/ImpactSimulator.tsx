@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Asteroid, calculateImpactEnergy } from '@/lib/nasa-api';
-import { Calculator, Target, Mountain, AlertTriangle, MapPin } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 
@@ -109,10 +109,10 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border-slate-700">
+        <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
-              <Calculator className="w-5 h-5 text-blue-400" />
+              
               Impact Simulation
               {asteroid && (
                 <Badge variant="outline" className="ml-2 text-xs">
@@ -121,7 +121,6 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
               )}
               {selectedLocation && (
                 <Badge variant="secondary" className="ml-2 text-xs">
-                  <MapPin className="w-3 h-3 mr-1" />
                   {selectedLocation.name}
                 </Badge>
               )}
@@ -130,15 +129,15 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
           <CardContent className="space-y-6">
             {/* Asteroid Info */}
             {asteroid && (
-              <div className="bg-slate-800/50 p-4 rounded-lg space-y-2">
-                <h4 className="text-sm font-semibold text-slate-300">Asteroid Properties</h4>
+              <div className="bg-zinc-900 p-4 rounded-lg space-y-2">
+                <h4 className="text-sm font-semibold text-zinc-300">Asteroid Properties</h4>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-slate-400">Diameter:</span>
+                    <span className="text-zinc-400">Diameter:</span>
                     <span className="text-white ml-2">{getDiameter().toFixed(2)} km</span>
                   </div>
                   <div>
-                    <span className="text-slate-400">Default Velocity:</span>
+                    <span className="text-zinc-400">Default Velocity:</span>
                     <span className="text-white ml-2">{impactVelocity} km/s</span>
                   </div>
                 </div>
@@ -151,15 +150,15 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
                 <h4 className="text-sm font-semibold text-red-300">Impact Target</h4>
                 <div className="grid grid-cols-3 gap-4 text-sm">
                   <div>
-                    <span className="text-slate-400">Location:</span>
+                    <span className="text-zinc-400">Location:</span>
                     <span className="text-white ml-2">{selectedLocation.name}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400">Latitude:</span>
+                    <span className="text-zinc-400">Latitude:</span>
                     <span className="text-white ml-2">{selectedLocation.lat.toFixed(2)}°</span>
                   </div>
                   <div>
-                    <span className="text-slate-400">Longitude:</span>
+                    <span className="text-zinc-400">Longitude:</span>
                     <span className="text-white ml-2">{selectedLocation.lng.toFixed(2)}°</span>
                   </div>
                 </div>
@@ -169,7 +168,7 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
             {/* Simulation Parameters */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="angle" className="text-slate-300">Impact Angle (degrees)</Label>
+                <Label htmlFor="angle" className="text-zinc-300">Impact Angle (degrees)</Label>
                 <Input
                   id="angle"
                   type="number"
@@ -177,12 +176,12 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
                   max="90"
                   value={impactAngle}
                   onChange={(e) => setImpactAngle(Number(e.target.value))}
-                  className="bg-slate-800 border-slate-600 text-white"
+                  className="bg-zinc-800 border-zinc-600 text-white"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="velocity" className="text-slate-300">Impact Velocity (km/s)</Label>
+                <Label htmlFor="velocity" className="text-zinc-300">Impact Velocity (km/s)</Label>
                 <Input
                   id="velocity"
                   type="number"
@@ -190,7 +189,7 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
                   max="100"
                   value={impactVelocity}
                   onChange={(e) => setImpactVelocity(Number(e.target.value))}
-                  className="bg-slate-800 border-slate-600 text-white"
+                  className="bg-zinc-800 border-zinc-600 text-white"
                 />
               </div>
               
@@ -198,9 +197,8 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
 
             <Button 
               onClick={runSimulation} 
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              className="w-full bg-white text-black border-2 border-zinc-300 hover:bg-zinc-50 hover:border-zinc-400"
             >
-              <Target className="w-4 h-4 mr-2" />
               Run Impact Simulation
             </Button>
 
@@ -210,14 +208,14 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-lg border border-blue-800/50"
+                className="bg-zinc-950 p-6 rounded-lg border border-zinc-800"
               >
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
                   <h4 className="text-lg font-bold text-white mb-2">
                     Calculating Impact Effects...
                   </h4>
-                  <p className="text-slate-300">
+                  <p className="text-zinc-300">
                     Analyzing asteroid trajectory, impact dynamics, and secondary effects
                   </p>
                 </div>

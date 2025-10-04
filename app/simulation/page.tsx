@@ -23,7 +23,7 @@ const InteractiveGlobe = dynamic(() => import("@/components/InteractiveGlobe"), 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Rocket, Target, Mountain, AlertTriangle, Globe } from "lucide-react";
+import { AlertTriangle, Target, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 type SimulationStep = 'select' | 'location' | 'simulate' | 'results';
@@ -77,7 +77,7 @@ export default function SimulationPage() {
           <div className="flex items-center justify-between mb-12">
             <Link href="/">
               <Button variant="outline" className="bg-card border-border text-white hover:bg-white/5 px-6 py-3">
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                
                 Back to Home
               </Button>
             </Link>
@@ -119,7 +119,7 @@ export default function SimulationPage() {
                 simulationStep === 'location' ? 'bg-white text-black shadow-lg' : 
                 (simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-white/80 text-black' : 'bg-neutral-700/50 text-white/70'
               }`}>
-                <Globe className="w-4 h-4" />
+              
                 <span className="font-medium">Choose Location</span>
               </div>
               
@@ -129,7 +129,7 @@ export default function SimulationPage() {
                 simulationStep === 'simulate' ? 'bg-white text-black shadow-lg' : 
                 simulationStep === 'results' ? 'bg-white/80 text-black' : 'bg-neutral-700/50 text-white/70'
               }`}>
-                <Rocket className="w-4 h-4" />
+            
                 <span className="font-medium">Configure Impact</span>
               </div>
               
@@ -138,7 +138,7 @@ export default function SimulationPage() {
               <div className={`flex items-center space-x-3 px-6 py-3 rounded-full transition-all ${
                 simulationStep === 'results' ? 'bg-white text-black shadow-lg' : 'bg-neutral-700/50 text-white/70'
               }`}>
-                <Mountain className="w-4 h-4" />
+              
                 <span className="font-medium">View Results</span>
               </div>
             </div>

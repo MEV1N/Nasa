@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Building2, Users, AlertTriangle, MapPin, Skull, Heart } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { AffectedCity } from '@/utils/citiesDatabase';
 
 interface AffectedCitiesDisplayProps {
@@ -17,13 +17,13 @@ export function AffectedCitiesDisplay({ affectedCities, className }: AffectedCit
       <Card className={`bg-card border-border ${className}`}>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
-            <Building2 className="w-5 h-5 text-green-400" />
+        
             Affected Cities
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-center py-8">
-            <Heart className="w-12 h-12 text-green-400 mx-auto mb-4" />
+            
             <p className="text-slate-300 text-lg">No major cities within damage zones</p>
             <p className="text-slate-400 text-sm mt-2">
               The impact location is in a remote area with minimal urban population exposure
@@ -52,10 +52,10 @@ export function AffectedCitiesDisplay({ affectedCities, className }: AffectedCit
 
   const getDamageIcon = (level: string) => {
     switch (level) {
-      case 'severe': return <Skull className="w-4 h-4" />;
+      
       case 'moderate': return <AlertTriangle className="w-4 h-4" />;
       case 'light': return <AlertTriangle className="w-4 h-4" />;
-      default: return <MapPin className="w-4 h-4" />;
+      
     }
   };
 
@@ -72,7 +72,7 @@ export function AffectedCitiesDisplay({ affectedCities, className }: AffectedCit
     <Card className={`bg-card border-border ${className}`}>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-white">
-          <Building2 className="w-5 h-5 text-red-400" />
+          
           Affected Cities Analysis
           <Badge variant="outline" className="ml-2">
             {affectedCities.length} Cities
@@ -115,7 +115,7 @@ export function AffectedCitiesDisplay({ affectedCities, className }: AffectedCit
           {severeCities.length > 0 && (
             <div className="bg-red-900/20 border border-red-800 rounded-lg p-3">
               <h4 className="text-red-400 font-semibold text-sm mb-2 flex items-center gap-2">
-                <Skull className="w-4 h-4" />
+            
                 Severe Destruction ({severeCities.length})
               </h4>
               <div className="text-xs text-slate-300">

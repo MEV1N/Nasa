@@ -6,7 +6,7 @@ import { AsteroidCard } from './AsteroidCard';
 import { Asteroid, fetchAsteroids, AsteroidResponse } from '@/lib/nasa-api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Loader2, Search, AlertCircle, Rocket } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface AsteroidListProps {
@@ -127,9 +127,9 @@ export function AsteroidList({ onAsteroidSelect }: AsteroidListProps) {
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
         >
-          <Rocket className="w-12 h-12 text-blue-500" />
+          
         </motion.div>
-        <p className="text-lg text-neutral-400">Loading asteroids from NASA...</p>
+        <p className="text-lg text-neutral-400">Loading asteroid data......</p>
       </div>
     );
   }
@@ -164,7 +164,7 @@ export function AsteroidList({ onAsteroidSelect }: AsteroidListProps) {
         transition={{ duration: 0.6, delay: 0.4 }}
       >
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 w-4 h-4" />
+
           <Input
             placeholder="Search asteroids by name or ID..."
             value={searchTerm}
@@ -237,7 +237,7 @@ export function AsteroidList({ onAsteroidSelect }: AsteroidListProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <Loader2 className="w-6 h-6 animate-spin text-blue-500 mr-2" />
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mr-2"></div>
             <span className="text-slate-400">Loading more asteroids...</span>
           </motion.div>
         )}
@@ -264,7 +264,7 @@ export function AsteroidList({ onAsteroidSelect }: AsteroidListProps) {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3 }}
         >
-          <Search className="w-12 h-12 mx-auto mb-4 text-slate-500" />
+
           <p className="text-lg">No asteroids found matching &quot;{searchTerm}&quot;</p>
           <p className="text-sm mt-2">Try a different search term or clear the search to see all asteroids.</p>
         </motion.div>

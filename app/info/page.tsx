@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TriangleAlert as AlertTriangle, Shield, Database, Globe, Zap, BookOpen } from "lucide-react";
+import { TriangleAlert as AlertTriangle, Database, Globe, BookOpen, Shield, Zap } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function InfoPage() {

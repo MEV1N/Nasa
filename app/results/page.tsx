@@ -33,10 +33,10 @@ import dynamic from 'next/dynamic';
 const DamageZoneMap = dynamic(() => import('@/components/DamageZoneMap').then(mod => ({ default: mod.DamageZoneMap })), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[400px] bg-slate-800/50 rounded-lg flex items-center justify-center">
+    <div className="w-full h-[400px] bg-zinc-900 rounded-lg flex items-center justify-center">
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-        <p className="text-slate-300">Loading damage zone visualization...</p>
+        <p className="text-zinc-300">Loading damage zone visualization...</p>
       </div>
     </div>
   ),
@@ -313,7 +313,7 @@ function ResultsContent() {
             <Button 
               onClick={handleNewSimulation}
               variant="outline" 
-              className="bg-card border-border text-white hover:bg-white/5"
+              className="bg-zinc-950 border-zinc-700 text-white hover:bg-zinc-900"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               New Simulation
@@ -323,7 +323,7 @@ function ResultsContent() {
               <Button 
                 onClick={handleShareResults}
                 variant="outline"
-                className="bg-card border-border text-white hover:bg-white/5"
+                className="bg-zinc-950 border-zinc-700 text-white hover:bg-zinc-900"
               >
                 <Share2 className="w-4 h-4 mr-2" />
                 Share Results
@@ -356,10 +356,10 @@ function ResultsContent() {
           transition={{ duration: 0.6, delay: 0.35 }}
           className="mb-8"
         >
-          <Card className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 border-purple-800/50">
+          <Card className="bg-zinc-950 border-zinc-800">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-white text-2xl">
-                <Brain className="w-6 h-6 text-purple-400" />
+                <Brain className="w-6 h-6 text-white" />
                 Impact Summary
               </CardTitle>
             </CardHeader>
@@ -368,63 +368,63 @@ function ResultsContent() {
                 const storedData = localStorage.getItem('impactSimulationData');
                 const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
                 
-                if (!geminiData) return <p className="text-slate-400">No enhanced data available</p>;
+                if (!geminiData) return <p className="text-zinc-400">No enhanced data available</p>;
                 
                 return (
                   <div className="space-y-6">
                     {/* Core Impact Metrics - Priority Data */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-yellow-800/30">
-                        <div className="text-2xl font-bold text-yellow-400">
+                      <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+                        <div className="text-2xl font-bold text-white">
                           {getAveragedEnergy(geminiData.impactEnergy, simulationData).toFixed(1)} MT
                         </div>
-                        <div className="text-sm text-neutral-400">Energy Produced</div>
+                        <div className="text-sm text-zinc-400">Energy Produced</div>
                         
                       </div>
-                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-red-800/30">
-                        <div className="text-2xl font-bold text-red-400">
+                      <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+                        <div className="text-2xl font-bold text-white">
                           {(() => {
                             const averagedEnergy = getAveragedEnergy(geminiData.impactEnergy, simulationData);
                             const averagedRadii = getAveragedDamageRadii(geminiData.damageRadii, averagedEnergy);
                             return averagedRadii.severe.toFixed(1);
                           })()} km
                         </div>
-                        <div className="text-sm text-neutral-400">Destruction Radius</div>
+                        <div className="text-sm text-zinc-400">Destruction Radius</div>
                         
                       </div>
-                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-cyan-800/30">
-                        <div className="text-2xl font-bold text-cyan-400">
+                      <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+                        <div className="text-2xl font-bold text-white">
                           {(() => {
                             const averagedEnergy = getAveragedEnergy(geminiData.impactEnergy, simulationData);
                             return getAveragedCraterDiameter(geminiData.craterDiameter, averagedEnergy).toFixed(2);
                           })()} km
                         </div>
-                        <div className="text-sm text-neutral-400">Crater Diameter</div>
+                        <div className="text-sm text-zinc-400">Crater Diameter</div>
                         
                       </div>
-                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-orange-800/30">
-                        <div className="text-2xl font-bold text-orange-400">
+                      <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+                        <div className="text-2xl font-bold text-white">
                           {affectedCities.length}
                         </div>
-                        <div className="text-sm text-neutral-400">Cities Affected</div>
+                        <div className="text-sm text-zinc-400">Cities Affected</div>
                         
                       </div>
                     </div>
 
                     {/* Precision Physical Data */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-purple-800/30">
-                        <div className="text-xl font-bold text-purple-400">
+                      <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+                        <div className="text-xl font-bold text-white">
                           {getAveragedSurfaceVelocity(geminiData.impactVelocityAtSurface, simulationData).toFixed(1)} km/s
                         </div>
-                        <div className="text-sm text-neutral-400">Surface Velocity</div>
+                        <div className="text-sm text-zinc-400">Surface Velocity</div>
                         
                       </div>
-                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-yellow-800/30">
-                        <div className="text-xl font-bold text-yellow-400">
+                      <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
+                        <div className="text-xl font-bold text-white">
                           {geminiData.thermalRadius?.toFixed(1) || 'N/A'} km
                         </div>
-                        <div className="text-sm text-neutral-400">Thermal Radius</div>
+                        <div className="text-sm text-zinc-400">Thermal Radius</div>
                         
                       </div>
                     </div>
@@ -445,55 +445,55 @@ function ResultsContent() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-8"
         >
-          <Card className="bg-card border-border">
+          <Card className="bg-zinc-950 border-zinc-800">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
-                <Target className="w-5 h-5 text-red-400" />
+                <Target className="w-5 h-5 text-white" />
                 Damage Zone Classifications
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="flex items-start gap-3 p-3 bg-red-900/20 rounded-lg border border-red-800/50">
-                  <div className="w-4 h-4 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
+                <div className="flex items-start gap-3 p-3 bg-zinc-900 rounded-lg border border-zinc-700">
+                  <div className="w-4 h-4 bg-white rounded-full mt-1 flex-shrink-0"></div>
                   <div>
-                    <span className="text-red-200 font-semibold text-sm">Severe Destruction</span>
-                    <p className="text-slate-300 text-xs mt-1">Radius: {(() => {
+                    <span className="text-white font-semibold text-sm">Severe Destruction</span>
+                    <p className="text-zinc-300 text-xs mt-1">Radius: {(() => {
                       const storedData = localStorage.getItem('impactSimulationData');
                       const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
                       const averagedEnergy = getAveragedEnergy(geminiData?.impactEnergy, simulationData);
                       const averagedRadii = getAveragedDamageRadii(geminiData?.damageRadii, averagedEnergy);
                       return averagedRadii.severe.toFixed(1);
                     })()} km</p>
-                    <p className="text-slate-400 text-xs mt-1">Complete devastation</p>
+                    <p className="text-zinc-400 text-xs mt-1">Complete devastation</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-3 bg-orange-900/20 rounded-lg border border-orange-800/50">
-                  <div className="w-4 h-4 bg-orange-500 rounded-full mt-1 flex-shrink-0"></div>
+                <div className="flex items-start gap-3 p-3 bg-zinc-900 rounded-lg border border-zinc-700">
+                  <div className="w-4 h-4 bg-zinc-400 rounded-full mt-1 flex-shrink-0"></div>
                   <div>
-                    <span className="text-orange-200 font-semibold text-sm">Major Damage</span>
-                    <p className="text-slate-300 text-xs mt-1">Radius: {(() => {
+                    <span className="text-white font-semibold text-sm">Major Damage</span>
+                    <p className="text-zinc-300 text-xs mt-1">Radius: {(() => {
                       const storedData = localStorage.getItem('impactSimulationData');
                       const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
                       const averagedEnergy = getAveragedEnergy(geminiData?.impactEnergy, simulationData);
                       const averagedRadii = getAveragedDamageRadii(geminiData?.damageRadii, averagedEnergy);
                       return averagedRadii.moderate.toFixed(1);
                     })()} km</p>
-                    <p className="text-slate-400 text-xs mt-1">Structural damage</p>
+                    <p className="text-zinc-400 text-xs mt-1">Structural damage</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-3 bg-yellow-900/20 rounded-lg border border-yellow-800/50">
-                  <div className="w-4 h-4 bg-yellow-500 rounded-full mt-1 flex-shrink-0"></div>
+                <div className="flex items-start gap-3 p-3 bg-zinc-900 rounded-lg border border-zinc-700">
+                  <div className="w-4 h-4 bg-zinc-600 rounded-full mt-1 flex-shrink-0"></div>
                   <div>
-                    <span className="text-yellow-200 font-semibold text-sm">Evacuation Zone</span>
-                    <p className="text-slate-300 text-xs mt-1">Radius: {(() => {
+                    <span className="text-white font-semibold text-sm">Evacuation Zone</span>
+                    <p className="text-zinc-300 text-xs mt-1">Radius: {(() => {
                       const storedData = localStorage.getItem('impactSimulationData');
                       const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
                       const averagedEnergy = getAveragedEnergy(geminiData?.impactEnergy, simulationData);
                       const averagedRadii = getAveragedDamageRadii(geminiData?.damageRadii, averagedEnergy);
                       return averagedRadii.light.toFixed(1);
                     })()} km</p>
-                    <p className="text-slate-400 text-xs mt-1">Light damage</p>
+                    <p className="text-zinc-400 text-xs mt-1">Light damage</p>
                   </div>
                 </div>
               </div>
@@ -509,10 +509,10 @@ function ResultsContent() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <Card className="bg-card border-border">
+            <Card className="bg-zinc-950 border-zinc-800">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white">
-                  <Map className="w-5 h-5 text-blue-400" />
+                  <Map className="w-5 h-5 text-white" />
                   Interactive Damage Zone Map
                 </CardTitle>
               </CardHeader>
@@ -528,7 +528,7 @@ function ResultsContent() {
                   additionalEffects={additionalEffects || undefined}
                   className="h-96"
                 />
-                <div className="mt-3 text-xs text-slate-400 text-center">
+                <div className="mt-3 text-xs text-zinc-400 text-center">
                   Click on circles and markers for detailed information
                 </div>
               </CardContent>
@@ -602,10 +602,10 @@ function ResultsContent() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mt-8"
         >
-          <Card className="bg-card border-border">
+          <Card className="bg-zinc-950 border-zinc-800">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
-                <Mountain className="w-5 h-5 text-green-400" />
+                <Mountain className="w-5 h-5 text-white" />
                 Technical Details
               </CardTitle>
             </CardHeader>
@@ -613,7 +613,7 @@ function ResultsContent() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div>
                   <h4 className="text-white font-semibold mb-2">Asteroid Properties</h4>
-                  <div className="space-y-1 text-sm text-slate-300">
+                  <div className="space-y-1 text-sm text-zinc-300">
                     <div>Name: {simulationData.asteroid.name}</div>
                     <div>Diameter: {simulationData.asteroid.diameter.toFixed(3)} km</div>
                     <div>Velocity: {simulationData.parameters.velocity} km/s</div>
@@ -622,7 +622,7 @@ function ResultsContent() {
                 </div>
                 <div>
                   <h4 className="text-white font-semibold mb-2">Impact Parameters</h4>
-                  <div className="space-y-1 text-sm text-slate-300">
+                  <div className="space-y-1 text-sm text-zinc-300">
                     <div>Angle: {simulationData.parameters.angle}°</div>
                     <div>Mass: {results.mass.toExponential(2)} kg</div>
                     <div>Energy: {results.energyJoules.toExponential(2)} J</div>
@@ -631,7 +631,7 @@ function ResultsContent() {
                 </div>
                 <div>
                   <h4 className="text-white font-semibold mb-2">Environmental Impact</h4>
-                  <div className="space-y-1 text-sm text-slate-300">
+                  <div className="space-y-1 text-sm text-zinc-300">
                     <div>Crater Depth: {(results.craterDiameter / 3000).toFixed(2)} km</div>
                     <div>Seismic Events: {results.earthquakeEffects.length}</div>
                     <div>Max Earthquake: {results.earthquakeEffects[0]?.magnitude.toFixed(1) || '0.0'} M</div>
@@ -660,7 +660,7 @@ function LoadingResults() {
       <div className="text-center">
         <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white mx-auto mb-6"></div>
         <h2 className="text-2xl font-bold text-white mb-2">Loading Impact Results</h2>
-        <p className="text-slate-300">Analyzing simulation parameters...</p>
+        <p className="text-zinc-300">Analyzing simulation parameters...</p>
       </div>
     </div>
   );

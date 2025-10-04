@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Search, TriangleAlert as AlertTriangle, Calendar, Gauge, Ruler } from "lucide-react";
+import { TriangleAlert as AlertTriangle } from "lucide-react";
 
 export default function DatabasePage() {
   const [asteroids, setAsteroids] = useState<Asteroid[]>([]);
@@ -44,7 +44,7 @@ export default function DatabasePage() {
           </p>
 
           <div className="max-w-2xl mx-auto relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-neutral-400" />
+
             <Input
               type="text"
               placeholder="Search asteroids by name..."
@@ -138,7 +138,6 @@ export default function DatabasePage() {
                   <CardContent className="space-y-4">
                     <div className="space-y-3">
                       <div className="flex items-start gap-3">
-                        <Ruler className="h-4 w-4 text-cyan-400 mt-0.5 shrink-0" />
                         <div>
                           <p className="text-xs text-gray-400">Estimated Diameter</p>
                           <p className="text-sm text-white font-semibold">
@@ -149,7 +148,7 @@ export default function DatabasePage() {
                       </div>
 
                       <div className="flex items-start gap-3">
-                        <Gauge className="h-4 w-4 text-green-400 mt-0.5 shrink-0" />
+
                         <div>
                           <p className="text-xs text-gray-400">Absolute Magnitude</p>
                           <p className="text-sm text-white font-semibold">
@@ -161,7 +160,7 @@ export default function DatabasePage() {
                       {asteroid.close_approach_data && asteroid.close_approach_data.length > 0 && (
                         <>
                           <div className="flex items-start gap-3">
-                            <Calendar className="h-4 w-4 text-purple-400 mt-0.5 shrink-0" />
+
                             <div>
                               <p className="text-xs text-gray-400">Next Close Approach</p>
                               <p className="text-sm text-white font-semibold">
@@ -171,7 +170,7 @@ export default function DatabasePage() {
                           </div>
 
                           <div className="flex items-start gap-3">
-                            <Gauge className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
+
                             <div>
                               <p className="text-xs text-gray-400">Relative Velocity</p>
                               <p className="text-sm text-white font-semibold">
@@ -184,7 +183,7 @@ export default function DatabasePage() {
                           </div>
 
                           <div className="flex items-start gap-3">
-                            <Ruler className="h-4 w-4 text-yellow-400 mt-0.5 shrink-0" />
+
                             <div>
                               <p className="text-xs text-gray-400">Miss Distance</p>
                               <p className="text-sm text-white font-semibold">

@@ -243,7 +243,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
         <Card className="bg-card border-border">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
-              <Map className="w-5 h-5 text-blue-400" />
+              
               Impact Zone Visualization
             </CardTitle>
           </CardHeader>

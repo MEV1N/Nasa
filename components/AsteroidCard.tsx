@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Asteroid } from '@/lib/nasa-api';
-import { Calendar, Gauge, Ruler, AlertTriangle } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface AsteroidCardProps {
@@ -106,7 +106,6 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
           <CardContent className="relative z-10 space-y-6">
             {/* Diameter */}
             <div className="flex items-center gap-2 text-neutral-300">
-              <Ruler className="w-4 h-4 text-white" />
               <span className="text-sm">
                 Diameter: <span className="font-semibold text-white">
                   {avgDiameter > 0 ? `${avgDiameter.toFixed(2)} km` : 'Unknown'}
@@ -117,7 +116,6 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
             {/* Velocity */}
             {velocity > 0 && (
               <div className="flex items-center gap-2 text-neutral-300">
-                <Gauge className="w-4 h-4 text-white" />
                 <span className="text-sm">
                   Velocity: <span className="font-semibold text-white">
                     {velocity.toLocaleString()} km/h
@@ -128,7 +126,6 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
 
             {/* Closest approach date */}
             <div className="flex items-center gap-2 text-neutral-300">
-              <Calendar className="w-4 h-4 text-white" />
               <span className="text-sm">
                 Next approach: <span className="font-semibold text-white">
                   {approachDate}

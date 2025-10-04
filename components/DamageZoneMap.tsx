@@ -151,7 +151,7 @@ export function DamageZoneMap({ location, damageRadii, additionalEffects, classN
             font-size: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             animation: pulse 2s infinite;
-          ">🌊</div>`,
+          "></div>`,
           iconSize: [18, 18],
           iconAnchor: [9, 9],
         });
@@ -160,7 +160,7 @@ export function DamageZoneMap({ location, damageRadii, additionalEffects, classN
           .addTo(map)
           .bindPopup(`
             <div>
-              <h4 style="margin: 0 0 6px 0; color: #333;">🚨 Tsunami Warning</h4>
+              <h4 style="margin: 0 0 6px 0; color: #333;">Tsunami Warning</h4>
               <p style="margin: 0; font-size: 12px; color: #666;">
                 Coastal areas in this direction at high risk of tsunami flooding
               </p>

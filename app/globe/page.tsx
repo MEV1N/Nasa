@@ -41,7 +41,6 @@ export default function GlobePage() {
         {/* Features Section */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-card border border-border rounded-lg p-6 text-center hover:glow-on-hover transition-all duration-300">
-            <div className="text-3xl mb-4">🌍</div>
             <h3 className="text-xl font-semibold text-white mb-2">Interactive Navigation</h3>
             <p className="text-muted-foreground">
               Rotate, zoom, and explore Earth with smooth 3D navigation controls
@@ -49,7 +48,6 @@ export default function GlobePage() {
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6 text-center hover:glow-on-hover transition-all duration-300">
-            <div className="text-3xl mb-4">📍</div>
             <h3 className="text-xl font-semibold text-white mb-2">Location Detection</h3>
             <p className="text-muted-foreground">
               Click anywhere to get precise coordinates and location information
@@ -57,7 +55,6 @@ export default function GlobePage() {
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6 text-center hover:glow-on-hover transition-all duration-300">
-            <div className="text-3xl mb-4">🚀</div>
             <h3 className="text-xl font-semibold text-white mb-2">Real-time Data</h3>
             <p className="text-muted-foreground">
               Get instant feedback with location markers and coordinate display

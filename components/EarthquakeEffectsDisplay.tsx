@@ -3,7 +3,7 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangle, MapPin, Users, Skull } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { EarthquakeEffect, getEarthquakeSummary } from '@/utils/earthquakeEffects';
 
 interface EarthquakeEffectsDisplayProps {
@@ -28,11 +28,11 @@ export function EarthquakeEffectsDisplay({ effects, className }: EarthquakeEffec
     switch (damage) {
       case 'catastrophic':
       case 'severe':
-        return <Skull className="w-3 h-3" />;
+        return null;
       case 'moderate':
         return <AlertTriangle className="w-3 h-3" />;
       default:
-        return <MapPin className="w-3 h-3" />;
+        return null;
     }
   };
 
@@ -95,7 +95,7 @@ export function EarthquakeEffectsDisplay({ effects, className }: EarthquakeEffec
         {summary.estimatedCasualties > 0 && (
           <div className="bg-slate-800/30 p-3 rounded-lg">
             <h4 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
-              <Skull className="w-4 h-4 text-red-400" />
+            
               Casualty Analysis
             </h4>
             <div className="grid grid-cols-2 gap-3">
@@ -167,7 +167,7 @@ export function EarthquakeEffectsDisplay({ effects, className }: EarthquakeEffec
         {/* Legend */}
         <div className="flex flex-wrap gap-2 text-xs">
           <Badge variant="destructive" className="text-xs">
-            <Skull className="w-3 h-3 mr-1" />
+        
             Severe/Catastrophic
           </Badge>
           <Badge variant="secondary" className="text-xs bg-orange-800/20 text-orange-400">
@@ -175,7 +175,7 @@ export function EarthquakeEffectsDisplay({ effects, className }: EarthquakeEffec
             Moderate
           </Badge>
           <Badge variant="outline" className="text-xs">
-            <MapPin className="w-3 h-3 mr-1" />
+
             Light Effects
           </Badge>
         </div>

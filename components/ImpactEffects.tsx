@@ -121,10 +121,10 @@ function ImpactEffects({
   }, [asteroidDiameter, impactVelocity, impactAngle, impactLat, impactLng]);
 
   const getSeverityColor = (value: number, thresholds: number[]) => {
-    if (value >= thresholds[2]) return "text-red-400 bg-red-900/20";
-    if (value >= thresholds[1]) return "text-orange-400 bg-orange-900/20";
-    if (value >= thresholds[0]) return "text-yellow-400 bg-yellow-900/20";
-    return "text-green-400 bg-green-900/20";
+    if (value >= thresholds[2]) return "text-white bg-zinc-800";
+    if (value >= thresholds[1]) return "text-zinc-200 bg-zinc-900";
+    if (value >= thresholds[0]) return "text-zinc-300 bg-zinc-900";
+    return "text-zinc-400 bg-zinc-900";
   };
 
   const getImpactClass = () => {
@@ -137,35 +137,35 @@ function ImpactEffects({
   };
 
   return (
-    <Card className={`bg-card border-border ${className}`}>
+    <Card className={`bg-zinc-950 border-zinc-800 ${className}`}>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-white">
-          <Globe className="w-5 h-5 text-purple-400" />
+          <Globe className="w-5 h-5 text-white" />
           Global Impact Effects Analysis
-          <Badge variant="outline" className="ml-2">
+          <Badge variant="outline" className="ml-2 bg-zinc-900 border-zinc-700 text-white">
             {getImpactClass()}
           </Badge>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Impact Parameters Summary */}
-        <div className="bg-slate-800/50 p-4 rounded-lg">
-          <h4 className="text-sm font-semibold text-slate-300 mb-3">Impact Parameters</h4>
+        <div className="bg-zinc-900 p-4 rounded-lg">
+          <h4 className="text-sm font-semibold text-zinc-300 mb-3">Impact Parameters</h4>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
-              <span className="text-slate-400">Diameter:</span>
+              <span className="text-zinc-400">Diameter:</span>
               <div className="text-white font-medium">{asteroidDiameter} km</div>
             </div>
             <div>
-              <span className="text-slate-400">Velocity:</span>
+              <span className="text-zinc-400">Velocity:</span>
               <div className="text-white font-medium">{impactVelocity} km/s</div>
             </div>
             <div>
-              <span className="text-slate-400">Angle:</span>
+              <span className="text-zinc-400">Angle:</span>
               <div className="text-white font-medium">{impactAngle}°</div>
             </div>
             <div>
-              <span className="text-slate-400">Energy:</span>
+              <span className="text-zinc-400">Energy:</span>
               <div className="text-white font-medium">
                 {effects ? `${effects.energyMegatons.toLocaleString()} MT` : 'Calculating...'}
               </div>
@@ -190,7 +190,7 @@ function ImpactEffects({
               {/* Tsunami Effects */}
               <div className={`p-4 rounded-lg border ${getSeverityColor(effects.tsunamiHeight, [10, 100, 500])}`}>
                 <div className="flex items-center gap-2 mb-2">
-                  <Waves className="w-5 h-5" />
+                  
                   <span className="font-semibold">Tsunami Height</span>
                 </div>
                 <div className="text-2xl font-bold mb-1">
@@ -207,7 +207,7 @@ function ImpactEffects({
               {/* Airblast Radius */}
               <div className={`p-4 rounded-lg border ${getSeverityColor(effects.airblastRadius, [50, 200, 1000])}`}>
                 <div className="flex items-center gap-2 mb-2">
-                  <Wind className="w-5 h-5" />
+                  
                   <span className="font-semibold">Airblast Radius</span>
                 </div>
                 <div className="text-2xl font-bold mb-1">
@@ -221,7 +221,7 @@ function ImpactEffects({
               {/* Temperature Drop */}
               <div className={`p-4 rounded-lg border ${getSeverityColor(effects.temperatureDrop, [1, 3, 8])}`}>
                 <div className="flex items-center gap-2 mb-2">
-                  <Thermometer className="w-5 h-5" />
+                  
                   <span className="font-semibold">Global Cooling</span>
                 </div>
                 <div className="text-2xl font-bold mb-1">
@@ -237,7 +237,7 @@ function ImpactEffects({
               {/* Seismic Magnitude */}
               <div className={`p-4 rounded-lg border ${getSeverityColor(effects.seismicMagnitude, [6, 8, 10])}`}>
                 <div className="flex items-center gap-2 mb-2">
-                  <Zap className="w-5 h-5" />
+                  
                   <span className="font-semibold">Seismic Impact</span>
                 </div>
                 <div className="text-2xl font-bold mb-1">
@@ -251,27 +251,27 @@ function ImpactEffects({
 
             {/* Secondary Effects */}
             {effects.impactWinter > 0 && (
-              <div className="bg-slate-800/50 p-4 rounded-lg">
-                <h4 className="text-sm font-semibold text-slate-300 mb-3 flex items-center gap-2">
-                  <TrendingDown className="w-4 h-4" />
+              <div className="bg-zinc-900 p-4 rounded-lg">
+                <h4 className="text-sm font-semibold text-zinc-300 mb-3 flex items-center gap-2">
+                  
                   Long-term Effects
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <span className="text-slate-400">Impact Winter Duration:</span>
+                    <span className="text-zinc-400">Impact Winter Duration:</span>
                     <div className="text-orange-300 font-medium">
                       {effects.impactWinter} months
                     </div>
                   </div>
                   <div>
-                    <span className="text-slate-400">Global Debris Layer:</span>
-                    <div className="text-yellow-300 font-medium">
+                    <span className="text-white-400">Global Debris Layer:</span>
+                    <div className="text-white-300 font-medium">
                       {effects.debrisThickness} cm
                     </div>
                   </div>
                 </div>
                 {effects.impactWinter > 12 && (
-                  <div className="mt-3 p-3 bg-red-900/20 border border-red-800 rounded text-red-300 text-xs">
+                  <div className="mt-3 p-3 bg-red-900/20 border border-red-800 rounded text-white text-300 text-xs">
                     <AlertTriangle className="w-4 h-4 inline mr-2" />
                     Extended impact winter may cause mass extinction event
                   </div>
@@ -282,10 +282,10 @@ function ImpactEffects({
             {/* Impact Classification */}
             <div className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 p-4 rounded-lg border border-purple-800/50">
               <div className="text-center">
-                <div className="text-lg font-semibold text-purple-300 mb-2">
+                <div className="text-lg font-semibold text-white-300 mb-2">
                   Impact Classification: {getImpactClass()}
                 </div>
-                <div className="text-sm text-slate-300">
+                <div className="text-sm text-zinc-300">
                   {getImpactClass() === 'Extinction Event' ? 'This impact would cause a mass extinction event similar to the Chicxulub asteroid that killed the dinosaurs.' :
                    getImpactClass() === 'Global' ? 'This impact would have severe global consequences affecting all life on Earth.' :
                    getImpactClass() === 'Continental' ? 'This impact would devastate an entire continent and affect global climate.' :

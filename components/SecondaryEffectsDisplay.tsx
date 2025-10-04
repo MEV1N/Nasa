@@ -179,7 +179,7 @@ export function SecondaryEffectsDisplay({
     <div className={`space-y-6 ${className}`}>
       {/* Tsunami Affected Coastal Areas */}
       {effects.tsunamiAffectedCoasts.length > 0 && (
-        <Card className="bg-card border-border">
+        <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
               <Waves className="w-5 h-5 text-blue-400" />
@@ -208,31 +208,31 @@ export function SecondaryEffectsDisplay({
                           {risk.toUpperCase()} RISK
                         </Badge>
                       </div>
-                      <span className="text-xs text-slate-400">
+                      <span className="text-xs text-zinc-400">
                         {formatDistance(location.distanceFromImpact)}
                       </span>
                     </div>
                     <div className="grid grid-cols-3 gap-3 text-xs">
                       <div>
-                        <span className="text-slate-400">Population:</span>
+                        <span className="text-zinc-400">Population:</span>
                         <div className="text-white font-medium">
                           {formatPopulation(location.population)}
                         </div>
                       </div>
                       <div>
-                        <span className="text-slate-400">Elevation:</span>
+                        <span className="text-zinc-400">Elevation:</span>
                         <div className="text-white font-medium">
                           {location.elevation}m above sea
                         </div>
                       </div>
                       <div>
-                        <span className="text-slate-400">Region:</span>
+                        <span className="text-zinc-400">Region:</span>
                         <div className="text-white font-medium">
                           {location.region}
                         </div>
                       </div>
                     </div>
-                    <div className="mt-2 text-xs text-slate-300">
+                    <div className="mt-2 text-xs text-zinc-300">
                       {risk === 'extreme' && 'Catastrophic tsunami waves expected - immediate evacuation required'}
                       {risk === 'high' && 'Major tsunami flooding likely - evacuation recommended'}
                       {risk === 'moderate' && 'Tsunami waves possible - coastal areas at risk'}
@@ -248,7 +248,7 @@ export function SecondaryEffectsDisplay({
 
       {/* Seismic Affected Regions */}
       {effects.seismicAffectedRegions.length > 0 && (
-        <Card className="bg-card border-border">
+        <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
               <Mountain className="w-5 h-5 text-yellow-400" />
@@ -270,7 +270,7 @@ export function SecondaryEffectsDisplay({
                       <span className="text-white text-sm font-medium">
                         {location.name}, {location.country}
                       </span>
-                      <span className="text-xs text-slate-400">
+                      <span className="text-xs text-zinc-400">
                         Pop: {formatPopulation(location.population)}
                       </span>
                     </div>
@@ -287,7 +287,7 @@ export function SecondaryEffectsDisplay({
 
       {/* Climate Affected Areas */}
       {asteroidData.energyMt >= 1000 && (
-        <Card className="bg-card border-border">
+        <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
               <Thermometer className="w-5 h-5 text-purple-400" />
@@ -303,13 +303,13 @@ export function SecondaryEffectsDisplay({
                 <Globe className="w-5 h-5 text-purple-400" />
                 <span className="font-semibold text-purple-300">Worldwide Climate Disruption</span>
               </div>
-              <p className="text-sm text-slate-300">
+              <p className="text-sm text-zinc-300">
                 This impact will cause global climate effects affecting all inhabited regions worldwide. 
                 Major population centers will experience temperature drops, reduced sunlight, and agricultural disruption.
               </p>
             </div>
             
-            <div className="text-sm text-slate-400 mb-3">
+            <div className="text-sm text-zinc-400 mb-3">
               Most Vulnerable Population Centers:
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -333,7 +333,7 @@ export function SecondaryEffectsDisplay({
 
       {/* Airblast Affected Zones */}
       {effects.airblastAffectedZones.length > 0 && (
-        <Card className="bg-card border-border">
+        <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
               <Wind className="w-5 h-5 text-gray-400" />
@@ -357,19 +357,19 @@ export function SecondaryEffectsDisplay({
                         {location.name}, {location.country}
                       </span>
                     </div>
-                    <span className="text-xs text-slate-400">
+                    <span className="text-xs text-zinc-400">
                       {formatDistance(location.distanceFromImpact)}
                     </span>
                   </div>
                   <div className="grid grid-cols-2 gap-3 text-xs">
                     <div>
-                      <span className="text-slate-400">Population at Risk:</span>
+                      <span className="text-zinc-400">Population at Risk:</span>
                       <div className="text-red-300 font-medium">
                         {formatPopulation(location.population)}
                       </div>
                     </div>
                     <div>
-                      <span className="text-slate-400">Expected Effect:</span>
+                      <span className="text-zinc-400">Expected Effect:</span>
                       <div className="text-gray-300 font-medium">
                         {location.distanceFromImpact <= 100 ? 'Severe damage' :
                          location.distanceFromImpact <= 300 ? 'Major damage' : 'Moderate damage'}
@@ -384,7 +384,7 @@ export function SecondaryEffectsDisplay({
       )}
 
       {/* Summary Statistics */}
-      <Card className="bg-gradient-to-r from-slate-900 to-slate-800 border-slate-700">
+      <Card className="bg-gradient-to-r from-zinc-950 to-zinc-900 border-zinc-800">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
             <Users className="w-5 h-5 text-cyan-400" />
@@ -397,29 +397,29 @@ export function SecondaryEffectsDisplay({
               <div className="text-2xl font-bold text-blue-400">
                 {effects.tsunamiAffectedCoasts.length}
               </div>
-              <div className="text-xs text-slate-400">Coastal Areas</div>
-              <div className="text-xs text-slate-300">Tsunami Risk</div>
+              <div className="text-xs text-zinc-400">Coastal Areas</div>
+              <div className="text-xs text-zinc-300">Tsunami Risk</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-yellow-400">
                 {effects.seismicAffectedRegions.length}
               </div>
-              <div className="text-xs text-slate-400">Regions</div>
-              <div className="text-xs text-slate-300">Seismic Effects</div>
+              <div className="text-xs text-zinc-400">Regions</div>
+              <div className="text-xs text-zinc-300">Seismic Effects</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-purple-400">
                 {asteroidData.energyMt >= 1000 ? 'GLOBAL' : effects.climateAffectedAreas.length}
               </div>
-              <div className="text-xs text-slate-400">Areas</div>
-              <div className="text-xs text-slate-300">Climate Impact</div>
+              <div className="text-xs text-zinc-400">Areas</div>
+              <div className="text-xs text-zinc-300">Climate Impact</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-gray-400">
                 {effects.airblastAffectedZones.length}
               </div>
-              <div className="text-xs text-slate-400">Zones</div>
-              <div className="text-xs text-slate-300">Airblast Damage</div>
+              <div className="text-xs text-zinc-400">Zones</div>
+              <div className="text-xs text-zinc-300">Airblast Damage</div>
             </div>
           </div>
         </CardContent>

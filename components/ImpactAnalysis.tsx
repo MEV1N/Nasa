@@ -107,16 +107,16 @@ export default function ImpactAnalysis({
       <Card className="bg-gradient-to-br from-purple-900/20 to-blue-900/20 border-purple-800/50">
         <CardHeader>
           <CardTitle className="flex items-center gap-3 text-white">
-            <Brain className="w-6 h-6 text-purple-400" />
-            AI Impact Analysis
+            
+            Impact Analysis
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Analysis Parameters Summary */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-slate-800/50 p-4 rounded-lg">
-              <h4 className="text-sm font-semibold text-purple-300 mb-3 flex items-center gap-2">
-                <Zap className="w-4 h-4" />
+              <h4 className="text-sm font-semibold text-white-300 mb-3 flex items-center gap-2">
+                
                 Asteroid Data
               </h4>
               <div className="space-y-2 text-sm">
@@ -145,7 +145,7 @@ export default function ImpactAnalysis({
             </div>
 
             <div className="bg-slate-800/50 p-4 rounded-lg">
-              <h4 className="text-sm font-semibold text-blue-300 mb-3 flex items-center gap-2">
+              <h4 className="text-sm font-semibold text-white-300 mb-3 flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
                 Impact Location
               </h4>
@@ -209,8 +209,8 @@ export default function ImpactAnalysis({
           {/* Analysis Status */}
           {loading && !analysis && (
             <div className="flex items-center justify-center py-8">
-              <Loader2 className="w-6 h-6 mr-3 animate-spin text-purple-400" />
-              <span className="text-slate-300">Generating AI analysis...</span>
+              <Loader2 className="w-6 h-6 mr-3 animate-spin text-white-400" />
+              <span className="text-slate-300">Generating analysis...</span>
             </div>
           )}
 
@@ -261,11 +261,11 @@ export default function ImpactAnalysis({
             >
               <div className="bg-gradient-to-r from-purple-900/50 to-blue-900/50 p-4 border-b border-slate-700">
                 <h4 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-purple-400" />
+                  <TrendingUp className="w-5 h-5 text-white-400" />
                   Comprehensive Impact Analysis
                 </h4>
                 <p className="text-slate-300 text-sm mt-1">
-                  AI-powered scientific assessment of impact consequences
+                  Scientific assessment of impact consequences
                 </p>
               </div>
               

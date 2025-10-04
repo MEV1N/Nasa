@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Mountain, RotateCcw, ZoomIn, ZoomOut } from 'lucide-react';
+
 
 interface CraterVisualizationProps {
   craterDiameter?: number;
@@ -213,7 +213,7 @@ export function CraterVisualization({
       <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border-slate-700">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
-            <Mountain className="w-5 h-5 text-orange-400" />
+            
             Crater Visualization
           </CardTitle>
         </CardHeader>
@@ -242,7 +242,7 @@ export function CraterVisualization({
                 onClick={handleZoomIn}
                 className="bg-slate-800 border-slate-600 text-white hover:bg-slate-700"
               >
-                <ZoomIn className="w-4 h-4" />
+                Zoom In
               </Button>
               <Button
                 variant="outline"
@@ -250,7 +250,7 @@ export function CraterVisualization({
                 onClick={handleZoomOut}
                 className="bg-slate-800 border-slate-600 text-white hover:bg-slate-700"
               >
-                <ZoomOut className="w-4 h-4" />
+                Zoom Out
               </Button>
               <Button
                 variant="outline"
@@ -258,7 +258,7 @@ export function CraterVisualization({
                 onClick={handleRotate}
                 className="bg-slate-800 border-slate-600 text-white hover:bg-slate-700"
               >
-                <RotateCcw className="w-4 h-4" />
+                Reset View
               </Button>
               <Button
                 variant="outline"

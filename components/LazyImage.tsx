@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ImageIcon, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 
 interface LazyImageProps {
   src: string;
@@ -104,7 +104,7 @@ export function LazyImage({
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               className="mb-2"
             >
-              <ImageIcon className="w-6 h-6 text-neutral-400" />
+
             </motion.div>
             
             {/* Progress bar */}
