@@ -1,9 +1,20 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-// import PillNav from '../../components/PillNav'; // Component not found, commenting out
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { 
+  Brain, 
+  Code, 
+  Loader2, 
+  Copy,
+  CheckCircle
+} from "lucide-react";
 
-export default function PillNavDemo() {
+export default function APIDemo() {
   const [currentPage, setCurrentPage] = useState('/');
 
   const navItems = [

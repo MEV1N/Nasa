@@ -16,7 +16,8 @@ import {
   Map,
   RotateCcw,
   Download,
-  Share2
+  Share2,
+  Brain
 } from 'lucide-react';
 import { calculateImpact, type ImpactResults } from '@/utils/impactPhysics';
 import { calculateEarthquakeEffects, type EarthquakeEffect } from '@/utils/earthquakeEffects';
@@ -25,6 +26,7 @@ import { findAffectedCities, type AffectedCity } from '@/utils/citiesDatabase';
 import { AffectedCitiesDisplay } from '@/components/AffectedCitiesDisplay';
 import ImpactEffects from '@/components/ImpactEffects';
 import { SecondaryEffectsDisplay } from '@/components/SecondaryEffectsDisplay';
+import ImpactAnalysis from '@/components/ImpactAnalysis';
 import dynamic from 'next/dynamic';
 
 // Dynamic import for map component (client-side only)
@@ -75,99 +77,98 @@ function ResultsContent() {
   } | null>(null);
 
   useEffect(() => {
-    // Parse URL parameters
-    const asteroidName = searchParams.get('asteroid') || '';
-    const asteroidDiameter = parseFloat(searchParams.get('diameter') || '1');
-    const asteroidVelocity = parseFloat(searchParams.get('asteroidVelocity') || '20');
-    const hazardous = searchParams.get('hazardous') === 'true';
-    const lat = parseFloat(searchParams.get('lat') || '0');
-    const lng = parseFloat(searchParams.get('lng') || '0');
-    const locationName = searchParams.get('location') || 'Unknown Location';
-    const angle = parseFloat(searchParams.get('angle') || '45');
-    const velocity = parseFloat(searchParams.get('velocity') || '20');
-
-    if (!asteroidName || !lat || !lng) {
-      // Redirect back if no valid data
+    // Get simulation data from localStorage
+    const storedData = localStorage.getItem('impactSimulationData');
+    
+    if (!storedData) {
+      // Redirect back if no simulation data
       router.push('/simulation');
       return;
     }
 
-    const data: SimulationData = {
-      asteroid: {
-        name: asteroidName,
-        diameter: asteroidDiameter,
-        velocity: asteroidVelocity,
-        hazardous
-      },
-      location: { lat, lng, name: locationName },
-      parameters: { angle, velocity }
-    };
+    try {
+      const parsedData = JSON.parse(storedData);
+      
+      const data: SimulationData = {
+        asteroid: parsedData.asteroid,
+        location: parsedData.location,
+        parameters: parsedData.parameters
+      };
 
-    setSimulationData(data);
+      setSimulationData(data);
 
-    // Run the simulation
-    const impactData = calculateImpact({
-      diameter: asteroidDiameter * 1000, // Convert km to meters
-      density: 3000,
-      velocity,
-      angle
-    });
+      // Use Gemini-generated impact data
+      const geminiData = parsedData.geminiData;
+      
+      // Convert Gemini data to our internal format
+      const impactData = {
+        energyMt: geminiData.impactEnergy,
+        energyJoules: geminiData.energyJoules,
+        craterDiameter: geminiData.craterDiameter * 1000, // Convert km to meters for display consistency
+        mass: geminiData.impactMass,
+        radii: {
+          severe: geminiData.damageRadii.severe,
+          moderate: geminiData.damageRadii.moderate,
+          light: geminiData.damageRadii.light
+        }
+      };
 
-    // Calculate earthquake effects
-    const earthquakeEffects = calculateEarthquakeEffects(
-      { lat, lng },
-      impactData.energyMt,
-      2000
-    );
+      // Calculate earthquake effects using Gemini data
+      const earthquakeEffects = calculateEarthquakeEffects(
+        data.location,
+        geminiData.impactEnergy,
+        2000
+      );
 
-    // Calculate affected cities
-    const citiesInDamageZone = findAffectedCities(
-      lat,
-      lng,
-      impactData.radii
-    );
-    setAffectedCities(citiesInDamageZone);
+      // Calculate affected cities using Gemini damage radii
+      const citiesInDamageZone = findAffectedCities(
+        data.location.lat,
+        data.location.lng,
+        geminiData.damageRadii
+      );
+      setAffectedCities(citiesInDamageZone);
 
-    // Calculate additional effects for map display
-    const energyScale = impactData.energyMt / 24; // Normalized to reference impact
-    const airblastRadius = 50 * Math.pow(energyScale, 1/3);
-    const tsunamiRadius = velocity > 15 ? 100 * Math.pow(energyScale, 1/4) : 0; // Only if high velocity
-    const seismicRadius = 200 * Math.pow(energyScale, 1/5);
-    
-    setAdditionalEffects({
-      airblastRadius: Math.round(airblastRadius * 10) / 10,
-      tsunamiRadius: Math.round(tsunamiRadius * 10) / 10,
-      seismicRadius: Math.round(seismicRadius * 10) / 10
-    });
+      // Set additional effects from Gemini data
+      setAdditionalEffects({
+        airblastRadius: geminiData.airblastRadius,
+        tsunamiRadius: geminiData.tsunamiRisk ? geminiData.thermalRadius * 2 : 0,
+        seismicRadius: geminiData.debrisField
+      });
 
-    // Determine magnitude and description
-    let magnitude = '';
-    let description = '';
-    
-    if (impactData.energyMt < 1) {
-      magnitude = 'Minor';
-      description = 'Local damage, similar to a small building collapse';
-    } else if (impactData.energyMt < 100) {
-      magnitude = 'Moderate';
-      description = 'City-wide destruction, similar to the Hiroshima bomb';
-    } else if (impactData.energyMt < 10000) {
-      magnitude = 'Major';
-      description = 'Regional devastation, affects entire metropolitan areas';
-    } else if (impactData.energyMt < 1000000) {
-      magnitude = 'Catastrophic';
-      description = 'Continental damage, climate effects for years';
-    } else {
-      magnitude = 'Extinction Level';
-      description = 'Global catastrophe, mass extinction event';
+      // Determine magnitude and description based on Gemini energy data
+      let magnitude = '';
+      let description = '';
+      
+      if (geminiData.impactEnergy < 1) {
+        magnitude = 'Minor';
+        description = 'Local damage, similar to a small building collapse';
+      } else if (geminiData.impactEnergy < 100) {
+        magnitude = 'Moderate';
+        description = 'City-wide destruction, similar to the Hiroshima bomb';
+      } else if (geminiData.impactEnergy < 10000) {
+        magnitude = 'Major';
+        description = 'Regional devastation, affects entire metropolitan areas';
+      } else if (geminiData.impactEnergy < 1000000) {
+        magnitude = 'Catastrophic';
+        description = 'Continental damage, climate effects for years';
+      } else {
+        magnitude = 'Extinction Level';
+        description = 'Global catastrophe, mass extinction event';
+      }
+
+      setResults({
+        ...impactData,
+        magnitude,
+        description,
+        earthquakeEffects
+      });
+
+    } catch (error) {
+      console.error('Failed to parse simulation data:', error);
+      router.push('/simulation');
+      return;
     }
-
-    setResults({
-      ...impactData,
-      magnitude,
-      description,
-      earthquakeEffects
-    });
-  }, [searchParams, router]);
+  }, [router]);
 
   const handleNewSimulation = () => {
     router.push('/simulation');
@@ -288,6 +289,67 @@ function ResultsContent() {
               <div className="bg-slate-800/50 p-4 rounded-lg">
                 <p className="text-white text-lg">{results.description}</p>
               </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Gemini Enhanced Data */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="mb-8"
+        >
+          <Card className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 border-purple-800/50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3 text-white text-xl">
+                <Brain className="w-6 h-6 text-purple-400" />
+                AI-Enhanced Impact Analysis
+                <Badge variant="outline" className="text-purple-300 border-purple-400 text-xs">
+                  Powered by Gemini
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {(() => {
+                const storedData = localStorage.getItem('impactSimulationData');
+                const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
+                
+                if (!geminiData) return <p className="text-slate-400">No enhanced data available</p>;
+                
+                return (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="text-center bg-slate-800/50 p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-blue-400">
+                        {geminiData.earthquakeMagnitude?.toFixed(1) || 'N/A'}
+                      </div>
+                      <div className="text-sm text-neutral-400">Earthquake Magnitude</div>
+                      <div className="text-xs text-slate-500 mt-1">Richter Scale</div>
+                    </div>
+                    <div className="text-center bg-slate-800/50 p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-orange-400">
+                        {geminiData.estimatedCasualties?.toLocaleString() || 'N/A'}
+                      </div>
+                      <div className="text-sm text-neutral-400">Est. Casualties</div>
+                      <div className="text-xs text-slate-500 mt-1">Immediate Impact</div>
+                    </div>
+                    <div className="text-center bg-slate-800/50 p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-green-400">
+                        {geminiData.equivalentNukes?.toFixed(0) || 'N/A'}
+                      </div>
+                      <div className="text-sm text-neutral-400">Nuclear Equivalent</div>
+                      <div className="text-xs text-slate-500 mt-1">Hiroshima Bombs</div>
+                    </div>
+                    <div className="text-center bg-slate-800/50 p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-red-400">
+                        {geminiData.tsunamiRisk ? 'HIGH' : 'LOW'}
+                      </div>
+                      <div className="text-sm text-neutral-400">Tsunami Risk</div>
+                      <div className="text-xs text-slate-500 mt-1">Coastal Impact</div>
+                    </div>
+                  </div>
+                );
+              })()}
             </CardContent>
           </Card>
         </motion.div>
@@ -417,6 +479,30 @@ function ResultsContent() {
           className="mt-8"
         >
           <AffectedCitiesDisplay affectedCities={affectedCities} />
+        </motion.div>
+
+        {/* AI Impact Analysis */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.6 }}
+          className="mt-8"
+        >
+          <ImpactAnalysis 
+            asteroid={simulationData.asteroid}
+            location={simulationData.location}
+            impactData={{
+              energyMt: results.energyMt,
+              craterDiameter: results.craterDiameter / 1000, // Convert to km
+              radii: results.radii,
+              summary: {
+                totalPopulation: affectedCities.reduce((sum, city) => sum + city.population, 0),
+                totalFatalities: Math.floor(affectedCities.reduce((sum, city) => sum + city.population, 0) * 0.1),
+                totalInjuries: Math.floor(affectedCities.reduce((sum, city) => sum + city.population, 0) * 0.3),
+                affectedArea: Math.PI * Math.max(...Object.values(results.radii)) ** 2
+              }
+            }}
+          />
         </motion.div>
 
         {/* Additional Details */}

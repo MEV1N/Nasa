@@ -30,7 +30,6 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
       ? Math.round(parseFloat(asteroid.close_approach_data[0].relative_velocity.kilometers_per_hour) / 3600) // Convert to km/s
       : 20
   );
-  const [targetType, setTargetType] = useState('land');
   const [isSimulating, setIsSimulating] = useState(false);
 
   const getDiameter = () => {
@@ -39,7 +38,7 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
     return (estimated_diameter_min + estimated_diameter_max) / 2;
   };
 
-  const runSimulation = () => {
+  const runSimulation = async () => {
     if (!asteroid || !selectedLocation) {
       alert('Please select both an asteroid and impact location before running simulation.');
       return;
@@ -47,23 +46,60 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
 
     setIsSimulating(true);
 
-    // Build URL parameters for results page
-    const params = new URLSearchParams({
-      asteroid: asteroid.name.replace(/[()]/g, ''),
-      diameter: getDiameter().toString(),
-      asteroidVelocity: asteroid.close_approach_data?.[0]?.relative_velocity?.kilometers_per_hour 
-        ? Math.round(parseFloat(asteroid.close_approach_data[0].relative_velocity.kilometers_per_hour) / 3600).toString()
-        : '20',
-      hazardous: asteroid.is_potentially_hazardous_asteroid.toString(),
-      lat: selectedLocation.lat.toString(),
-      lng: selectedLocation.lng.toString(),
-      location: selectedLocation.name,
-      angle: impactAngle.toString(),
-      velocity: impactVelocity.toString(),
-    });
+    try {
+      // Get impact data from Gemini AI
+      const response = await fetch('/api/gemini-impact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          asteroidName: asteroid.name.replace(/[()]/g, ''),
+          asteroidDiameter: getDiameter(),
+          asteroidVelocity: impactVelocity,
+          locationName: selectedLocation.name,
+          lat: selectedLocation.lat,
+          lng: selectedLocation.lng,
+          impactAngle: impactAngle,
+          hazardous: asteroid.is_potentially_hazardous_asteroid,
+        }),
+      });
 
-    // Navigate to results page
-    router.push(`/results?${params.toString()}`);
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+      }
+
+      const result = await response.json();
+      
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to get impact data');
+      }
+
+      // Store the impact data in localStorage to pass to results page
+      localStorage.setItem('impactSimulationData', JSON.stringify({
+        asteroid: {
+          name: asteroid.name.replace(/[()]/g, ''),
+          diameter: getDiameter(),
+          velocity: impactVelocity,
+          hazardous: asteroid.is_potentially_hazardous_asteroid,
+        },
+        location: selectedLocation,
+        parameters: {
+          angle: impactAngle,
+          velocity: impactVelocity,
+        },
+        geminiData: result.data,
+        timestamp: result.timestamp,
+      }));
+
+      // Navigate to results page
+      router.push('/results');
+      
+    } catch (error) {
+      console.error('Simulation error:', error);
+      alert(`Simulation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setIsSimulating(false);
+    }
   };
 
   return (
@@ -158,19 +194,6 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
                 />
               </div>
               
-              <div className="space-y-2">
-                <Label htmlFor="target" className="text-slate-300">Target Type</Label>
-                <Select value={targetType} onValueChange={setTargetType}>
-                  <SelectTrigger className="bg-slate-800 border-slate-600 text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="land">Land</SelectItem>
-                    <SelectItem value="ocean">Ocean</SelectItem>
-                    <SelectItem value="urban">Urban Area</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
             </div>
 
             <Button 
