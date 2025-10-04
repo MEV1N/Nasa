@@ -1,16 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
-const { GenAI } = require('@google/genai');
-
-const genAI = new GenAI({ apiKey: process.env.GEMINI_API_KEY! });
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export async function POST(request: NextRequest) {
   try {
+    // Initialize Gemini AI inside the function to catch errors
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+    
     const { asteroid, location, impactData } = await request.json();
 
     if (!asteroid || !location || !impactData) {
       return NextResponse.json(
         { error: "Missing parameters" },
         { status: 400 }
+      );
+    }
+
+    // Check if API key is available
+    if (!process.env.GEMINI_API_KEY) {
+      return NextResponse.json(
+        { error: "Gemini API key not configured" },
+        { status: 500 }
       );
     }
 
@@ -42,12 +51,10 @@ Please provide a comprehensive scientific analysis covering:
 Provide a detailed, scientific analysis of this impact scenario.`;
 
     // Generate response using Gemini
-    const response = await genAI.generateContent({
-      model: 'gemini-1.5-pro',
-      messages: [{ role: 'user', content: prompt }],
-    });
-
-    const analysis = response.data?.text || response.text;
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const analysis = response.text();
 
     if (!analysis) {
       throw new Error('No analysis received from Gemini');
