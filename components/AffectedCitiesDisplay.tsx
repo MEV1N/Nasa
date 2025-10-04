@@ -84,25 +84,25 @@ export function AffectedCitiesDisplay({ affectedCities, className }: AffectedCit
         <div className="bg-slate-800/50 p-4 rounded-lg">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
-              <div className="text-2xl font-bold text-red-400">
+              <div className="text-2xl font-bold text-white">
                 {formatNumber(totalCasualties)}
               </div>
               <div className="text-xs text-slate-400">Est. Casualties</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-blue-400">
+              <div className="text-2xl font-bold text-white">
                 {formatNumber(totalPopulation)}
               </div>
               <div className="text-xs text-slate-400">Total Population</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-green-400">
+              <div className="text-2xl font-bold text-white">
                 {((1 - totalCasualties / totalPopulation) * 100).toFixed(1)}%
               </div>
               <div className="text-xs text-slate-400">Survival Rate</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-purple-400">
+              <div className="text-2xl font-bold text-white">
                 {affectedCities.length}
               </div>
               <div className="text-xs text-slate-400">Cities Affected</div>

@@ -328,7 +328,7 @@ function ResultsContent() {
             <h1 className="text-4xl md:text-6xl font-bold text-gradient">
               Impact Analysis Results
             </h1>
-            <div className="flex items-center justify-center gap-4 text-lg text-neutral-400">
+            <div className="flex items-center justify-center gap-4 text-lg text-zinc-400">
               <div className="flex items-center gap-2">
                 <Target className="w-5 h-5" />
                 {simulationData.asteroid.name}

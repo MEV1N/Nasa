@@ -386,35 +386,35 @@ export function SecondaryEffectsDisplay({
       <Card className="bg-gradient-to-r from-zinc-950 to-zinc-900 border-zinc-800">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
-            <Users className="w-5 h-5 text-cyan-400" />
+            
             Secondary Effects Summary
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
-              <div className="text-2xl font-bold text-blue-400">
+              <div className="text-2xl font-bold text-white">
                 {effects.tsunamiAffectedCoasts.length}
               </div>
               <div className="text-xs text-zinc-400">Coastal Areas</div>
               <div className="text-xs text-zinc-300">Tsunami Risk</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-yellow-400">
+              <div className="text-2xl font-bold text-white">
                 {effects.seismicAffectedRegions.length}
               </div>
               <div className="text-xs text-zinc-400">Regions</div>
               <div className="text-xs text-zinc-300">Seismic Effects</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-purple-400">
+              <div className="text-2xl font-bold text-white">
                 {asteroidData.energyMt >= 1000 ? 'GLOBAL' : effects.climateAffectedAreas.length}
               </div>
               <div className="text-xs text-zinc-400">Areas</div>
               <div className="text-xs text-zinc-300">Climate Impact</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-gray-400">
+              <div className="text-2xl font-bold text-white">
                 {effects.airblastAffectedZones.length}
               </div>
               <div className="text-xs text-zinc-400">Zones</div>
