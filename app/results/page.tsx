@@ -294,6 +294,9 @@ function ResultsContent() {
         </motion.div>
 
         {/* Gemini Enhanced Data */}
+
+
+        {/* AI-Enhanced Impact Analysis */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -349,7 +352,8 @@ function ResultsContent() {
                     </div>
                   </div>
                 );
-              })()}
+              })()
+            }
             </CardContent>
           </Card>
         </motion.div>
