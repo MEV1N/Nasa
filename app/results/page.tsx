@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -54,7 +54,7 @@ interface SimulationData {
   };
 }
 
-export default function ResultsPage() {
+function ResultsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [simulationData, setSimulationData] = useState<SimulationData | null>(null);
@@ -394,5 +394,27 @@ export default function ResultsPage() {
         </motion.div>
       </div>
     </div>
+  );
+}
+
+// Loading component for Suspense fallback
+function LoadingResults() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white mx-auto mb-6"></div>
+        <h2 className="text-2xl font-bold text-white mb-2">Loading Impact Results</h2>
+        <p className="text-slate-300">Analyzing simulation parameters...</p>
+      </div>
+    </div>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function ResultsPage() {
+  return (
+    <Suspense fallback={<LoadingResults />}>
+      <ResultsContent />
+    </Suspense>
   );
 }
