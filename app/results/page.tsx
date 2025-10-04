@@ -17,7 +17,8 @@ import {
   RotateCcw,
   Download,
   Share2,
-  Brain
+  Brain,
+  Calculator
 } from 'lucide-react';
 import { calculateImpact, type ImpactResults } from '@/utils/impactPhysics';
 import { calculateEarthquakeEffects, type EarthquakeEffect } from '@/utils/earthquakeEffects';
@@ -26,7 +27,6 @@ import { findAffectedCities, type AffectedCity } from '@/utils/citiesDatabase';
 import { AffectedCitiesDisplay } from '@/components/AffectedCitiesDisplay';
 import ImpactEffects from '@/components/ImpactEffects';
 import { SecondaryEffectsDisplay } from '@/components/SecondaryEffectsDisplay';
-import ImpactAnalysis from '@/components/ImpactAnalysis';
 import dynamic from 'next/dynamic';
 
 // Dynamic import for map component (client-side only)
@@ -64,6 +64,113 @@ function ResultsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [simulationData, setSimulationData] = useState<SimulationData | null>(null);
+
+  // Utility function to calculate physics-based energy
+  const calculatePhysicsEnergy = (diameter: number, velocity: number): number => {
+    const radius = (diameter * 1000) / 2; // convert km to meters, then to radius
+    const volume = (4/3) * Math.PI * Math.pow(radius, 3); // m³
+    const density = 3000; // kg/m³ (rocky asteroid)
+    const mass = density * volume; // kg
+    const velocityMs = velocity * 1000; // convert km/s to m/s
+    const energyJoules = 0.5 * mass * Math.pow(velocityMs, 2); // Joules
+    return energyJoules / (4.184e15); // Convert to megatons TNT
+  };
+
+  // Physics-based crater diameter calculation (Collins et al. scaling)
+  const calculatePhysicsCraterDiameter = (energy: number): number => {
+    // D = 1.8 * (E/4.2e12)^0.25 for complex craters (km)
+    const energyJoules = energy * 4.184e15;
+    return 1.8 * Math.pow(energyJoules / 4.2e12, 0.25);
+  };
+
+  // Physics-based damage radii calculations
+  const calculatePhysicsDamageRadii = (energy: number) => {
+    const cubeRootEnergy = Math.pow(energy, 1/3);
+    return {
+      severe: cubeRootEnergy * 0.56, // >100 kPa overpressure
+      moderate: cubeRootEnergy * 1.78, // 10-100 kPa overpressure  
+      light: cubeRootEnergy * 4.71 // 1-10 kPa overpressure
+    };
+  };
+
+  // Physics-based thermal radius calculation
+  const calculatePhysicsThermalRadius = (energy: number): number => {
+    return Math.pow(energy, 0.4) * 7.2; // 1st/2nd degree burns radius
+  };
+
+  // Physics-based surface velocity (atmospheric deceleration)
+  const calculatePhysicsSurfaceVelocity = (initialVelocity: number, diameter: number): number => {
+    // Simplified atmospheric deceleration model
+    const dragCoeff = Math.min(0.3, 1000 / (diameter * 1000)); // Larger objects less affected
+    return initialVelocity * (1 - dragCoeff);
+  };
+
+  // Utility function to get averaged energy between Gemini and physics calculations
+  const getAveragedEnergy = (geminiEnergy: number | null, simData: SimulationData): number => {
+    const physicsEnergy = calculatePhysicsEnergy(
+      simData.asteroid.diameter, 
+      simData.parameters.velocity
+    );
+    
+    if (geminiEnergy && geminiEnergy > 0) {
+      // Average between Gemini and physics calculations
+      return (geminiEnergy + physicsEnergy) / 2;
+    }
+    
+    // Fallback to physics calculation if Gemini data unavailable
+    return physicsEnergy;
+  };
+
+  // Utility function to get averaged crater diameter
+  const getAveragedCraterDiameter = (geminiDiameter: number | null, averagedEnergy: number): number => {
+    const physicsDiameter = calculatePhysicsCraterDiameter(averagedEnergy);
+    
+    if (geminiDiameter && geminiDiameter > 0) {
+      return (geminiDiameter + physicsDiameter) / 2;
+    }
+    
+    return physicsDiameter;
+  };
+
+  // Utility function to get averaged damage radii
+  const getAveragedDamageRadii = (geminiRadii: any, averagedEnergy: number) => {
+    const physicsRadii = calculatePhysicsDamageRadii(averagedEnergy);
+    
+    if (geminiRadii && geminiRadii.severe && geminiRadii.moderate && geminiRadii.light) {
+      return {
+        severe: (geminiRadii.severe + physicsRadii.severe) / 2,
+        moderate: (geminiRadii.moderate + physicsRadii.moderate) / 2,
+        light: (geminiRadii.light + physicsRadii.light) / 2
+      };
+    }
+    
+    return physicsRadii;
+  };
+
+  // Utility function to get averaged thermal radius
+  const getAveragedThermalRadius = (geminiThermal: number | null, averagedEnergy: number): number => {
+    const physicsThermal = calculatePhysicsThermalRadius(averagedEnergy);
+    
+    if (geminiThermal && geminiThermal > 0) {
+      return (geminiThermal + physicsThermal) / 2;
+    }
+    
+    return physicsThermal;
+  };
+
+  // Utility function to get averaged surface velocity
+  const getAveragedSurfaceVelocity = (geminiVelocity: number | null, simData: SimulationData): number => {
+    const physicsVelocity = calculatePhysicsSurfaceVelocity(
+      simData.parameters.velocity,
+      simData.asteroid.diameter
+    );
+    
+    if (geminiVelocity && geminiVelocity > 0) {
+      return (geminiVelocity + physicsVelocity) / 2;
+    }
+    
+    return physicsVelocity;
+  };
   const [results, setResults] = useState<(ImpactResults & {
     magnitude: string;
     description: string;
@@ -241,62 +348,8 @@ function ResultsContent() {
           </div>
         </motion.div>
 
+
         {/* Impact Summary */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-8"
-        >
-          <Card className="bg-gradient-to-r from-red-900/30 to-orange-900/30 border-red-800/50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-white text-2xl">
-                <Zap className="w-6 h-6 text-yellow-400" />
-                Impact Summary
-                <Badge variant={results.magnitude === 'Extinction Level' ? 'destructive' : 'secondary'} className="text-lg px-3 py-1">
-                  {results.magnitude}
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-orange-400">
-                    {results.energyMt.toLocaleString()}
-                  </div>
-                  <div className="text-sm text-neutral-400">Megatons TNT</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-400">
-                    {(results.craterDiameter / 1000).toFixed(2)}
-                  </div>
-                  <div className="text-sm text-neutral-400">km Crater Diameter</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-red-400">
-                    {results.radii.severe.toFixed(1)}
-                  </div>
-                  <div className="text-sm text-neutral-400">km Destruction Radius</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-yellow-400">
-                    {results.earthquakeEffects.length}
-                  </div>
-                  <div className="text-sm text-neutral-400">Cities Affected</div>
-                </div>
-              </div>
-              
-              <div className="bg-slate-800/50 p-4 rounded-lg">
-                <p className="text-white text-lg">{results.description}</p>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Gemini Enhanced Data */}
-
-
-        {/* AI-Enhanced Impact Analysis */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -305,10 +358,9 @@ function ResultsContent() {
         >
           <Card className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 border-purple-800/50">
             <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-white text-xl">
+              <CardTitle className="flex items-center gap-3 text-white text-2xl">
                 <Brain className="w-6 h-6 text-purple-400" />
-                AI-Enhanced Impact Analysis
-
+                Impact Summary
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -319,35 +371,65 @@ function ResultsContent() {
                 if (!geminiData) return <p className="text-slate-400">No enhanced data available</p>;
                 
                 return (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="text-center bg-slate-800/50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-blue-400">
-                        {geminiData.earthquakeMagnitude?.toFixed(1) || 'N/A'}
+                  <div className="space-y-6">
+                    {/* Core Impact Metrics - Priority Data */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-yellow-800/30">
+                        <div className="text-2xl font-bold text-yellow-400">
+                          {getAveragedEnergy(geminiData.impactEnergy, simulationData).toFixed(1)} MT
+                        </div>
+                        <div className="text-sm text-neutral-400">Energy Produced</div>
+                        
                       </div>
-                      <div className="text-sm text-neutral-400">Earthquake Magnitude</div>
-                      <div className="text-xs text-slate-500 mt-1">Richter Scale</div>
-                    </div>
-                    <div className="text-center bg-slate-800/50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-orange-400">
-                        {geminiData.estimatedCasualties?.toLocaleString() || 'N/A'}
+                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-red-800/30">
+                        <div className="text-2xl font-bold text-red-400">
+                          {(() => {
+                            const averagedEnergy = getAveragedEnergy(geminiData.impactEnergy, simulationData);
+                            const averagedRadii = getAveragedDamageRadii(geminiData.damageRadii, averagedEnergy);
+                            return averagedRadii.severe.toFixed(1);
+                          })()} km
+                        </div>
+                        <div className="text-sm text-neutral-400">Destruction Radius</div>
+                        
                       </div>
-                      <div className="text-sm text-neutral-400">Est. Casualties</div>
-                      <div className="text-xs text-slate-500 mt-1">Immediate Impact</div>
-                    </div>
-                    <div className="text-center bg-slate-800/50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-green-400">
-                        {geminiData.equivalentNukes?.toFixed(0) || 'N/A'}
+                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-cyan-800/30">
+                        <div className="text-2xl font-bold text-cyan-400">
+                          {(() => {
+                            const averagedEnergy = getAveragedEnergy(geminiData.impactEnergy, simulationData);
+                            return getAveragedCraterDiameter(geminiData.craterDiameter, averagedEnergy).toFixed(2);
+                          })()} km
+                        </div>
+                        <div className="text-sm text-neutral-400">Crater Diameter</div>
+                        
                       </div>
-                      <div className="text-sm text-neutral-400">Nuclear Equivalent</div>
-                      <div className="text-xs text-slate-500 mt-1">Hiroshima Bombs</div>
-                    </div>
-                    <div className="text-center bg-slate-800/50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-red-400">
-                        {geminiData.tsunamiRisk ? 'HIGH' : 'LOW'}
+                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-orange-800/30">
+                        <div className="text-2xl font-bold text-orange-400">
+                          {affectedCities.length}
+                        </div>
+                        <div className="text-sm text-neutral-400">Cities Affected</div>
+                        
                       </div>
-                      <div className="text-sm text-neutral-400">Tsunami Risk</div>
-                      <div className="text-xs text-slate-500 mt-1">Coastal Impact</div>
                     </div>
+
+                    {/* Precision Physical Data */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-purple-800/30">
+                        <div className="text-xl font-bold text-purple-400">
+                          {getAveragedSurfaceVelocity(geminiData.impactVelocityAtSurface, simulationData).toFixed(1)} km/s
+                        </div>
+                        <div className="text-sm text-neutral-400">Surface Velocity</div>
+                        
+                      </div>
+                      <div className="text-center bg-slate-800/50 p-4 rounded-lg border border-yellow-800/30">
+                        <div className="text-xl font-bold text-yellow-400">
+                          {geminiData.thermalRadius?.toFixed(1) || 'N/A'} km
+                        </div>
+                        <div className="text-sm text-neutral-400">Thermal Radius</div>
+                        
+                      </div>
+                    </div>
+
+
                   </div>
                 );
               })()
@@ -376,24 +458,42 @@ function ResultsContent() {
                   <div className="w-4 h-4 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
                   <div>
                     <span className="text-red-200 font-semibold text-sm">Severe Destruction</span>
-                    <p className="text-slate-300 text-xs mt-1">Radius: {results.radii.severe.toFixed(1)} km</p>
-                    <p className="text-slate-400 text-xs mt-1">Complete devastation, total structural collapse</p>
+                    <p className="text-slate-300 text-xs mt-1">Radius: {(() => {
+                      const storedData = localStorage.getItem('impactSimulationData');
+                      const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
+                      const averagedEnergy = getAveragedEnergy(geminiData?.impactEnergy, simulationData);
+                      const averagedRadii = getAveragedDamageRadii(geminiData?.damageRadii, averagedEnergy);
+                      return averagedRadii.severe.toFixed(1);
+                    })()} km</p>
+                    <p className="text-slate-400 text-xs mt-1">Complete devastation</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-orange-900/20 rounded-lg border border-orange-800/50">
                   <div className="w-4 h-4 bg-orange-500 rounded-full mt-1 flex-shrink-0"></div>
                   <div>
                     <span className="text-orange-200 font-semibold text-sm">Major Damage</span>
-                    <p className="text-slate-300 text-xs mt-1">Radius: {results.radii.moderate.toFixed(1)} km</p>
-                    <p className="text-slate-400 text-xs mt-1">Severe structural damage, infrastructure failure</p>
+                    <p className="text-slate-300 text-xs mt-1">Radius: {(() => {
+                      const storedData = localStorage.getItem('impactSimulationData');
+                      const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
+                      const averagedEnergy = getAveragedEnergy(geminiData?.impactEnergy, simulationData);
+                      const averagedRadii = getAveragedDamageRadii(geminiData?.damageRadii, averagedEnergy);
+                      return averagedRadii.moderate.toFixed(1);
+                    })()} km</p>
+                    <p className="text-slate-400 text-xs mt-1">Structural damage</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-yellow-900/20 rounded-lg border border-yellow-800/50">
                   <div className="w-4 h-4 bg-yellow-500 rounded-full mt-1 flex-shrink-0"></div>
                   <div>
                     <span className="text-yellow-200 font-semibold text-sm">Evacuation Zone</span>
-                    <p className="text-slate-300 text-xs mt-1">Radius: {results.radii.light.toFixed(1)} km</p>
-                    <p className="text-slate-400 text-xs mt-1">Light damage, evacuation recommended</p>
+                    <p className="text-slate-300 text-xs mt-1">Radius: {(() => {
+                      const storedData = localStorage.getItem('impactSimulationData');
+                      const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
+                      const averagedEnergy = getAveragedEnergy(geminiData?.impactEnergy, simulationData);
+                      const averagedRadii = getAveragedDamageRadii(geminiData?.damageRadii, averagedEnergy);
+                      return averagedRadii.light.toFixed(1);
+                    })()} km</p>
+                    <p className="text-slate-400 text-xs mt-1">Light damage</p>
                   </div>
                 </div>
               </div>
@@ -419,7 +519,12 @@ function ResultsContent() {
               <CardContent>
                 <DamageZoneMap 
                   location={simulationData.location}
-                  damageRadii={results.radii}
+                  damageRadii={(() => {
+                    const storedData = localStorage.getItem('impactSimulationData');
+                    const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
+                    const averagedEnergy = getAveragedEnergy(geminiData?.impactEnergy, simulationData);
+                    return getAveragedDamageRadii(geminiData?.damageRadii, averagedEnergy);
+                  })()}
                   additionalEffects={additionalEffects || undefined}
                   className="h-96"
                 />
@@ -453,6 +558,11 @@ function ResultsContent() {
             asteroidDiameter={simulationData.asteroid.diameter}
             impactVelocity={simulationData.parameters.velocity}
             impactAngle={simulationData.parameters.angle}
+            averagedEnergyMt={(() => {
+              const storedData = localStorage.getItem('impactSimulationData');
+              const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
+              return getAveragedEnergy(geminiData?.impactEnergy, simulationData);
+            })()}
           />
         </motion.div>
 
@@ -483,29 +593,7 @@ function ResultsContent() {
           <AffectedCitiesDisplay affectedCities={affectedCities} />
         </motion.div>
 
-        {/* AI Impact Analysis */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.6 }}
-          className="mt-8"
-        >
-          <ImpactAnalysis 
-            asteroid={simulationData.asteroid}
-            location={simulationData.location}
-            impactData={{
-              energyMt: results.energyMt,
-              craterDiameter: results.craterDiameter / 1000, // Convert to km
-              radii: results.radii,
-              summary: {
-                totalPopulation: affectedCities.reduce((sum, city) => sum + city.population, 0),
-                totalFatalities: Math.floor(affectedCities.reduce((sum, city) => sum + city.population, 0) * 0.1),
-                totalInjuries: Math.floor(affectedCities.reduce((sum, city) => sum + city.population, 0) * 0.3),
-                affectedArea: Math.PI * Math.max(...Object.values(results.radii)) ** 2
-              }
-            }}
-          />
-        </motion.div>
+
 
         {/* Additional Details */}
         <motion.div
@@ -547,7 +635,13 @@ function ResultsContent() {
                     <div>Crater Depth: {(results.craterDiameter / 3000).toFixed(2)} km</div>
                     <div>Seismic Events: {results.earthquakeEffects.length}</div>
                     <div>Max Earthquake: {results.earthquakeEffects[0]?.magnitude.toFixed(1) || '0.0'} M</div>
-                    <div>Affected Region: {Math.max(...Object.values(results.radii)).toFixed(0)} km radius</div>
+                    <div>Affected Region: {(() => {
+                      const storedData = localStorage.getItem('impactSimulationData');
+                      const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
+                      const averagedEnergy = getAveragedEnergy(geminiData?.impactEnergy, simulationData);
+                      const averagedRadii = getAveragedDamageRadii(geminiData?.damageRadii, averagedEnergy);
+                      return Math.max(averagedRadii.severe, averagedRadii.moderate, averagedRadii.light).toFixed(0);
+                    })()} km radius</div>
                   </div>
                 </div>
               </div>

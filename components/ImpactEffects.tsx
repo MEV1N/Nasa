@@ -20,6 +20,7 @@ interface ImpactEffectsProps {
   asteroidDiameter?: number; // in km
   impactVelocity?: number; // in km/s
   impactAngle?: number; // in degrees
+  averagedEnergyMt?: number; // Pre-calculated averaged energy in MT
   className?: string;
 }
 
@@ -39,6 +40,7 @@ function ImpactEffects({
   asteroidDiameter = 5, 
   impactVelocity = 20,
   impactAngle = 45,
+  averagedEnergyMt,
   className 
 }: ImpactEffectsProps) {
   const [effects, setEffects] = useState<EffectsData | null>(null);
@@ -59,9 +61,9 @@ function ImpactEffects({
   const calculateEffects = () => {
     setIsCalculating(true);
     
-    // Calculate kinetic energy
-    const energy = calculateKineticEnergy();
-    const energyMt = energy / (4.184e15); // Convert to megatons TNT
+    // Use averaged energy if provided, otherwise calculate kinetic energy
+    const energy = averagedEnergyMt ? averagedEnergyMt * 4.184e15 : calculateKineticEnergy(); // Convert MT back to Joules if needed
+    const energyMt = averagedEnergyMt || (energy / (4.184e15)); // Use provided energy or convert calculated energy
     
     // Normalized energy for scaling (reference: 1e20 J = ~24 MT)
     const energyScale = energy / 1e20;
@@ -167,21 +169,14 @@ function ImpactEffects({
               <div className="text-white font-medium">
                 {effects ? `${effects.energyMegatons.toLocaleString()} MT` : 'Calculating...'}
               </div>
+              {averagedEnergyMt && (
+                <div className="text-xs text-green-400 mt-1"></div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Calculate Button */}
-        <div className="text-center">
-          <Button 
-            onClick={calculateEffects}
-            disabled={isCalculating}
-            className="bg-purple-600 hover:bg-purple-700"
-          >
-            <Calculator className="w-4 h-4 mr-2" />
-            {isCalculating ? 'Calculating...' : 'Recalculate Global Effects'}
-          </Button>
-        </div>
+    
 
         {effects && (
           <motion.div
