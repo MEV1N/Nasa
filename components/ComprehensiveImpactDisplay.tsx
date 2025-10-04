@@ -7,13 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { 
   Target, 
-  Zap, 
-  Users, 
-  Skull, 
   AlertTriangle, 
-  Map,
-  BarChart3,
-  TrendingUp
 } from 'lucide-react';
 import type { ComprehensiveImpactResult } from '@/app/api/simulate-impact/route';
 import dynamic from 'next/dynamic';
@@ -116,7 +110,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
         <Card className="bg-card border-border">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
-              <Skull className="w-5 h-5 text-red-400" />
+              
               Casualty Analysis
             </CardTitle>
           </CardHeader>
@@ -124,7 +118,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-red-900/20 p-4 rounded-lg border border-red-800/50">
                 <div className="flex items-center gap-2 mb-2">
-                  <Skull className="w-4 h-4 text-red-400" />
+                  
                   <span className="text-red-200 font-medium">Fatalities</span>
                 </div>
                 <div className="text-2xl font-bold text-white">
@@ -156,7 +150,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
 
               <div className="bg-green-900/20 p-4 rounded-lg border border-green-800/50">
                 <div className="flex items-center gap-2 mb-2">
-                  <Users className="w-4 h-4 text-green-400" />
+                  
                   <span className="text-green-200 font-medium">Survivors</span>
                 </div>
                 <div className="text-2xl font-bold text-white">
@@ -183,7 +177,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
         <Card className="bg-card border-border">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
-              <BarChart3 className="w-5 h-5 text-blue-400" />
+            
               Impact Zone Breakdown
             </CardTitle>
           </CardHeader>
@@ -273,7 +267,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
         <Card className="bg-card border-border">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-green-400" />
+
               Technical Parameters
             </CardTitle>
           </CardHeader>

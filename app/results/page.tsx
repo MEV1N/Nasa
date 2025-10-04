@@ -8,17 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   ArrowLeft, 
-  Target, 
-  Zap, 
-  Mountain, 
-  AlertTriangle, 
+  Target,
   MapPin, 
   Map,
-  RotateCcw,
-  Download,
   Share2,
-  Brain,
-  Calculator
 } from 'lucide-react';
 import { calculateImpact, type ImpactResults } from '@/utils/impactPhysics';
 import { calculateEarthquakeEffects, type EarthquakeEffect } from '@/utils/earthquakeEffects';
@@ -359,7 +352,7 @@ function ResultsContent() {
           <Card className="bg-zinc-950 border-zinc-800">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-white text-2xl">
-                <Brain className="w-6 h-6 text-white" />
+            
                 Impact Summary
               </CardTitle>
             </CardHeader>
@@ -605,7 +598,7 @@ function ResultsContent() {
           <Card className="bg-zinc-950 border-zinc-800">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-white">
-                <Mountain className="w-5 h-5 text-white" />
+                
                 Technical Details
               </CardTitle>
             </CardHeader>

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TriangleAlert as AlertTriangle, Database, Globe, BookOpen, Shield, Zap } from "lucide-react";
+import { TriangleAlert as AlertTriangle } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function InfoPage() {
@@ -60,7 +60,7 @@ export default function InfoPage() {
           <Card className="bg-card border-border">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-2xl font-orbitron text-white glow-on-hover">
-                <Zap className="h-6 w-6 glow-icon-hover" />
+                
                 Impact Physics & Calculations
               </CardTitle>
             </CardHeader>
@@ -125,7 +125,7 @@ export default function InfoPage() {
           <Card className="bg-card border-border">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-2xl font-orbitron text-white glow-on-hover">
-                <Database className="h-6 w-6 glow-icon-hover" />
+                
                 Data Sources
               </CardTitle>
             </CardHeader>
@@ -133,7 +133,7 @@ export default function InfoPage() {
               <div className="space-y-3">
                 <div className="bg-card p-4 rounded-lg border border-border">
                   <h4 className="font-semibold text-white mb-2 flex items-center gap-2 glow-on-hover">
-                    <Globe className="h-4 w-4 text-white glow-icon-hover" />
+                    
                     NASA Near-Earth Object API
                   </h4>
                   <p className="text-sm">
@@ -152,7 +152,7 @@ export default function InfoPage() {
 
                 <div className="bg-card p-4 rounded-lg border border-border">
                   <h4 className="font-semibold text-white mb-2 flex items-center gap-2 glow-on-hover">
-                    <BookOpen className="h-4 w-4 text-white glow-icon-hover" />
+                    
                     Impact Simulation Models
                   </h4>
                   <p className="text-sm">
@@ -167,7 +167,7 @@ export default function InfoPage() {
           <Card className="bg-card border-border">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-2xl font-orbitron text-white glow-on-hover">
-                <Shield className="h-6 w-6 glow-icon-hover" />
+                
                 Planetary Defense
               </CardTitle>
             </CardHeader>
@@ -200,7 +200,7 @@ export default function InfoPage() {
           <Card className="bg-card border-border">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-2xl font-orbitron text-white glow-on-hover">
-                <BookOpen className="h-6 w-6 glow-icon-hover" />
+            
                 How to Use This Simulator
               </CardTitle>
             </CardHeader>

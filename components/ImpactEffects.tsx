@@ -280,9 +280,9 @@ function ImpactEffects({
             )}
 
             {/* Impact Classification */}
-            <div className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 p-4 rounded-lg border border-purple-800/50">
+            <div className="bg-zinc-950 p-4 rounded-lg border border-zinc-800">
               <div className="text-center">
-                <div className="text-lg font-semibold text-white-300 mb-2">
+                <div className="text-lg font-semibold text-white mb-2">
                   Impact Classification: {getImpactClass()}
                 </div>
                 <div className="text-sm text-zinc-300">

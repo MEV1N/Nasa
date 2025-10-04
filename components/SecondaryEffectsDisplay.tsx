@@ -298,10 +298,9 @@ export function SecondaryEffectsDisplay({
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-800/50 mb-4">
+            <div className="bg-zinc-950 p-4 rounded-lg border border-zinc-800 mb-4">
               <div className="flex items-center gap-2 mb-2">
-                <Globe className="w-5 h-5 text-purple-400" />
-                <span className="font-semibold text-purple-300">Worldwide Climate Disruption</span>
+                <span className="font-semibold text-white">Worldwide Climate Disruption</span>
               </div>
               <p className="text-sm text-zinc-300">
                 This impact will cause global climate effects affecting all inhabited regions worldwide. 

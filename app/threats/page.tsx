@@ -6,15 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { 
-  AlertTriangle, 
-  Skull, 
-  Zap, 
-  Target,
-  Calendar,
-  Ruler,
-  Gauge,
-  ArrowRight,
-  RefreshCw
+  AlertTriangle,
 } from 'lucide-react';
 import { Asteroid } from '@/lib/nasa-api';
 import Link from 'next/link';
@@ -36,7 +28,7 @@ const DANGER_LEVELS: Record<string, DangerLevel> = {
     color: 'text-red-200',
     bgColor: 'bg-red-900/30',
     borderColor: 'border-red-600',
-    icon: Skull,
+    icon: AlertTriangle,
     description: 'Extinction-level threat with catastrophic global impact potential'
   },
   high: {
@@ -54,7 +46,7 @@ const DANGER_LEVELS: Record<string, DangerLevel> = {
     color: 'text-yellow-200',
     bgColor: 'bg-yellow-900/30',
     borderColor: 'border-yellow-600',
-    icon: Zap,
+    icon: AlertTriangle,
     description: 'Local to regional damage with substantial infrastructure impact'
   },
   low: {
@@ -63,7 +55,7 @@ const DANGER_LEVELS: Record<string, DangerLevel> = {
     color: 'text-blue-200', 
     bgColor: 'bg-blue-900/30',
     borderColor: 'border-blue-600',
-    icon: Target,
+    icon: AlertTriangle,
     description: 'Minimal damage expected, primarily atmospheric effects'
   }
 };
@@ -143,25 +135,24 @@ function AsteroidCard({ asteroid, dangerLevel }: { asteroid: Asteroid; dangerLev
         <CardContent className="space-y-3">
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div className="flex items-center gap-2">
-              <Ruler className="w-4 h-4 text-slate-400" />
+            
               <span className="text-slate-300">
                 {diameter > 0 ? `${(diameter * 1000).toFixed(0)}m` : 'Unknown'}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Gauge className="w-4 h-4 text-slate-400" />
+              
               <span className="text-slate-300">
                 {velocity > 0 ? `${velocity} km/s` : 'Unknown'}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Target className="w-4 h-4 text-slate-400" />
               <span className="text-slate-300">
                 {distance > 0 ? `${(distance / 1000000).toFixed(2)}M km` : 'Unknown'}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-slate-400" />
+            
               <span className="text-slate-300">
                 {new Date(approachDate).getFullYear()}
               </span>
@@ -177,7 +168,6 @@ function AsteroidCard({ asteroid, dangerLevel }: { asteroid: Asteroid; dangerLev
               className="w-full mt-3 bg-slate-700 hover:bg-slate-600 text-white"
               size="sm"
             >
-              <ArrowRight className="w-4 h-4 mr-2" />
               Simulate Impact
             </Button>
           </Link>
@@ -271,7 +261,7 @@ export default function ThreatsPage() {
             className="bg-blue-600 hover:bg-blue-700"
             disabled={loading}
           >
-            <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+        
             Refresh Data
           </Button>
         </motion.div>
