@@ -19,7 +19,7 @@ export default function InfoPage() {
             INFORMATION CENTER
           </h1>
           <p className="text-center text-neutral-400 text-lg">
-            Learn about asteroid threats, impact physics, and how this simulator works
+            Learn about asteroid threats, impact physics, and how Impactor 25 works
           </p>
         </motion.div>
 
@@ -66,7 +66,7 @@ export default function InfoPage() {
             </CardHeader>
             <CardContent className="space-y-4 text-neutral-300">
               <p>
-                When an asteroid strikes Earth, it releases tremendous kinetic energy. This simulator uses
+                When an asteroid strikes Earth, it releases tremendous kinetic energy. Impactor 25 uses
                 physics-based calculations to estimate the consequences:
               </p>
 
@@ -201,7 +201,7 @@ export default function InfoPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-2xl font-orbitron text-white glow-on-hover">
             
-                How to Use This Simulator
+                How to Use Impactor 25
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-neutral-300">
@@ -230,7 +230,7 @@ export default function InfoPage() {
 
               <div className="bg-card border border-border p-4 rounded-lg mt-4">
                 <p className="text-sm text-neutral-200">
-                  <strong>Note:</strong> This simulator uses the NASA DEMO_KEY for API access. For production use,
+                  <strong>Note:</strong> Impactor 25 uses the NASA DEMO_KEY for API access. For production use,
                   obtain a free API key at api.nasa.gov and replace the placeholder in the codebase.
                 </p>
               </div>

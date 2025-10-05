@@ -17,14 +17,14 @@ export default function Home() {
           className="text-center mb-24"
         >
           <h1 className="text-5xl md:text-7xl font-bold mb-8 font-orbitron text-gradient">
-            ASTEROID IMPACT SIMULATOR
+            IMPACTOR 25
           </h1>
           <p className="text-xl md:text-2xl text-gradient-subtle max-w-4xl mx-auto mb-12 leading-relaxed">
             Explore near-Earth objects, simulate asteroid impacts anywhere on Earth,
             and visualize the catastrophic consequences of cosmic collisions.
           </p>
           <p className="text-base text-gradient-accent max-w-3xl mx-auto mb-16 leading-relaxed">
-            Powered by NASA&apos;s Near-Earth Object API, this simulator provides real asteroid data
+            Powered by NASA&apos;s Near-Earth Object API, Impactor 25 provides real asteroid data
             combined with physics-based impact calculations to help understand the threats from space.
           </p>
 

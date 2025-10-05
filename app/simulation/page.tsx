@@ -95,7 +95,7 @@ export default function SimulationPage() {
 
           <div className="text-center space-y-6">
             <h1 className="text-4xl md:text-5xl font-bold text-gradient font-orbitron">
-              Asteroid Impact Simulator
+              Impactor 25
             </h1>
             <p className="text-lg text-neutral-400 max-w-4xl mx-auto leading-relaxed">
               Select an asteroid from NASA&apos;s database, configure impact parameters, and visualize the devastating consequences
@@ -258,7 +258,7 @@ export default function SimulationPage() {
                 </Button>
               </div>
 
-              {/* Impact Simulator */}
+              {/* Impactor 25 Engine */}
               <ImpactSimulator asteroid={selectedAsteroid} selectedLocation={selectedLocation} />
             </motion.div>
           )}

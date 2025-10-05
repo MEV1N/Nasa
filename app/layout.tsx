@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 const orbitron = Orbitron({ subsets: ['latin'], variable: '--font-orbitron' });
 
 export const metadata: Metadata = {
-  title: 'NASA Space Apps: Asteroid Impact Simulator',
+  title: 'Impactor 25',
   description: 'Explore asteroid data, simulate impacts, and visualize consequences',
 };
 
@@ -31,7 +31,7 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
             <div className="flex justify-between items-center h-20">
               <Link href="/" className="font-bold text-xl font-orbitron text-white hover:text-gray-300 transition-colors">
-                NASA ASTEROID SIMULATOR
+                IMPACTOR 25
               </Link>
               <div className="flex space-x-12">
                 <Link href="/" className="text-white/90 hover:text-white transition-colors text-sm font-medium font-orbitron">
