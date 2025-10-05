@@ -76,7 +76,7 @@ export default function SimulationPage() {
         >
           <div className="flex items-center justify-between mb-12">
             <Link href="/">
-              <Button variant="outline" className="bg-card border-border text-white hover:bg-white/5 px-6 py-3">
+              <Button variant="outline" className="bg-card border-border text-white hover:bg-white/5 px-6 py-3 font-orbitron">
                 
                 Back to Home
               </Button>
@@ -275,7 +275,7 @@ export default function SimulationPage() {
               {/* Results Header */}
               <Card className="bg-card border-border">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-white">
+                  <CardTitle className="flex items-center gap-3 text-white font-orbitron">
                     <AlertTriangle className="w-6 h-6 text-white" />
                     Impact Analysis Results
                     <Badge variant="destructive">
@@ -286,19 +286,19 @@ export default function SimulationPage() {
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-white">
+                      <div className="text-3xl font-bold text-white font-orbitron">
                         {simulationResults.energy.toLocaleString()}
                       </div>
                       <div className="text-sm text-neutral-400">Megatons TNT</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-white">
+                      <div className="text-3xl font-bold text-white font-orbitron">
                         {simulationResults.craterDiameter.toFixed(1)}
                       </div>
                       <div className="text-sm text-neutral-400">km Crater Diameter</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-white">
+                      <div className="text-3xl font-bold text-white font-orbitron">
                         {selectedAsteroid.name.replace(/[()]/g, '').substring(0, 15)}...
                       </div>
                       <div className="text-sm text-neutral-400">Impacting Asteroid</div>

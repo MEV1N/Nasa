@@ -128,7 +128,7 @@ function AsteroidCard({ asteroid, dangerLevel }: { asteroid: Asteroid; dangerLev
               </Badge>
             )}
           </div>
-          <CardTitle className="text-white text-lg font-semibold">
+          <CardTitle className="text-white text-lg font-semibold font-orbitron">
             {asteroid.name.replace(/[()]/g, '')}
           </CardTitle>
         </CardHeader>
@@ -233,7 +233,7 @@ export default function ThreatsPage() {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white mx-auto mb-6"></div>
-          <h2 className="text-2xl font-bold text-white mb-2">Analyzing Asteroid Threats</h2>
+          <h2 className="text-2xl font-bold text-white mb-2 font-orbitron">Analyzing Asteroid Threats</h2>
           <p className="text-slate-300">Classifying danger levels...</p>
         </div>
       </div>
@@ -280,7 +280,7 @@ export default function ThreatsPage() {
               <Card key={key} className={`${level.bgColor} border-2 ${level.borderColor}`}>
                 <CardContent className="p-4 text-center">
                   <Icon className={`w-8 h-8 ${level.color} mx-auto mb-2`} />
-                  <div className="text-2xl font-bold text-white">{count}</div>
+                  <div className="text-2xl font-bold text-white font-orbitron">{count}</div>
                   <div className={`text-sm ${level.color}`}>{level.label}</div>
                 </CardContent>
               </Card>
@@ -303,7 +303,7 @@ export default function ThreatsPage() {
             >
               <div className="flex items-center gap-3 mb-6">
                 <level.icon className={`w-6 h-6 ${level.color}`} />
-                <h2 className="text-2xl font-bold text-white">{level.label}</h2>
+                <h2 className="text-2xl font-bold text-white font-orbitron">{level.label}</h2>
                 <Badge variant="outline" className={`${level.color} ${level.borderColor}`}>
                   {asteroids.length} asteroid{asteroids.length !== 1 ? 's' : ''}
                 </Badge>

@@ -139,7 +139,7 @@ function ImpactEffects({
   return (
     <Card className={`bg-zinc-950 border-zinc-800 ${className}`}>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-white">
+        <CardTitle className="flex items-center gap-2 text-white font-orbitron">
           <Globe className="w-5 h-5 text-white" />
           Global Impact Effects Analysis
           <Badge variant="outline" className="ml-2 bg-zinc-900 border-zinc-700 text-white">
@@ -150,7 +150,7 @@ function ImpactEffects({
       <CardContent className="space-y-6">
         {/* Impact Parameters Summary */}
         <div className="bg-zinc-900 p-4 rounded-lg">
-          <h4 className="text-sm font-semibold text-zinc-300 mb-3">Impact Parameters</h4>
+          <h4 className="text-sm font-semibold text-zinc-300 mb-3 font-orbitron">Impact Parameters</h4>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
               <span className="text-zinc-400">Diameter:</span>
@@ -252,7 +252,7 @@ function ImpactEffects({
             {/* Secondary Effects */}
             {effects.impactWinter > 0 && (
               <div className="bg-zinc-900 p-4 rounded-lg">
-                <h4 className="text-sm font-semibold text-zinc-300 mb-3 flex items-center gap-2">
+                <h4 className="text-sm font-semibold text-zinc-300 mb-3 flex items-center gap-2 font-orbitron">
                   
                   Long-term Effects
                 </h4>

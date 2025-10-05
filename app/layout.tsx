@@ -34,19 +34,19 @@ export default function RootLayout({
                 NASA ASTEROID SIMULATOR
               </Link>
               <div className="flex space-x-12">
-                <Link href="/" className="text-white/90 hover:text-white transition-colors text-sm font-medium">
+                <Link href="/" className="text-white/90 hover:text-white transition-colors text-sm font-medium font-orbitron">
                   Home
                 </Link>
-                <Link href="/simulation" className="text-white/90 hover:text-white transition-colors text-sm font-medium">
+                <Link href="/simulation" className="text-white/90 hover:text-white transition-colors text-sm font-medium font-orbitron">
                   Simulation
                 </Link>
-                <Link href="/database" className="text-white/90 hover:text-white transition-colors text-sm font-medium">
+                <Link href="/database" className="text-white/90 hover:text-white transition-colors text-sm font-medium font-orbitron">
                   Database
                 </Link>
-                <Link href="/globe" className="text-white/90 hover:text-white transition-colors text-sm font-medium">
+                <Link href="/globe" className="text-white/90 hover:text-white transition-colors text-sm font-medium font-orbitron">
                   Globe
                 </Link>
-                <Link href="/info" className="text-white/90 hover:text-white transition-colors text-sm font-medium">
+                <Link href="/info" className="text-white/90 hover:text-white transition-colors text-sm font-medium font-orbitron">
                   Info
                 </Link>
               </div>

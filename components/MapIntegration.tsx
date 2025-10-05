@@ -61,7 +61,7 @@ function MapIntegration({
       <Marker position={[impactLat, impactLng]}>
         <Popup>
           <div>
-            <h3>Impact Location</h3>
+            <h3 className="font-orbitron">Impact Location</h3>
             <p>Asteroid: {asteroidDiameter} km diameter</p>
             <p>Velocity: {impactVelocity} km/s</p>
             <p>Angle: {impactAngle}°</p>
@@ -84,7 +84,7 @@ function MapIntegration({
         >
           <Popup>
             <div>
-              <h4>Airblast Zone</h4>
+              <h4 className="font-orbitron">Airblast Zone</h4>
               <p>Radius: {effects.airblastRadius.toFixed(1)} km</p>
               <p>Destructive shockwave effects</p>
             </div>
@@ -107,7 +107,7 @@ function MapIntegration({
         >
           <Popup>
             <div>
-              <h4>Tsunami Zone</h4>
+              <h4 className="font-orbitron">Tsunami Zone</h4>
               <p>Wave Height: {effects.tsunamiHeight.toFixed(0)} meters</p>
               <p>Coastal flooding risk</p>
             </div>
@@ -130,7 +130,7 @@ function MapIntegration({
         >
           <Popup>
             <div>
-              <h4>Seismic Effects</h4>
+              <h4 className="font-orbitron">Seismic Effects</h4>
               <p>Radius: {effects.seismicRadius.toFixed(1)} km</p>
               <p>Earthquake damage from impact</p>
             </div>

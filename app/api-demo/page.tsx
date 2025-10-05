@@ -163,10 +163,10 @@ export default function ImpactAnalysis({ asteroid, location, impactData }) {
               <CardContent className="space-y-6">
                 {/* Asteroid Parameters */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-purple-300">Asteroid Data</h3>
+                  <h3 className="text-lg font-semibold text-purple-300 font-orbitron">Asteroid Data</h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label className="text-slate-300">Name</Label>
+                      <Label className="text-slate-300 font-orbitron">Name</Label>
                       <Input
                         value={asteroid.name}
                         onChange={(e) => setAsteroid({...asteroid, name: e.target.value})}
@@ -174,7 +174,7 @@ export default function ImpactAnalysis({ asteroid, location, impactData }) {
                       />
                     </div>
                     <div>
-                      <Label className="text-slate-300">Diameter (m)</Label>
+                      <Label className="text-slate-300 font-orbitron">Diameter (m)</Label>
                       <Input
                         type="number"
                         value={asteroid.diameter}
@@ -183,7 +183,7 @@ export default function ImpactAnalysis({ asteroid, location, impactData }) {
                       />
                     </div>
                     <div>
-                      <Label className="text-slate-300">Velocity (km/s)</Label>
+                      <Label className="text-slate-300 font-orbitron">Velocity (km/s)</Label>
                       <Input
                         type="number"
                         value={asteroid.velocity}
@@ -192,7 +192,7 @@ export default function ImpactAnalysis({ asteroid, location, impactData }) {
                       />
                     </div>
                     <div>
-                      <Label className="text-slate-300">Hazardous</Label>
+                      <Label className="text-slate-300 font-orbitron">Hazardous</Label>
                       <select
                         value={asteroid.hazardous.toString()}
                         onChange={(e) => setAsteroid({...asteroid, hazardous: e.target.value === 'true'})}
@@ -207,10 +207,10 @@ export default function ImpactAnalysis({ asteroid, location, impactData }) {
 
                 {/* Location Parameters */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-blue-300">Location Data</h3>
+                  <h3 className="text-lg font-semibold text-blue-300 font-orbitron">Location Data</h3>
                   <div className="grid grid-cols-1 gap-4">
                     <div>
-                      <Label className="text-slate-300">Location Name</Label>
+                      <Label className="text-slate-300 font-orbitron">Location Name</Label>
                       <Input
                         value={location.name}
                         onChange={(e) => setLocation({...location, name: e.target.value})}
@@ -219,7 +219,7 @@ export default function ImpactAnalysis({ asteroid, location, impactData }) {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label className="text-slate-300">Latitude</Label>
+                        <Label className="text-slate-300 font-orbitron">Latitude</Label>
                         <Input
                           type="number"
                           step="0.0001"
@@ -229,7 +229,7 @@ export default function ImpactAnalysis({ asteroid, location, impactData }) {
                         />
                       </div>
                       <div>
-                        <Label className="text-slate-300">Longitude</Label>
+                        <Label className="text-slate-300 font-orbitron">Longitude</Label>
                         <Input
                           type="number"
                           step="0.0001"
@@ -244,10 +244,10 @@ export default function ImpactAnalysis({ asteroid, location, impactData }) {
 
                 {/* Impact Data Parameters */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-orange-300">Impact Data</h3>
+                  <h3 className="text-lg font-semibold text-orange-300 font-orbitron">Impact Data</h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label className="text-slate-300">Energy (MT)</Label>
+                      <Label className="text-slate-300 font-orbitron">Energy (MT)</Label>
                       <Input
                         type="number"
                         step="0.1"
@@ -257,7 +257,7 @@ export default function ImpactAnalysis({ asteroid, location, impactData }) {
                       />
                     </div>
                     <div>
-                      <Label className="text-slate-300">Crater Diameter (km)</Label>
+                      <Label className="text-slate-300 font-orbitron">Crater Diameter (km)</Label>
                       <Input
                         type="number"
                         step="0.1"

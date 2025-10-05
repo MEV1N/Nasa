@@ -240,7 +240,7 @@ const InteractiveGlobe: React.FC<InteractiveGlobeProps> = ({ className, onLocati
       {selectedLocation && (
         <div className="absolute top-4 right-4 bg-black/90 text-white p-4 rounded-lg max-w-sm border border-red-500/50">
           <div className="flex justify-between items-start mb-2">
-            <h3 className="text-lg font-semibold text-red-400">Impact Target Selected</h3>
+            <h3 className="text-lg font-semibold text-red-400 font-orbitron">Impact Target Selected</h3>
             <button 
               onClick={clearSelection}
               className="text-gray-400 hover:text-white transition-colors"

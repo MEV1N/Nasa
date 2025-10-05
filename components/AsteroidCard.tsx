@@ -95,7 +95,7 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
           )}
 
           <CardHeader className="relative z-10 pb-2">
-            <CardTitle className="text-white text-lg font-bold truncate">
+            <CardTitle className="text-white text-lg font-bold truncate font-orbitron">
               {asteroid.name.replace(/[()]/g, '')}
             </CardTitle>
             <div className="text-sm text-neutral-400">
@@ -107,7 +107,7 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
             {/* Diameter */}
             <div className="flex items-center gap-2 text-neutral-300">
               <span className="text-sm">
-                Diameter: <span className="font-semibold text-white">
+                Diameter: <span className="font-semibold text-white font-orbitron">
                   {avgDiameter > 0 ? `${avgDiameter.toFixed(2)} km` : 'Unknown'}
                 </span>
               </span>
@@ -117,7 +117,7 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
             {velocity > 0 && (
               <div className="flex items-center gap-2 text-neutral-300">
                 <span className="text-sm">
-                  Velocity: <span className="font-semibold text-white">
+                  Velocity: <span className="font-semibold text-white font-orbitron">
                     {velocity.toLocaleString()} km/h
                   </span>
                 </span>
@@ -127,7 +127,7 @@ export function AsteroidCard({ asteroid, index, onSelect }: AsteroidCardProps) {
             {/* Closest approach date */}
             <div className="flex items-center gap-2 text-neutral-300">
               <span className="text-sm">
-                Next approach: <span className="font-semibold text-white">
+                Next approach: <span className="font-semibold text-white font-orbitron">
                   {approachDate}
                 </span>
               </span>

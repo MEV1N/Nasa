@@ -38,7 +38,7 @@ export default function APIDemo() {
           </h1>
           
           <div className="bg-gray-900 p-6 rounded-lg mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Features:</h2>
+            <h2 className="text-2xl font-semibold mb-4 font-orbitron">Features:</h2>
             <ul className="space-y-2 text-gray-300">
               <li>• Animated pill-style navigation with GSAP</li>
               <li>• Responsive design with mobile hamburger menu</li>
@@ -51,7 +51,7 @@ export default function APIDemo() {
           </div>
 
           <div className="bg-gray-900 p-6 rounded-lg mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Current Configuration:</h2>
+            <h2 className="text-2xl font-semibold mb-4 font-orbitron">Current Configuration:</h2>
             <pre className="text-sm text-gray-300 overflow-x-auto">
 {`<PillNav
   logo="/nasa-logo.svg"
@@ -74,15 +74,15 @@ export default function APIDemo() {
           </div>
 
           <div className="bg-gray-900 p-6 rounded-lg">
-            <h2 className="text-2xl font-semibold mb-4">Color Variations:</h2>
+            <h2 className="text-2xl font-semibold mb-4 font-orbitron">Color Variations:</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-gray-800 rounded">
-                <h3 className="font-semibold mb-2">Dark Theme</h3>
+                <h3 className="font-semibold mb-2 font-orbitron">Dark Theme</h3>
                 <p className="text-sm text-gray-400">baseColor: "#000000"</p>
                 <p className="text-sm text-gray-400">pillColor: "#ffffff"</p>
               </div>
               <div className="p-4 bg-gray-800 rounded">
-                <h3 className="font-semibold mb-2">Light Theme</h3>
+                <h3 className="font-semibold mb-2 font-orbitron">Light Theme</h3>
                 <p className="text-sm text-gray-400">baseColor: "#ffffff"</p>
                 <p className="text-sm text-gray-400">pillColor: "#000000"</p>
               </div>

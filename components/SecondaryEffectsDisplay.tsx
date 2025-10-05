@@ -181,7 +181,7 @@ export function SecondaryEffectsDisplay({
       {effects.tsunamiAffectedCoasts.length > 0 && (
         <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
+            <CardTitle className="flex items-center gap-2 text-white font-orbitron">
               Tsunami Affected Coastal Areas
               <Badge variant="outline" className="ml-2">
                 {effects.tsunamiAffectedCoasts.length} Locations
@@ -254,7 +254,7 @@ export function SecondaryEffectsDisplay({
       {effects.seismicAffectedRegions.length > 0 && (
         <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
+            <CardTitle className="flex items-center gap-2 text-white font-orbitron">
               Seismic Affected Regions
               <Badge variant="outline" className="ml-2">
                 {effects.seismicAffectedRegions.length} Locations
@@ -292,7 +292,7 @@ export function SecondaryEffectsDisplay({
       {asteroidData.energyMt >= 1000 && (
         <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
+            <CardTitle className="flex items-center gap-2 text-white font-orbitron">
               Global Climate Impact Zones
               <Badge variant="outline" className="ml-2 text-white-400">
                 GLOBAL EFFECT
@@ -336,7 +336,7 @@ export function SecondaryEffectsDisplay({
       {effects.airblastAffectedZones.length > 0 && (
         <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
+            <CardTitle className="flex items-center gap-2 text-white font-orbitron">
               <Wind className="w-5 h-5 text-gray-400" />
               Airblast/Shockwave Zones
               <Badge variant="outline" className="ml-2">
@@ -387,7 +387,7 @@ export function SecondaryEffectsDisplay({
       {/* Summary Statistics */}
       <Card className="bg-gradient-to-r from-zinc-950 to-zinc-900 border-zinc-800">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
+          <CardTitle className="flex items-center gap-2 text-white font-orbitron">
             Secondary Effects Summary
           </CardTitle>
         </CardHeader>

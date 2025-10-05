@@ -63,7 +63,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
         <Card className="bg-gradient-to-r from-red-900/20 to-orange-900/20 border-red-800/50">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-white text-xl flex items-center gap-2">
+              <CardTitle className="text-white text-xl flex items-center gap-2 font-orbitron">
                 <Target className="w-6 h-6 text-red-400" />
                 Impact Assessment Results
               </CardTitle>
@@ -73,25 +73,25 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white font-orbitron">
                   {formatNumber(results.physicsResults.energyMt)} MT
                 </div>
                 <div className="text-slate-300 text-sm">TNT Equivalent</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white font-orbitron">
                   {results.physicsResults.craterDiameter.toFixed(1)} km
                 </div>
                 <div className="text-slate-300 text-sm">Crater Diameter</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white font-orbitron">
                   {formatNumber(results.summary.totalPopulation)}
                 </div>
                 <div className="text-slate-300 text-sm">People Affected</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white font-orbitron">
                   {results.summary.affectedArea.toFixed(0)} km²
                 </div>
                 <div className="text-slate-300 text-sm">Affected Area</div>
@@ -109,7 +109,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
       >
         <Card className="bg-card border-border">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-white flex items-center gap-2 font-orbitron">
               
               Casualty Analysis
             </CardTitle>
@@ -121,7 +121,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
                   
                   <span className="text-red-200 font-medium">Fatalities</span>
                 </div>
-                <div className="text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white font-orbitron">
                   {formatNumber(results.summary.totalFatalities)}
                 </div>
                 <div className="text-slate-400 text-sm">
@@ -137,7 +137,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
                   <AlertTriangle className="w-4 h-4 text-yellow-400" />
                   <span className="text-yellow-200 font-medium">Injuries</span>
                 </div>
-                <div className="text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white font-orbitron">
                   {formatNumber(results.summary.totalInjuries)}
                 </div>
                 <div className="text-slate-400 text-sm">
@@ -153,7 +153,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
                   
                   <span className="text-green-200 font-medium">Survivors</span>
                 </div>
-                <div className="text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white font-orbitron">
                   {formatNumber(results.summary.totalSurvivors)}
                 </div>
                 <div className="text-slate-400 text-sm">
@@ -176,7 +176,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
       >
         <Card className="bg-card border-border">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-white flex items-center gap-2 font-orbitron">
             
               Impact Zone Breakdown
             </CardTitle>
@@ -194,7 +194,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
                 return (
                   <div key={index} className={`p-4 rounded-lg border ${colors.bg} ${colors.border}`}>
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className={`font-semibold capitalize ${colors.text}`}>
+                      <h4 className={`font-semibold capitalize ${colors.text} font-orbitron`}>
                         {zone.zone} Damage Zone
                       </h4>
                       <Badge variant="outline" className={`${colors.text} border-current`}>
@@ -236,7 +236,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
       >
         <Card className="bg-card border-border">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-white flex items-center gap-2 font-orbitron">
               
               Impact Zone Visualization
             </CardTitle>
@@ -266,7 +266,7 @@ export function ComprehensiveImpactDisplay({ results, className }: Comprehensive
       >
         <Card className="bg-card border-border">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-white flex items-center gap-2 font-orbitron">
 
               Technical Parameters
             </CardTitle>

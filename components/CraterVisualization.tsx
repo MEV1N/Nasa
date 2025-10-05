@@ -212,7 +212,7 @@ export function CraterVisualization({
     >
       <Card className="bg-gradient-to-br from-slate-900 to-slate-800 border-slate-700">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
+          <CardTitle className="flex items-center gap-2 text-white font-orbitron">
             
             Crater Visualization
           </CardTitle>

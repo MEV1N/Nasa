@@ -106,7 +106,7 @@ export default function ImpactAnalysis({
     >
       <Card className="bg-gradient-to-br from-purple-900/20 to-blue-900/20 border-purple-800/50">
         <CardHeader>
-          <CardTitle className="flex items-center gap-3 text-white">
+          <CardTitle className="flex items-center gap-3 text-white font-orbitron">
             
             Impact Analysis
           </CardTitle>
@@ -115,7 +115,7 @@ export default function ImpactAnalysis({
           {/* Analysis Parameters Summary */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-slate-800/50 p-4 rounded-lg">
-              <h4 className="text-sm font-semibold text-white-300 mb-3 flex items-center gap-2">
+              <h4 className="text-sm font-semibold text-white-300 mb-3 flex items-center gap-2 font-orbitron">
                 
                 Asteroid Data
               </h4>
@@ -145,7 +145,7 @@ export default function ImpactAnalysis({
             </div>
 
             <div className="bg-slate-800/50 p-4 rounded-lg">
-              <h4 className="text-sm font-semibold text-white-300 mb-3 flex items-center gap-2">
+              <h4 className="text-sm font-semibold text-white-300 mb-3 flex items-center gap-2 font-orbitron">
                 <MapPin className="w-4 h-4" />
                 Impact Location
               </h4>
@@ -173,7 +173,7 @@ export default function ImpactAnalysis({
           {/* Quick Impact Summary */}
           {impactData.summary && (
             <div className="bg-red-900/20 p-4 rounded-lg border border-red-800/50">
-              <h4 className="text-sm font-semibold text-red-300 mb-3 flex items-center gap-2">
+              <h4 className="text-sm font-semibold text-red-300 mb-3 flex items-center gap-2 font-orbitron">
                 <AlertTriangle className="w-4 h-4" />
                 Impact Overview
               </h4>
@@ -260,7 +260,7 @@ export default function ImpactAnalysis({
               className="bg-slate-900/70 border border-slate-700 rounded-lg overflow-hidden"
             >
               <div className="bg-gradient-to-r from-purple-900/50 to-blue-900/50 p-4 border-b border-slate-700">
-                <h4 className="text-lg font-semibold text-white flex items-center gap-2">
+                <h4 className="text-lg font-semibold text-white flex items-center gap-2 font-orbitron">
                   <TrendingUp className="w-5 h-5 text-white-400" />
                   Comprehensive Impact Analysis
                 </h4>

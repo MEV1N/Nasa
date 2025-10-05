@@ -64,7 +64,7 @@ export default function DatabasePage() {
           <Card className="bg-card border-border">
             <CardContent className="pt-6">
               <div className="text-center">
-                <p className="text-4xl font-bold text-white">{asteroids.length}</p>
+                <p className="text-4xl font-bold text-white font-orbitron">{asteroids.length}</p>
                 <p className="text-sm text-neutral-400 mt-2">Total Asteroids</p>
               </div>
             </CardContent>
@@ -73,7 +73,7 @@ export default function DatabasePage() {
           <Card className="bg-card border-border">
             <CardContent className="pt-6">
               <div className="text-center">
-                <p className="text-4xl font-bold text-white">
+                <p className="text-4xl font-bold text-white font-orbitron">
                   {asteroids.filter((a) => a.is_potentially_hazardous_asteroid).length}
                 </p>
                 <p className="text-sm text-neutral-400 mt-2">Potentially Hazardous</p>
@@ -84,7 +84,7 @@ export default function DatabasePage() {
           <Card className="bg-card border-border">
             <CardContent className="pt-6">
               <div className="text-center">
-                <p className="text-4xl font-bold text-white">
+                <p className="text-4xl font-bold text-white font-orbitron">
                   {asteroids.filter((a) => !a.is_potentially_hazardous_asteroid).length}
                 </p>
                 <p className="text-sm text-neutral-400 mt-2">Non-Hazardous</p>

@@ -111,7 +111,7 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
       >
         <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
+            <CardTitle className="flex items-center gap-2 text-white font-orbitron">
               
               Impact Simulation
               {asteroid && (
@@ -130,7 +130,7 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
             {/* Asteroid Info */}
             {asteroid && (
               <div className="bg-zinc-900 p-4 rounded-lg space-y-2">
-                <h4 className="text-sm font-semibold text-zinc-300">Asteroid Properties</h4>
+                <h4 className="text-sm font-semibold text-zinc-300 font-orbitron">Asteroid Properties</h4>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <span className="text-zinc-400">Diameter:</span>
@@ -147,7 +147,7 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
             {/* Impact Location Info */}
             {selectedLocation && (
               <div className="bg-red-900/20 p-4 rounded-lg border border-red-800/50 space-y-2">
-                <h4 className="text-sm font-semibold text-red-300">Impact Target</h4>
+                <h4 className="text-sm font-semibold text-red-300 font-orbitron">Impact Target</h4>
                 <div className="grid grid-cols-3 gap-4 text-sm">
                   <div>
                     <span className="text-zinc-400">Location:</span>
@@ -168,7 +168,7 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
             {/* Simulation Parameters */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="angle" className="text-zinc-300">Impact Angle (degrees)</Label>
+                <Label htmlFor="angle" className="text-zinc-300 font-orbitron">Impact Angle (degrees)</Label>
                 <Input
                   id="angle"
                   type="number"
@@ -181,7 +181,7 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="velocity" className="text-zinc-300">Impact Velocity (km/s)</Label>
+                <Label htmlFor="velocity" className="text-zinc-300 font-orbitron">Impact Velocity (km/s)</Label>
                 <Input
                   id="velocity"
                   type="number"
@@ -212,7 +212,7 @@ export function ImpactSimulator({ asteroid, selectedLocation }: ImpactSimulatorP
               >
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-                  <h4 className="text-lg font-bold text-white mb-2">
+                  <h4 className="text-lg font-bold text-white mb-2 font-orbitron">
                     Calculating Impact Effects...
                   </h4>
                   <p className="text-zinc-300">

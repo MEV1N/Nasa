@@ -47,7 +47,7 @@ export default function InfoPage() {
                 While most PHAs will never actually hit Earth, they warrant careful monitoring.
               </p>
               <div className="bg-card p-4 rounded-lg border border-border">
-                <h4 className="font-semibold text-white mb-2">Historical Impact Events:</h4>
+                <h4 className="font-semibold text-white mb-2 font-orbitron">Historical Impact Events:</h4>
                 <ul className="space-y-2 list-disc list-inside text-sm">
                   <li><strong>Chicxulub Impact (66 million years ago):</strong> 10-15 km asteroid that caused the extinction of dinosaurs</li>
                   <li><strong>Tunguska Event (1908):</strong> ~50-meter object flattened 2,000 km² of Siberian forest</li>
@@ -132,7 +132,7 @@ export default function InfoPage() {
             <CardContent className="space-y-4 text-neutral-300">
               <div className="space-y-3">
                 <div className="bg-card p-4 rounded-lg border border-border">
-                  <h4 className="font-semibold text-white mb-2 flex items-center gap-2 glow-on-hover">
+                  <h4 className="font-semibold text-white mb-2 flex items-center gap-2 glow-on-hover font-orbitron">
                     
                     NASA Near-Earth Object API
                   </h4>
@@ -151,7 +151,7 @@ export default function InfoPage() {
                 </div>
 
                 <div className="bg-card p-4 rounded-lg border border-border">
-                  <h4 className="font-semibold text-white mb-2 flex items-center gap-2 glow-on-hover">
+                  <h4 className="font-semibold text-white mb-2 flex items-center gap-2 glow-on-hover font-orbitron">
                     
                     Impact Simulation Models
                   </h4>
@@ -178,7 +178,7 @@ export default function InfoPage() {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-card p-4 rounded-lg border border-border">
-                  <h4 className="font-semibold text-white mb-2">Detection Systems</h4>
+                  <h4 className="font-semibold text-white mb-2 font-orbitron">Detection Systems</h4>
                   <ul className="text-sm space-y-1 list-disc list-inside">
                     <li>Ground-based telescopes</li>
                     <li>Space-based infrared surveys</li>
@@ -186,7 +186,7 @@ export default function InfoPage() {
                   </ul>
                 </div>
                 <div className="bg-card p-4 rounded-lg border border-border">
-                  <h4 className="font-semibold text-white mb-2">Deflection Methods</h4>
+                  <h4 className="font-semibold text-white mb-2 font-orbitron">Deflection Methods</h4>
                   <ul className="text-sm space-y-1 list-disc list-inside">
                     <li>Kinetic impactor (DART mission)</li>
                     <li>Gravity tractor</li>

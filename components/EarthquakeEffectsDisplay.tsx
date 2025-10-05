@@ -49,7 +49,7 @@ export function EarthquakeEffectsDisplay({ effects, className }: EarthquakeEffec
   return (
     <Card className={`bg-slate-800/50 border-slate-700 ${className}`}>
       <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-white text-lg">
+        <CardTitle className="flex items-center gap-2 text-white text-lg font-orbitron">
           <AlertTriangle className="w-5 h-5 text-orange-400" />
           Secondary Earthquake Effects
         </CardTitle>
@@ -94,7 +94,7 @@ export function EarthquakeEffectsDisplay({ effects, className }: EarthquakeEffec
         {/* Detailed Casualty Breakdown */}
         {summary.estimatedCasualties > 0 && (
           <div className="bg-slate-800/30 p-3 rounded-lg">
-            <h4 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
+            <h4 className="text-sm font-semibold text-white mb-2 flex items-center gap-2 font-orbitron">
             
               Casualty Analysis
             </h4>
@@ -127,7 +127,7 @@ export function EarthquakeEffectsDisplay({ effects, className }: EarthquakeEffec
 
         {/* Affected Cities List */}
         <div className="max-h-48 overflow-y-auto space-y-2">
-          <h4 className="text-sm font-medium text-white sticky top-0 bg-slate-800 py-1">
+          <h4 className="text-sm font-medium text-white sticky top-0 bg-slate-800 py-1 font-orbitron">
             Most Affected Cities:
           </h4>
           {effects.slice(0, 12).map((effect, index) => (

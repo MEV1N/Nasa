@@ -351,7 +351,7 @@ function ResultsContent() {
         >
           <Card className="bg-zinc-950 border-zinc-800">
             <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-white text-2xl">
+              <CardTitle className="flex items-center gap-3 text-white text-2xl font-orbitron">
             
                 Impact Summary
               </CardTitle>
@@ -368,14 +368,14 @@ function ResultsContent() {
                     {/* Core Impact Metrics - Priority Data */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                       <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
-                        <div className="text-2xl font-bold text-white">
+                        <div className="text-2xl font-bold text-white font-orbitron">
                           {getAveragedEnergy(geminiData.impactEnergy, simulationData).toFixed(1)} MT
                         </div>
                         <div className="text-sm text-zinc-400">Energy Produced</div>
                         
                       </div>
                       <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
-                        <div className="text-2xl font-bold text-white">
+                        <div className="text-2xl font-bold text-white font-orbitron">
                           {(() => {
                             const averagedEnergy = getAveragedEnergy(geminiData.impactEnergy, simulationData);
                             const averagedRadii = getAveragedDamageRadii(geminiData.damageRadii, averagedEnergy);
@@ -386,7 +386,7 @@ function ResultsContent() {
                         
                       </div>
                       <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
-                        <div className="text-2xl font-bold text-white">
+                        <div className="text-2xl font-bold text-white font-orbitron">
                           {(() => {
                             const averagedEnergy = getAveragedEnergy(geminiData.impactEnergy, simulationData);
                             return getAveragedCraterDiameter(geminiData.craterDiameter, averagedEnergy).toFixed(2);
@@ -396,7 +396,7 @@ function ResultsContent() {
                         
                       </div>
                       <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
-                        <div className="text-2xl font-bold text-white">
+                        <div className="text-2xl font-bold text-white font-orbitron">
                           {affectedCities.length}
                         </div>
                         <div className="text-sm text-zinc-400">Cities Affected</div>
@@ -407,14 +407,14 @@ function ResultsContent() {
                     {/* Precision Physical Data */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
-                        <div className="text-xl font-bold text-white">
+                        <div className="text-xl font-bold text-white font-orbitron">
                           {getAveragedSurfaceVelocity(geminiData.impactVelocityAtSurface, simulationData).toFixed(1)} km/s
                         </div>
                         <div className="text-sm text-zinc-400">Surface Velocity</div>
                         
                       </div>
                       <div className="text-center bg-zinc-900 p-4 rounded-lg border border-zinc-700">
-                        <div className="text-xl font-bold text-white">
+                        <div className="text-xl font-bold text-white font-orbitron">
                           {geminiData.thermalRadius?.toFixed(1) || 'N/A'} km
                         </div>
                         <div className="text-sm text-zinc-400">Thermal Radius</div>
@@ -440,7 +440,7 @@ function ResultsContent() {
         >
           <Card className="bg-zinc-950 border-zinc-800">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
+              <CardTitle className="flex items-center gap-2 text-white font-orbitron">
                 <Target className="w-5 h-5 text-white" />
                 Damage Zone Classifications
               </CardTitle>
@@ -450,7 +450,7 @@ function ResultsContent() {
                 <div className="flex items-start gap-3 p-3 bg-zinc-900 rounded-lg border border-zinc-700">
                   <div className="w-4 h-4 bg-white rounded-full mt-1 flex-shrink-0"></div>
                   <div>
-                    <span className="text-white font-semibold text-sm">Severe Destruction</span>
+                    <span className="text-white font-semibold text-sm font-orbitron">Severe Destruction</span>
                     <p className="text-zinc-300 text-xs mt-1">Radius: {(() => {
                       const storedData = localStorage.getItem('impactSimulationData');
                       const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
@@ -464,7 +464,7 @@ function ResultsContent() {
                 <div className="flex items-start gap-3 p-3 bg-zinc-900 rounded-lg border border-zinc-700">
                   <div className="w-4 h-4 bg-zinc-400 rounded-full mt-1 flex-shrink-0"></div>
                   <div>
-                    <span className="text-white font-semibold text-sm">Major Damage</span>
+                    <span className="text-white font-semibold text-sm font-orbitron">Major Damage</span>
                     <p className="text-zinc-300 text-xs mt-1">Radius: {(() => {
                       const storedData = localStorage.getItem('impactSimulationData');
                       const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
@@ -478,7 +478,7 @@ function ResultsContent() {
                 <div className="flex items-start gap-3 p-3 bg-zinc-900 rounded-lg border border-zinc-700">
                   <div className="w-4 h-4 bg-zinc-600 rounded-full mt-1 flex-shrink-0"></div>
                   <div>
-                    <span className="text-white font-semibold text-sm">Evacuation Zone</span>
+                    <span className="text-white font-semibold text-sm font-orbitron">Evacuation Zone</span>
                     <p className="text-zinc-300 text-xs mt-1">Radius: {(() => {
                       const storedData = localStorage.getItem('impactSimulationData');
                       const geminiData = storedData ? JSON.parse(storedData).geminiData : null;
@@ -504,7 +504,7 @@ function ResultsContent() {
           >
             <Card className="bg-zinc-950 border-zinc-800">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-white">
+                <CardTitle className="flex items-center gap-2 text-white font-orbitron">
                   <Map className="w-5 h-5 text-white" />
                   Interactive Damage Zone Map
                 </CardTitle>
@@ -597,7 +597,7 @@ function ResultsContent() {
         >
           <Card className="bg-zinc-950 border-zinc-800">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white">
+              <CardTitle className="flex items-center gap-2 text-white font-orbitron">
                 
                 Technical Details
               </CardTitle>
@@ -605,7 +605,7 @@ function ResultsContent() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div>
-                  <h4 className="text-white font-semibold mb-2">Asteroid Properties</h4>
+                  <h4 className="text-white font-semibold mb-2 font-orbitron">Asteroid Properties</h4>
                   <div className="space-y-1 text-sm text-zinc-300">
                     <div>Name: {simulationData.asteroid.name}</div>
                     <div>Diameter: {simulationData.asteroid.diameter.toFixed(3)} km</div>
@@ -614,7 +614,7 @@ function ResultsContent() {
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold mb-2">Impact Parameters</h4>
+                  <h4 className="text-white font-semibold mb-2 font-orbitron">Impact Parameters</h4>
                   <div className="space-y-1 text-sm text-zinc-300">
                     <div>Angle: {simulationData.parameters.angle}°</div>
                     <div>Mass: {results.mass.toExponential(2)} kg</div>
@@ -623,7 +623,7 @@ function ResultsContent() {
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-white font-semibold mb-2">Environmental Impact</h4>
+                  <h4 className="text-white font-semibold mb-2 font-orbitron">Environmental Impact</h4>
                   <div className="space-y-1 text-sm text-zinc-300">
                     <div>Crater Depth: {(results.craterDiameter / 3000).toFixed(2)} km</div>
                     <div>Seismic Events: {results.earthquakeEffects.length}</div>
@@ -652,7 +652,7 @@ function LoadingResults() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
       <div className="text-center">
         <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white mx-auto mb-6"></div>
-        <h2 className="text-2xl font-bold text-white mb-2">Loading Impact Results</h2>
+        <h2 className="text-2xl font-bold text-white mb-2 font-orbitron">Loading Impact Results</h2>
         <p className="text-zinc-300">Analyzing simulation parameters...</p>
       </div>
     </div>

@@ -41,21 +41,21 @@ export default function GlobePage() {
         {/* Features Section */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-card border border-border rounded-lg p-6 text-center hover:glow-on-hover transition-all duration-300">
-            <h3 className="text-xl font-semibold text-white mb-2">Interactive Navigation</h3>
+            <h3 className="text-xl font-semibold text-white mb-2 font-orbitron">Interactive Navigation</h3>
             <p className="text-muted-foreground">
               Rotate, zoom, and explore Earth with smooth 3D navigation controls
             </p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6 text-center hover:glow-on-hover transition-all duration-300">
-            <h3 className="text-xl font-semibold text-white mb-2">Location Detection</h3>
+            <h3 className="text-xl font-semibold text-white mb-2 font-orbitron">Location Detection</h3>
             <p className="text-muted-foreground">
               Click anywhere to get precise coordinates and location information
             </p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6 text-center hover:glow-on-hover transition-all duration-300">
-            <h3 className="text-xl font-semibold text-white mb-2">Real-time Data</h3>
+            <h3 className="text-xl font-semibold text-white mb-2 font-orbitron">Real-time Data</h3>
             <p className="text-muted-foreground">
               Get instant feedback with location markers and coordinate display
             </p>
@@ -64,10 +64,10 @@ export default function GlobePage() {
 
         {/* Instructions Section */}
         <div className="mt-12 bg-card border border-border rounded-lg p-8">
-          <h2 className="text-2xl font-bold text-white mb-6">How to Use</h2>
+          <h2 className="text-2xl font-bold text-white mb-6 font-orbitron">How to Use</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-lg font-semibold text-white mb-3">Navigation Controls</h3>
+              <h3 className="text-lg font-semibold text-white mb-3 font-orbitron">Navigation Controls</h3>
               <ul className="space-y-2 text-muted-foreground">
                 <li>• <strong>Left click + drag:</strong> Rotate the globe</li>
                 <li>• <strong>Scroll wheel:</strong> Zoom in and out</li>
@@ -75,7 +75,7 @@ export default function GlobePage() {
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-white mb-3">Location Selection</h3>
+              <h3 className="text-lg font-semibold text-white mb-3 font-orbitron">Location Selection</h3>
               <ul className="space-y-2 text-muted-foreground">
                 <li>• <strong>Single click:</strong> Select any location on Earth</li>
                 <li>• <strong>Red markers:</strong> Show your selected points</li>
