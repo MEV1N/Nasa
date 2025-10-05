@@ -113,36 +113,36 @@ export function AffectedCitiesDisplay({ affectedCities, className }: AffectedCit
         {/* Damage Level Breakdown */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {severeCities.length > 0 && (
-            <div className="bg-red-900/20 border border-red-800 rounded-lg p-3">
-              <h4 className="text-red-400 font-semibold text-sm mb-2 flex items-center gap-2">
+            <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3">
+              <h4 className="text-white font-semibold text-sm mb-2 flex items-center gap-2">
             
                 Severe Destruction ({severeCities.length})
               </h4>
-              <div className="text-xs text-slate-300">
+              <div className="text-xs text-zinc-300">
                 80% casualty rate expected
               </div>
             </div>
           )}
           
           {moderateCities.length > 0 && (
-            <div className="bg-orange-900/20 border border-orange-800 rounded-lg p-3">
-              <h4 className="text-orange-400 font-semibold text-sm mb-2 flex items-center gap-2">
+            <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3">
+              <h4 className="text-white font-semibold text-sm mb-2 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" />
                 Major Damage ({moderateCities.length})
               </h4>
-              <div className="text-xs text-slate-300">
+              <div className="text-xs text-zinc-300">
                 30% casualty rate expected
               </div>
             </div>
           )}
           
           {lightCities.length > 0 && (
-            <div className="bg-yellow-900/20 border border-yellow-800 rounded-lg p-3">
-              <h4 className="text-yellow-400 font-semibold text-sm mb-2 flex items-center gap-2">
+            <div className="bg-zinc-950 border border-zinc-800 rounded-lg p-3">
+              <h4 className="text-white font-semibold text-sm mb-2 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" />
                 Light Damage ({lightCities.length})
               </h4>
-              <div className="text-xs text-slate-300">
+              <div className="text-xs text-zinc-300">
                 5% casualty rate expected
               </div>
             </div>
@@ -154,7 +154,7 @@ export function AffectedCitiesDisplay({ affectedCities, className }: AffectedCit
           {affectedCities.map((city, index) => (
             <div
               key={`${city.name}-${city.country}`}
-              className={`p-3 rounded-lg border ${getDamageColor(city.damageLevel)} bg-opacity-50`}
+              className="p-3 rounded-lg border border-zinc-800 bg-zinc-950"
             >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
@@ -164,7 +164,11 @@ export function AffectedCitiesDisplay({ affectedCities, className }: AffectedCit
                   </span>
                   <Badge 
                     variant="outline" 
-                    className={`text-xs ${getDamageColor(city.damageLevel)}`}
+                    className={`text-xs ${
+                      city.damageLevel === 'severe' ? 'text-red-400 border-red-700' :
+                      city.damageLevel === 'moderate' ? 'text-yellow-400 border-yellow-700' :
+                      'text-white border-zinc-700'
+                    }`}
                   >
                     {city.damageLevel.toUpperCase()}
                   </Badge>
@@ -183,19 +187,19 @@ export function AffectedCitiesDisplay({ affectedCities, className }: AffectedCit
                 </div>
                 <div>
                   <span className="text-slate-400">Est. Casualties:</span>
-                  <div className="text-red-300 font-medium">
+                  <div className="text-white font-medium">
                     {formatNumber(city.estimatedCasualties)}
                   </div>
                 </div>
                 <div>
                   <span className="text-slate-400">Survival Rate:</span>
-                  <div className="text-green-300 font-medium">
+                  <div className="text-white font-medium">
                     {(city.survivalRate * 100).toFixed(0)}%
                   </div>
                 </div>
                 <div>
                   <span className="text-slate-400">Survivors:</span>
-                  <div className="text-blue-300 font-medium">
+                  <div className="text-white font-medium">
                     {formatNumber(city.population - city.estimatedCasualties)}
                   </div>
                 </div>

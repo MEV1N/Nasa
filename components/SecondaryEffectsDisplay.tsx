@@ -182,7 +182,6 @@ export function SecondaryEffectsDisplay({
         <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
-              <Waves className="w-5 h-5 text-blue-400" />
               Tsunami Affected Coastal Areas
               <Badge variant="outline" className="ml-2">
                 {effects.tsunamiAffectedCoasts.length} Locations
@@ -196,7 +195,7 @@ export function SecondaryEffectsDisplay({
                 return (
                   <div
                     key={index}
-                    className={`p-3 rounded-lg border ${getRiskColor(risk)}`}
+                    className="p-3 rounded-lg border border-zinc-800 bg-zinc-950"
                   >
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex items-center gap-2">
@@ -204,7 +203,12 @@ export function SecondaryEffectsDisplay({
                         <span className="font-semibold text-white">
                           {location.name}, {location.country}
                         </span>
-                        <Badge variant="outline" className={`text-xs ${getRiskColor(risk)}`}>
+                        <Badge variant="outline" className={`text-xs ${
+                          risk === 'extreme' ? 'text-red-400 border-red-700' :
+                          risk === 'high' ? 'text-red-400 border-red-700' :
+                          risk === 'moderate' ? 'text-yellow-400 border-yellow-700' :
+                          'text-white border-zinc-700'
+                        }`}>
                           {risk.toUpperCase()} RISK
                         </Badge>
                       </div>
@@ -251,7 +255,6 @@ export function SecondaryEffectsDisplay({
         <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
-              <Mountain className="w-5 h-5 text-yellow-400" />
               Seismic Affected Regions
               <Badge variant="outline" className="ml-2">
                 {effects.seismicAffectedRegions.length} Locations
@@ -263,7 +266,7 @@ export function SecondaryEffectsDisplay({
               {effects.seismicAffectedRegions.map((location, index) => (
                 <div
                   key={index}
-                  className="p-2 rounded bg-yellow-900/20 border border-yellow-800/50"
+                  className="p-2 rounded bg-zinc-950 border border-zinc-800"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -274,7 +277,7 @@ export function SecondaryEffectsDisplay({
                         Pop: {formatPopulation(location.population)}
                       </span>
                     </div>
-                    <span className="text-xs text-yellow-300">
+                    <span className="text-xs text-zinc-400">
                       {formatDistance(location.distanceFromImpact)}
                     </span>
                   </div>
@@ -290,9 +293,8 @@ export function SecondaryEffectsDisplay({
         <Card className="bg-zinc-950 border-zinc-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
-              <Thermometer className="w-5 h-5 text-purple-400" />
               Global Climate Impact Zones
-              <Badge variant="outline" className="ml-2 text-purple-400">
+              <Badge variant="outline" className="ml-2 text-white-400">
                 GLOBAL EFFECT
               </Badge>
             </CardTitle>
@@ -315,12 +317,12 @@ export function SecondaryEffectsDisplay({
               {effects.climateAffectedAreas.slice(0, 12).map((location, index) => (
                 <div
                   key={index}
-                  className="p-2 rounded bg-purple-900/20 border border-purple-800/30 text-xs"
+                  className="p-2 rounded bg-zinc-950 border border-zinc-800 text-xs"
                 >
                   <div className="text-white font-medium">
                     {location.name}, {location.country}
                   </div>
-                  <div className="text-purple-300">
+                  <div className="text-zinc-300">
                     {formatPopulation(location.population)} people at risk
                   </div>
                 </div>
@@ -386,7 +388,6 @@ export function SecondaryEffectsDisplay({
       <Card className="bg-gradient-to-r from-zinc-950 to-zinc-900 border-zinc-800">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
-            
             Secondary Effects Summary
           </CardTitle>
         </CardHeader>
