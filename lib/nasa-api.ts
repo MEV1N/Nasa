@@ -70,7 +70,7 @@ export const fetchAsteroidsFromNASA = async (
 };
 
 // Mock data for when NASA API is unavailable
-const getMockAsteroids = (): AsteroidResponse => {
+export const getMockAsteroids = (): AsteroidResponse => {
   const mockAsteroids = [
     {
       id: "2465633",
@@ -207,34 +207,30 @@ export const fetchAsteroids = async (
     const res = await fetch(`/api/asteroids?page=${page}&size=${size}`);
     
     if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      
-      // If it's a rate limit or API key issue, provide mock data with a warning
-      if (res.status === 429 || res.status === 403) {
-        console.warn('NASA API unavailable, using mock data for demonstration');
-        const mockData = getMockAsteroids();
-        // Add a flag to indicate this is mock data
-        (mockData as any)._isMockData = true;
-        return mockData;
-      }
-      
-      throw new Error(errorData.error || "Failed to fetch asteroids");
-    }
-    
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching asteroids:", error);
-    
-    // If all else fails, return mock data for demonstration
-    if (error instanceof Error && (error.message.includes('fetch') || error.message.includes('network'))) {
-      console.warn('Network error, using mock data for demonstration');
+      console.warn(`API returned ${res.status}, falling back to mock data`);
       const mockData = getMockAsteroids();
       (mockData as any)._isMockData = true;
+      (mockData as any)._mockReason = `API returned ${res.status}`;
       return mockData;
     }
     
-    throw error;
+    const data = await res.json();
+    
+    // Check if the API returned mock data due to errors
+    if (data._isMockData) {
+      console.warn('API returned mock data:', data._mockReason);
+    }
+    
+    return data;
+  } catch (error) {
+    console.error("Error fetching asteroids:", error);
+    console.warn('Network/fetch error, using mock data for demonstration');
+    
+    // Always return mock data on error for better user experience
+    const mockData = getMockAsteroids();
+    (mockData as any)._isMockData = true;
+    (mockData as any)._mockReason = error instanceof Error ? error.message : 'Network error';
+    return mockData;
   }
 };
 

@@ -52,7 +52,15 @@ export function AsteroidList({ onAsteroidSelect }: AsteroidListProps) {
       if (reset) {
         setAsteroids(response.near_earth_objects);
       } else {
-        setAsteroids(prev => [...prev, ...response.near_earth_objects]);
+        setAsteroids(prev => {
+          // Create a map to track existing asteroid IDs
+          const existingIds = new Set(prev.map(asteroid => asteroid.id));
+          // Filter out duplicates from new data
+          const newAsteroids = response.near_earth_objects.filter(
+            asteroid => !existingIds.has(asteroid.id)
+          );
+          return [...prev, ...newAsteroids];
+        });
       }
       
       // Check if there are more pages
@@ -210,7 +218,7 @@ export function AsteroidList({ onAsteroidSelect }: AsteroidListProps) {
         <AnimatePresence>
           {displayAsteroids.map((asteroid, index) => (
             <motion.div
-              key={asteroid.id}
+              key={`${asteroid.id}-${index}`}
               ref={index === displayAsteroids.length - 1 ? lastAsteroidElementRef : undefined}
               layout
               initial={{ opacity: 0 }}

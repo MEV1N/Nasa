@@ -4,26 +4,11 @@ import { fetchAsteroidsFromNASA } from '@/lib/nasa-api';
 export async function GET(request: NextRequest) {
   try {
     // Get the NASA API key from environment variables
-    const apiKey = process.env.NASA_API_KEY;
+    const apiKey = process.env.NASA_API_KEY || 'DEMO_KEY';
     
-    if (!apiKey) {
-      console.error('NASA_API_KEY environment variable is not set');
-      console.error('Available environment variables:', Object.keys(process.env).filter(key => key.includes('NASA')));
-      console.error('Node environment:', process.env.NODE_ENV);
-      console.error('Vercel environment:', process.env.VERCEL_ENV);
-      
-      return NextResponse.json(
-        { 
-          error: 'NASA API key not configured',
-          message: 'Please set the NASA_API_KEY environment variable in your Vercel project settings',
-          debug: {
-            nodeEnv: process.env.NODE_ENV,
-            vercelEnv: process.env.VERCEL_ENV,
-            availableNasaKeys: Object.keys(process.env).filter(key => key.includes('NASA'))
-          }
-        },
-        { status: 500 }
-      );
+    if (!process.env.NASA_API_KEY) {
+      console.warn('NASA_API_KEY environment variable is not set, using DEMO_KEY');
+      console.warn('Note: DEMO_KEY has limited requests. Get your free API key from https://api.nasa.gov/');
     }
 
     // Get query parameters
@@ -47,46 +32,17 @@ export async function GET(request: NextRequest) {
     
   } catch (error) {
     console.error('API Route Error:', error);
+    console.warn('NASA API unavailable, falling back to mock data for demonstration');
     
-    // Return appropriate error response
-    if (error instanceof Error) {
-      // Check for common NASA API errors
-      if (error.message.includes('429')) {
-        return NextResponse.json(
-          { 
-            error: 'Rate limit exceeded. Please get your own NASA API key from https://api.nasa.gov/ and replace DEMO_KEY in .env.local',
-            code: 'RATE_LIMITED'
-          },
-          { status: 429 }
-        );
-      }
-      
-      if (error.message.includes('403')) {
-        return NextResponse.json(
-          { 
-            error: 'Invalid API key. Please check your NASA API key in .env.local',
-            code: 'INVALID_KEY'
-          },
-          { status: 403 }
-        );
-      }
-      
-      return NextResponse.json(
-        { 
-          error: error.message,
-          code: 'API_ERROR'
-        },
-        { status: 500 }
-      );
-    }
+    // Import mock data function
+    const { getMockAsteroids } = await import('@/lib/nasa-api');
+    const mockData = getMockAsteroids();
     
-    return NextResponse.json(
-      { 
-        error: 'Internal server error. Please try again later.',
-        code: 'UNKNOWN_ERROR'
-      },
-      { status: 500 }
-    );
+    // Add a flag to indicate this is mock data
+    (mockData as any)._isMockData = true;
+    (mockData as any)._mockReason = error instanceof Error ? error.message : 'Unknown error';
+    
+    return NextResponse.json(mockData);
   }
 }
 
