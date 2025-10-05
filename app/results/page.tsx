@@ -506,7 +506,7 @@ function ResultsContent() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-white font-orbitron">
                   <Map className="w-5 h-5 text-white" />
-                  Interactive Damage Zone Map
+                  Damage Zone Map
                 </CardTitle>
               </CardHeader>
               <CardContent>
