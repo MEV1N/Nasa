@@ -21,7 +21,7 @@ export default function GlobePage() {
       {/* Header */}
       <div className="border-b border-border bg-card/50 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-8">
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-4xl font-bold text-white mb-4 font-orbitron">
             Interactive Earth Globe
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed">

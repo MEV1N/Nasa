@@ -138,7 +138,7 @@ export default function ImpactAnalysis({ asteroid, location, impactData }) {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-4xl font-bold text-white mb-4 font-orbitron">
             Asteroid Analysis API Demo
           </h1>
           <p className="text-slate-300 text-lg">

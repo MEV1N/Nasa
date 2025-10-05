@@ -325,7 +325,7 @@ function ResultsContent() {
           </div>
 
           <div className="text-center space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold text-gradient">
+            <h1 className="text-4xl md:text-6xl font-bold text-gradient font-orbitron">
               Impact Analysis Results
             </h1>
             <div className="flex items-center justify-center gap-4 text-lg text-zinc-400">

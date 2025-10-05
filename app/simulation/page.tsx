@@ -94,7 +94,7 @@ export default function SimulationPage() {
           </div>
 
           <div className="text-center space-y-6">
-            <h1 className="text-4xl md:text-5xl font-bold text-gradient">
+            <h1 className="text-4xl md:text-5xl font-bold text-gradient font-orbitron">
               Asteroid Impact Simulator
             </h1>
             <p className="text-lg text-neutral-400 max-w-4xl mx-auto leading-relaxed">
