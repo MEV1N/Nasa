@@ -102,47 +102,7 @@ export default function SimulationPage() {
             </p>
           </div>
 
-          {/* Progress Steps */}
-          <div className="flex justify-center mt-12">
-            <div className="flex items-center space-x-6">
-              <div className={`flex items-center space-x-3 px-6 py-3 rounded-full transition-all ${
-                simulationStep === 'select' ? 'bg-white text-black shadow-lg' : 
-                (simulationStep === 'location' || simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-white/80 text-black' : 'bg-neutral-700/50 text-white/70'
-              }`}>
-                <Target className="w-4 h-4" />
-                <span className="font-medium">Select Asteroid</span>
-              </div>
-              
-              <div className="w-8 h-0.5 bg-neutral-600"></div>
-              
-              <div className={`flex items-center space-x-3 px-6 py-3 rounded-full transition-all ${
-                simulationStep === 'location' ? 'bg-white text-black shadow-lg' : 
-                (simulationStep === 'simulate' || simulationStep === 'results') ? 'bg-white/80 text-black' : 'bg-neutral-700/50 text-white/70'
-              }`}>
-              
-                <span className="font-medium">Choose Location</span>
-              </div>
-              
-              <div className="w-8 h-0.5 bg-neutral-600"></div>
-              
-              <div className={`flex items-center space-x-3 px-6 py-3 rounded-full transition-all ${
-                simulationStep === 'simulate' ? 'bg-white text-black shadow-lg' : 
-                simulationStep === 'results' ? 'bg-white/80 text-black' : 'bg-neutral-700/50 text-white/70'
-              }`}>
-            
-                <span className="font-medium">Configure Impact</span>
-              </div>
-              
-              <div className="w-8 h-0.5 bg-neutral-600"></div>
-              
-              <div className={`flex items-center space-x-3 px-6 py-3 rounded-full transition-all ${
-                simulationStep === 'results' ? 'bg-white text-black shadow-lg' : 'bg-neutral-700/50 text-white/70'
-              }`}>
-              
-                <span className="font-medium">View Results</span>
-              </div>
-            </div>
-          </div>
+
         </motion.div>
 
         {/* Main Content */}
